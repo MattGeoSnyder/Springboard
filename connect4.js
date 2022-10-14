@@ -82,6 +82,7 @@ function placeInTable(y, x) {
   piece.setAttribute("player", `${currPlayer}`);
 
   let board = document.querySelector('#board');
+  // can't get document.querySelector('#' + `${y}-${x}`) to work to select td cell directly.
   let place = board.children[y+1].children[x];
 
   place.appendChild(piece);
