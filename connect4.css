@@ -15,7 +15,6 @@
 /* pieces are div within game table cells: draw as colored circles */
 
 .piece {
-  /* TODO: make into circles */
   margin: 5px;
   width: 80%;
   height: 80%;
@@ -27,12 +26,30 @@
   animation-name: fall;
   animation-duration: .5s;
   animation-iteration-count: 1;
-  animation-timing-function: ease-out;
+  animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
 }
 
 @keyframes fall {
   0% {
     top: -300px;
+  }
+  70% {
+    top: 0px;
+  }
+  75% {
+    top: -30px
+  }
+  80% {
+    top: 0px;
+  }
+  85% {
+    top: -15px;
+  }
+  90% {
+    top: 0px;
+  }
+  95% {
+    top: -5px;
   }
   100% {
     top: 0px;
