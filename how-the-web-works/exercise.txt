@@ -1,0 +1,17 @@
+PART ONE
+1. HTTP is a protocol, which is a set of rules for how information is sent between clients and servers.
+2. URL is short for Uniform Resource Loctator. A url is an address for some internet resource
+3. DNS is short for Domain Name System. DNS is a system that translates hostnames into an ip address for a server.
+4. A query string is how you can pass key-value pairs into the url. It is at the end of a URL located after resources
+5. GET- gets data from the server without changing any data on the server.
+    POST- sends data to the server and changes data on the server.
+6. An HTTP request is a request from client to server following the HTTP protocol. 
+7. An HTTP response is a rsponse from a server to a client foloowing the HTTP protocol.
+8. An HTTP header are some of the attributes that the client asks the server for. For example, a browser knows what language the user typically wants so 
+    in the header the browser is requesting the content to be in the users preferred language.
+9. First the browswer tries to find the ip address of the server hosting hostname. It starts locally at the computer and if it doesn't find the ip address 
+    it ultimately moves to the DNS to find the ip address. From there an HTTP request is sent to the server via the specified URL. The Server then sends a 
+    response depending on if the request matches what is on the server. The browser then loads the DOM sent from the server. The browswer then makes several more 
+    request depending what is in the HTML of the DOM. 
+
+ 
