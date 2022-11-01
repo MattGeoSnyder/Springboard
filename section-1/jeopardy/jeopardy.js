@@ -133,22 +133,20 @@ function fillDataTable(category, colInd) {
  * */
 
 function handleClick(evt) {
-    let status = evt.target.showing;
-    console.log(evt);
-    // Come back to figure out how to add questions. Most likely just make a data board object. 
-    switch(status){
-        case null:
-            evt.target.innerText = jeopardyBoard.board[evt.target.row][evt.target.col].question;
-            evt.status = question;
-            break;
-        case 'question':
-            evt.target.innerText = jeopardyBoard.board[evt.target.row][evt.target.col].answer;
-            evt.status = answer;
-            break;
-        case 'answer': 
-            return;
-        default:
-            return;
+    let status = evt.target.getAttribute('showing');
+    console.log(status);
+
+    if (status === null){
+        let question = jeopardyBoard.board[evt.target.attributes.row.value][evt.target.attributes.col.value].question;
+        console.log(question);
+        evt.target.innerText = question;
+        evt.status = "question";
+    } else if (status === 'question') {
+        let answer = jeopardyBoard.board[evt.target.attributes.row.value][evt.target.attributes.col.value].answer;
+        evt.target.innerText = answer;
+        evt.status = "answer";
+    } else {
+        return;
     }
 
 }
