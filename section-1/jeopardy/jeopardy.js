@@ -91,7 +91,6 @@ async function fillTable() {
     let categoryIDs = await getCategoryIds();
     for (let i = 0; i < NUM_CATEGORIES; i++) {
         let category = await getCategory(categoryIDs[i]);
-        console.log(category);
         let newTd = document.createElement('td');
         newTd.innerText = category.title;
         headRow.appendChild(newTd);
@@ -104,6 +103,8 @@ async function fillTable() {
         let newTr = document.createElement('tr');
         for (let j = 0; j < NUM_CATEGORIES; j++){
             let newTd = document.createElement('td');
+            newTd.setAttribute('row',`${i}`);
+            newTd.setAttribute('col', `${j}`);
             newTd.setAttribute('showing', null);
             newTd.innerText = "?";
             newTr.appendChild(newTd);
@@ -113,8 +114,6 @@ async function fillTable() {
 }
 
 function fillDataTable(category, colInd) {
-    console.log(category);
-    console.log(jeopardyBoard);
     for (let i = 0; i < NUM_QUESTIONS_PER_CAT; i++){
         jeopardyBoard.board[i][colInd] = {
             category: category.title,
@@ -135,14 +134,16 @@ function fillDataTable(category, colInd) {
 
 function handleClick(evt) {
     let status = evt.target.showing;
-
+    console.log(evt);
     // Come back to figure out how to add questions. Most likely just make a data board object. 
     switch(status){
         case null:
-            status = question;
+            evt.target.innerText = jeopardyBoard.board[evt.target.row][evt.target.col].question;
+            evt.status = question;
             break;
         case 'question':
-            status = answer;
+            evt.target.innerText = jeopardyBoard.board[evt.target.row][evt.target.col].answer;
+            evt.status = answer;
             break;
         case 'answer': 
             return;
@@ -177,14 +178,15 @@ function hideLoadingView() {
  * */
 
 async function setupAndStart() {
-    let categoryIds = getCategoryIds();
-
+    await fillTable();
+    hideLoadingView();
 }
 
 /** On click of start / restart button, set up game. */
 
-// TODO
+$('#start').on('click', setupAndStart);
 
 /** On page load, add event handler for clicking clues */
-
-// TODO
+// I don't understand why we would do this after building the HTML Table.
+// It seems hard to wait for the html content to be loaded.
+$('#jeopardy tbody').on('click', handleClick);
