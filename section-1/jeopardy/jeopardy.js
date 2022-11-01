@@ -18,9 +18,23 @@
 //    ...
 //  ]
 
+class Board {
+    constructor(){
+        this.board = [];
+        for (let i = 0; i < NUM_QUESTIONS_PER_CAT; i++) {
+            this.board.push([]);
+            for (let j = 0; j < NUM_CATEGORIES; j++){
+                this.board[i].push(null);
+            }
+        }
+    }
+    answered = false;
+}
+
 let categories = [];
 const NUM_CATEGORIES = 6;
-
+const NUM_QUESTIONS_PER_CAT = 5;
+let jeopardyBoard = new Board();
 
 /** Get NUM_CATEGORIES random category from API.
  *
@@ -37,7 +51,9 @@ function sampleCategories() {
     let categoryIDs = new Set;
     while (categoryIDs.size < NUM_CATEGORIES) {
         let rand = Math.floor(Math.random()*100);
-        categoryIDs.add(categories[rand].id);
+        if (categories[rand].clues_count >= 5){
+            categoryIDs.add(categories[rand].id);
+        }
     }
     return [...categoryIDs];
 }
@@ -68,7 +84,46 @@ async function getCategory(catId) {
  */
 
 async function fillTable() {
+    let head = document.querySelector('#jeopardy thead');
+    let body = document.querySelector('#jeopardy tbody');
+    let headRow = document.createElement('tr');
+
+    let categoryIDs = await getCategoryIds();
+    for (let i = 0; i < NUM_CATEGORIES; i++) {
+        let category = await getCategory(categoryIDs[i]);
+        console.log(category);
+        let newTd = document.createElement('td');
+        newTd.innerText = category.title;
+        headRow.appendChild(newTd);
+
+        fillDataTable(category, i);
+    }
+    head.appendChild(headRow);
+
+    for (let i = 0; i < NUM_QUESTIONS_PER_CAT; i++){
+        let newTr = document.createElement('tr');
+        for (let j = 0; j < NUM_CATEGORIES; j++){
+            let newTd = document.createElement('td');
+            newTd.setAttribute('showing', null);
+            newTd.innerText = "?";
+            newTr.appendChild(newTd);
+        }
+        body.appendChild(newTr);    
+    }
 }
+
+function fillDataTable(category, colInd) {
+    console.log(category);
+    console.log(jeopardyBoard);
+    for (let i = 0; i < NUM_QUESTIONS_PER_CAT; i++){
+        jeopardyBoard.board[i][colInd] = {
+            category: category.title,
+            question: category.clues[i].question,
+            answer: category.clues[i].answer
+        };
+    }
+}
+
 
 /** Handle clicking on a clue: show the question or answer.
  *
@@ -79,6 +134,22 @@ async function fillTable() {
  * */
 
 function handleClick(evt) {
+    let status = evt.target.showing;
+
+    // Come back to figure out how to add questions. Most likely just make a data board object. 
+    switch(status){
+        case null:
+            status = question;
+            break;
+        case 'question':
+            status = answer;
+            break;
+        case 'answer': 
+            return;
+        default:
+            return;
+    }
+
 }
 
 /** Wipe the current Jeopardy board, show the loading spinner,
@@ -86,12 +157,16 @@ function handleClick(evt) {
  */
 
 function showLoadingView() {
-
+    $('#jeopardy').empty();
+    $('#spin-container').show();
+    $('#start').text('start');
 }
 
 /** Remove the loading spinner and update the button used to fetch data. */
 
 function hideLoadingView() {
+    $('#spin-container').hide();
+    $('#start').text('reset');
 }
 
 /** Start game:
@@ -102,6 +177,8 @@ function hideLoadingView() {
  * */
 
 async function setupAndStart() {
+    let categoryIds = getCategoryIds();
+
 }
 
 /** On click of start / restart button, set up game. */
