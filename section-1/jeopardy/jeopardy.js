@@ -92,7 +92,7 @@ async function fillTable() {
     for (let i = 0; i < NUM_CATEGORIES; i++) {
         let category = await getCategory(categoryIDs[i]);
         let newTd = document.createElement('td');
-        newTd.innerText = category.title;
+        newTd.innerText = category.title.toUpperCase();
         headRow.appendChild(newTd);
 
         fillDataTable(category, i);
@@ -105,7 +105,6 @@ async function fillTable() {
             let newTd = document.createElement('td');
             newTd.setAttribute('row',`${i}`);
             newTd.setAttribute('col', `${j}`);
-            newTd.setAttribute('showing', null);
             newTd.innerText = "?";
             newTr.appendChild(newTd);
         }
@@ -134,17 +133,16 @@ function fillDataTable(category, colInd) {
 
 function handleClick(evt) {
     let status = evt.target.getAttribute('showing');
-    console.log(status);
 
-    if (status === null){
+    if (!status){
         let question = jeopardyBoard.board[evt.target.attributes.row.value][evt.target.attributes.col.value].question;
         console.log(question);
         evt.target.innerText = question;
-        evt.status = "question";
+        evt.target.setAttribute('showing', 'question');
     } else if (status === 'question') {
         let answer = jeopardyBoard.board[evt.target.attributes.row.value][evt.target.attributes.col.value].answer;
         evt.target.innerText = answer;
-        evt.status = "answer";
+        evt.target.setAttribute('showing', 'answer'); 
     } else {
         return;
     }
@@ -165,7 +163,8 @@ function showLoadingView() {
 
 function hideLoadingView() {
     $('#spin-container').hide();
-    $('#start').text('reset');
+    $('#jeopardy').show();
+    $('#start').text('Reset');
 }
 
 /** Start game:
@@ -181,10 +180,14 @@ async function setupAndStart() {
 }
 
 /** On click of start / restart button, set up game. */
-
+$('#jeopardy').hide();
 $('#start').on('click', setupAndStart);
+
 
 /** On page load, add event handler for clicking clues */
 // I don't understand why we would do this after building the HTML Table.
 // It seems hard to wait for the html content to be loaded.
 $('#jeopardy tbody').on('click', handleClick);
+
+let spinner = document.querySelector('#spin-container i');
+spinner.classList.add('fa-8x');
