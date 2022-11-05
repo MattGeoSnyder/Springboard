@@ -68,7 +68,7 @@ header h1 {
 }
 
 thead {
-  grid-row: 1fr;
+  grid-row: 1/2;
 }
 
 thead tr {
@@ -82,7 +82,7 @@ thead tr td {
   text-align: center;
   color: white;
 
-  font-size: 150%;
+  font-size: 2.5em;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   text-shadow: 5px 1px black;
 }
@@ -105,7 +105,7 @@ tbody tr {
 tbody tr td {
   text-align: center;
   color: #b08f26;
-  font-size: 300%;
+  font-size: 5em;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
   font-weight: bolder;
   text-shadow: 5px 2px black;
@@ -125,7 +125,76 @@ td {
 
 td[showing="question"], td[showing="answer"] {
   color: white;
-  font-size: 100%;
+  font-size: 1.5em;
   text-shadow: none;
 }
 
+@media (min-width: 320px) and (max-width: 425px) {
+    header h1 {
+      font-size: 3rem;
+    }
+    #start {
+      height: 2rem;
+      width: 4rem;
+      font-size: 1rem;
+    }
+    thead tr td {
+      font-size: .75em;
+      text-shadow: 3px 1px black;
+      border: 2px solid black;
+    }
+    tbody tr td {
+      border: 2px solid black;
+      font-size: 2em;
+    }
+    td[showing=question], td[showing='answer'] {
+      font-size: .3em;
+    }
+    #jeopardy {
+      border: 3px solid black;
+    }
+}
+
+@media (min-width: 426px) and (max-width: 768px) {
+  thead tr td {
+    font-size: 1em;
+    text-shadow: 4px 2px black;
+  }
+  tbody tr td {
+    border: 3px solid black;
+    font-size: 3em;
+  }
+  td[showing=question], td[showing='answer'] {
+    font-size: .6em;
+  }
+
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  thead tr td {
+    font-size: 1em;
+    text-shadow: 4px 2px black;
+  }
+  tbody tr td {
+    border: 3px solid black;
+    font-size: 3em;
+  }
+  td[showing=question], td[showing='answer'] {
+    font-size: .75em;
+  }
+}
+
+@media (min-width:1025px) and (max-width: 1440px){
+  thead tr td {
+    font-size: 2em;
+    text-shadow: 4px 2px black;
+  }
+
+  tbody tr td {
+    font-size: 3.5em;
+  }
+  td[showing=question], td[showing='answer'] {
+    font-size: .85em;
+  }
+
+}
