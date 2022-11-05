@@ -20,6 +20,7 @@
 
 class Board {
     constructor(){
+        this.categories = [];
         this.board = [];
         for (let i = 0; i < NUM_QUESTIONS_PER_CAT; i++) {
             this.board.push([]);
@@ -28,10 +29,20 @@ class Board {
             }
         }
     }
-    answered = false;
+    fillBoard() {
+        for (let i = 0; i < NUM_QUESTIONS_PER_CAT; i++){
+            for(let j = 0; j < NUM_CATEGORIES; j++){
+                this.board[i][j] = {
+                    category: this.categories[j].title,
+                    question: this.categories[j].clues[i].question,
+                    answer: this.categories[j].clues[i].answer
+                };
+            }
+            
+        }
+    }
 }
 
-let categories = [];
 const NUM_CATEGORIES = 6;
 const NUM_QUESTIONS_PER_CAT = 5;
 let jeopardyBoard = new Board();
@@ -41,18 +52,17 @@ let jeopardyBoard = new Board();
  * Returns array of category ids
  */
 
-async function getCategoryIds() {
+ async function getCategoryIds() {
     let req = await axios.get('https://jservice.io/api/categories?count=100');
-    categories = req.data;
-    return sampleCategories();
+    return sampleCategories(req.data);
 }
 
-function sampleCategories() {
+function sampleCategories(request) {
     let categoryIDs = new Set;
     while (categoryIDs.size < NUM_CATEGORIES) {
         let rand = Math.floor(Math.random()*100);
-        if (categories[rand].clues_count >= 5){
-            categoryIDs.add(categories[rand].id);
+        if (request[rand].clues_count >= 5){
+            categoryIDs.add(request[rand].id);
         }
     }
     return [...categoryIDs];
@@ -70,7 +80,7 @@ function sampleCategories() {
  *   ]
  */
 
-async function getCategory(catId) {
+ async function getCategory(catId) {
     let req = await axios.get('https://jservice.io/api/category?id=' + catId);
     return req.data;
 }
@@ -83,42 +93,41 @@ async function getCategory(catId) {
  *   (initally, just show a "?" where the question/answer would go.)
  */
 
-async function fillTable() {
+ async function fillTable() {
     let head = document.querySelector('#jeopardy thead');
     let body = document.querySelector('#jeopardy tbody');
     let headRow = document.createElement('tr');
+    
+    let categoryIds = await getCategoryIds();
+    await getCategories(categoryIds);
+    jeopardyBoard.fillBoard();
 
-    let categoryIDs = await getCategoryIds();
-    for (let i = 0; i < NUM_CATEGORIES; i++) {
-        let category = await getCategory(categoryIDs[i]);
+    for(let category of jeopardyBoard.categories){
         let newTd = document.createElement('td');
         newTd.innerText = category.title.toUpperCase();
         headRow.appendChild(newTd);
-
-        fillDataTable(category, i);
     }
     head.appendChild(headRow);
 
     for (let i = 0; i < NUM_QUESTIONS_PER_CAT; i++){
-        let newTr = document.createElement('tr');
+        let newTr = document.createElement('tr')
         for (let j = 0; j < NUM_CATEGORIES; j++){
             let newTd = document.createElement('td');
-            newTd.setAttribute('row',`${i}`);
-            newTd.setAttribute('col', `${j}`);
-            newTd.innerText = "?";
+            newTd.innerText = '?';
+
             newTr.appendChild(newTd);
+            newTd.setAttribute('row', `${i}`);
+            newTd.setAttribute('col', `${j}`);
+
         }
-        body.appendChild(newTr);    
+        body.appendChild(newTr);
     }
 }
 
-function fillDataTable(category, colInd) {
-    for (let i = 0; i < NUM_QUESTIONS_PER_CAT; i++){
-        jeopardyBoard.board[i][colInd] = {
-            category: category.title,
-            question: category.clues[i].question,
-            answer: category.clues[i].answer
-        };
+async function getCategories(categoryIds){
+    for (let id of categoryIds){
+        let category = await getCategory(id);
+        jeopardyBoard.categories.push(category);
     }
 }
 
@@ -136,7 +145,6 @@ function handleClick(evt) {
 
     if (!status){
         let question = jeopardyBoard.board[evt.target.attributes.row.value][evt.target.attributes.col.value].question;
-        console.log(question);
         evt.target.innerText = question;
         evt.target.setAttribute('showing', 'question');
     } else if (status === 'question') {
@@ -154,9 +162,8 @@ function handleClick(evt) {
  */
 
 function showLoadingView() {
-    $('#jeopardy').empty();
+    $('#jeopardy').hide();
     $('#spin-container').show();
-    $('#start').text('start');
 }
 
 /** Remove the loading spinner and update the button used to fetch data. */
@@ -175,6 +182,9 @@ function hideLoadingView() {
  * */
 
 async function setupAndStart() {
+    showLoadingView();
+    $('tr').remove();
+    jeopardyBoard = new Board();
     await fillTable();
     hideLoadingView();
 }
