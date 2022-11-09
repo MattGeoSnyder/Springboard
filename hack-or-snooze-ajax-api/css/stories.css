@@ -31,9 +31,18 @@
 }
 
 .story-author {
+  position: relative;
   margin-left: 2em;
 }
 
 .story-user {
   display: block;
+}
+
+.favorite-icon {
+  top: 5%;
+  right: -5%;
+  position: relative;
+
+  size: 200% 200%;
 }

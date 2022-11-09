@@ -40,3 +40,4 @@ function showSubmitForm() {
 }
 
 $navSubmit.on('click', showSubmitForm);
+$navFavorites.on('click', putFavoritesOnPage);

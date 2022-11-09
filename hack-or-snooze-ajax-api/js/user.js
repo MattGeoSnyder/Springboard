@@ -111,6 +111,51 @@ function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
   $allStoriesList.show();
-
+  $('li i').show();
   updateNavOnLogin();
 }
+
+async function handleFavorite(evt) {
+  let favoriteIcon = evt.target;
+  let storyId = evt.target.parentElement.parentElement.id;
+
+  modifyFavoriteIcon(favoriteIcon);
+
+  if (favoriteIcon.getAttribute('favorited') === 'true') {
+    favoriteStory(storyId);
+  } else {
+    unfavoriteStory(storyId);
+  }
+
+}
+
+async function favoriteStory(storyId) {
+  let req = await axios.get(BASE_URL + "/stories/" + storyId);
+
+  let favorite = new Story(req.data.story);
+  addFavorite(favorite);
+
+  currentUser.storeFavoritesInLocalStorage();
+}
+
+function addFavorite(newFavorite) {
+  if (currentUser.favorites.length === 0){
+    currentUser.favorites.push(newFavorite);
+  } else {
+    if (currentUser.favorites.every( (favorite) => favorite.storyId !== newFavorite.storyId )){
+      currentUser.favorites.push(newFavorite);
+    }
+  }
+}
+
+function unfavoriteStory(storyId) {
+  for (let i = 0; i < currentUser.favorites.length; i++){
+    if (currentUser.favorites[i].storyId === storyId){
+      currentUser.favorites.splice(i,1);
+    }
+  }
+
+  currentUser.storeFavoritesInLocalStorage();
+}
+
+

@@ -74,9 +74,7 @@ class StoryList {
    */
 
   async addStory(user, newStory) {
-    console.log("hi");
     let post = await axios.post(BASE_URL + "/stories", {token: user.loginToken, story: newStory});
-    console.log(post);
     let story = new Story(post.data.story);
     this.stories.push(story);
     return story;
@@ -139,7 +137,7 @@ class User {
         ownStories: user.stories
       },
       response.data.token
-    );
+    )
   }
 
   /** Login in user with API, make User instance & return it.
@@ -198,4 +196,15 @@ class User {
       return null;
     }
   }
+  
+  storeFavoritesInLocalStorage(){
+    let favoritesJSON = JSON.stringify(this.favorites);
+    localStorage.setItem("favorites",favoritesJSON);
+  }
+  
+  getFavoritesFromLocalStorage() {
+    let favoritesJSON = localStorage.getItem('favorites');
+    this.favorites = JSON.parse(favoritesJSON);
+  }
+
 }
