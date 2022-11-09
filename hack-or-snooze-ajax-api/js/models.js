@@ -196,15 +196,19 @@ class User {
       return null;
     }
   }
-  
+
   storeFavoritesInLocalStorage(){
     let favoritesJSON = JSON.stringify(this.favorites);
     localStorage.setItem("favorites",favoritesJSON);
   }
   
   getFavoritesFromLocalStorage() {
+    this.favorites = [];
     let favoritesJSON = localStorage.getItem('favorites');
-    this.favorites = JSON.parse(favoritesJSON);
+    let favorites = JSON.parse(favoritesJSON);
+    for (let favorite of favorites) {
+      this.favorites.push(new Story(favorite));
+    }
   }
 
 }
