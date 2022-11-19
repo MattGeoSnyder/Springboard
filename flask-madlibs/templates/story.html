@@ -1,0 +1,10 @@
+{% extends 'template.html' %} 
+
+{% block stylesheet %} 
+    <link rel="stylesheet" href="../static/story.css">
+{% endblock %}
+
+{% block content %} 
+    <h1>Your Story</h1>
+    <p>{{s.generate(answers)}}</p>
+{% endblock %}
