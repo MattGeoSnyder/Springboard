@@ -4,6 +4,10 @@ div {
     justify-content: left;
 }
 
+body {
+    background-color: palegreen;
+}
+
 label {
     height: 100%;
 }
