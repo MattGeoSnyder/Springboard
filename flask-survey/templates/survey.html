@@ -5,8 +5,8 @@
 {% block content %}
 
 <p>{{survey['instructions']}}</p>
-<form action="/questions/0">
-    <button action="questions/0">Next</button>
+<form action="start-session" method="POST">
+    <button>Next</button>
 </form>
 
 {% endblock %}
