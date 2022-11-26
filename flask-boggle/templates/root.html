@@ -1,0 +1,32 @@
+{% extends 'base.html' %} 
+
+
+{% block content %} 
+
+    <section id="score-section"></section>
+
+    <section id="timer"></section>
+
+    <section id="result-section"></section>
+
+
+    <table>
+        {% for row in board %} 
+            <tr>
+                {% for item in row %}
+                    <td>{{item}}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <form action="#">
+        <input type="text" name="guess" placeholder="Your guess here">
+        <button>Guess</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" 
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" 
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../static/answer.js"></script>
+{% endblock %}
