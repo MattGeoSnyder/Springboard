@@ -1,0 +1,60 @@
+#timer {
+    border: 3px solid black;
+    border-radius: 50%;
+
+    height: 30%;
+    width: 25%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: "Bowlby One SC";
+    font-size: 1.5rem;
+}
+
+@media (max-width: 375px) {
+    #timer {
+        height: 30%;
+        width: 35%;
+
+        position: absolute;
+        top: 100px;
+    }
+}
+
+@media (min-width: 376px) and (max-width: 425px) {
+    #timer {
+        height: 38%;
+        width: 40%;
+    }
+}
+
+@media (min-width: 426px) and (max-width: 768px) {
+    #timer {
+        width: 58%;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    #timer {
+        height: 50%;
+        width: 65%;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+    #timer {
+        height: 80%;
+        width: 80%;
+        font-size: 4rem;
+    }
+}
+
+@media (min-width: 1441px) {
+    #timer {
+        height: 55%;
+        width: 50%;
+        font-size: 4rem;
+    }
+}

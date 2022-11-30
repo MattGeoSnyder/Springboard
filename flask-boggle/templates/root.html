@@ -1,28 +1,41 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% block stylesheet %}
+<link href="../static/css/main.css" rel="stylesheet" />
+<link href="../static/css/board.css" rel="stylesheet" />
+<link href="../static/css/timer.css" rel="stylesheet" />
+{% endblock %} {% block content %}
 
-<section id="score-section"></section>
+<div id="banner" class="container-fluid">
+  <div id="title">Boggle!</div>
+  <div id="games-played">Games Played:</div>
+  <div id="high-score">High Score:</div>
+  <div id="score-section">Score:</div>
+</div>
 
-<section id="timer"></section>
+<div id="result-section" class="container-fluid"></div>
 
-<section id="result-section"></section>
+<div id="main-container" class="container-fluid">
+  <div id="timer-container">
+    <div id="timer">60</div>
+  </div>
+  <div id="game-container">
+    <div id="game" class="container-md text-center">
+      {% for row in board %}
+      <div class="row">
+        {% for item in row %}
+        <div class="col">{{item}}</div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 
-<section id="high-score"></section>
-
-<section id="games-played"></section>
-
-<table>
-  {% for row in board %}
-  <tr>
-    {% for item in row %}
-    <td>{{item}}</td>
-    {% endfor %}
-  </tr>
-  {% endfor %}
-</table>
-<form action="#">
-  <input type="text" name="guess" placeholder="Your guess here" />
-  <button>Guess</button>
-</form>
+<div id="form-container" class="container-fluid">
+  <form action="#">
+    <input type="text" name="guess" placeholder="Your guess here" />
+    <button>Guess</button>
+  </form>
+</div>
 
 <script
   src="https://code.jquery.com/jquery-3.6.1.min.js"
@@ -30,5 +43,6 @@
   crossorigin="anonymous"
 ></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="../static/answer.js"></script>
+<script src="../static/js/game.js"></script>
+<script src="../static/js/main.js"></script>
 {% endblock %}
