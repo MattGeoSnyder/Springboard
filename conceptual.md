@@ -3,6 +3,7 @@
 Answer the following questions below:
 
 - What are important differences between Python and JavaScript?
+
   In web development, Python is used to deal with data on the backend of a website whereas JavaScript is used on the front end to make interactive webpages.
 
 - Given a dictionary like `{"a": 1, "b": 2}`: , list two ways you
