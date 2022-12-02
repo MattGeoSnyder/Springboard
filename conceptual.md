@@ -3,13 +3,13 @@
 Answer the following questions below:
 
 - What are important differences between Python and JavaScript?
-- In web development, Python is used to deal with data on the backend of a website whereas JavaScript is used on the front end to make interactive webpages.
+- - In web development, Python is used to deal with data on the backend of a website whereas JavaScript is used on the front end to make interactive webpages.
 
 - Given a dictionary like `{"a": 1, "b": 2}`: , list two ways you
   can try to get a missing key (like "c") _without_ your programming
   crashing.
 
-You can use the .get method or you can use a try/except block to except a KeyError
+- - You can use the .get method or you can use a try/except block to except a KeyError
 
 - What is a unit test?
 
