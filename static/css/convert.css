@@ -1,0 +1,25 @@
+h1 {
+    display: flex;
+    justify-content: center;
+
+    padding-top: 5px;
+}
+
+#result-container {
+    width: 33%;
+    background-color: skyblue;
+    margin: 0 auto;
+
+    border: 2px solid black;
+    border-radius: 8px;
+}
+
+form {
+    padding-bottom: 10px;
+    
+}
+
+form button {
+    display: block;
+    margin: 10px auto;
+}

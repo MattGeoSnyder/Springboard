@@ -1,0 +1,14 @@
+{% extends 'base.html' %} 
+
+{% block stylesheet %} 
+<link rel="stylesheet" href="./static/css/convert.css">
+{% endblock %}
+
+{% block content %} 
+    <div id="result-container">
+        <h1>The Result is: {{conversion['symbol']}}{{conversion['conversion']}}</h1> 
+        <form action="/" method="get">
+            <button>Home</button>
+        </form>
+    </div>
+{% endblock %}
