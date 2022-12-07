@@ -1,16 +1,11 @@
 from boggle import Boggle
 from flask import Flask, request, render_template, session, jsonify
-from flask_debugtoolbar import DebugToolbarExtension
 import pdb
-
 
 boggle_game = Boggle()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "$Boy07032018"
-
-toolbar = DebugToolbarExtension()
-toolbar.__init__(app)
 
 
 @app.route('/')
@@ -32,8 +27,10 @@ def check_answer():
         json_object: dictionary containing validity of result
     """
     guess = request.json['answer']
+    # pdb.set_trace()
     board = session['board']
     result = boggle_game.check_valid_word(board, guess)
+
     return jsonify({"result": result})
 
 
