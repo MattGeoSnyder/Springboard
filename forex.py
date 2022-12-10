@@ -35,7 +35,7 @@ def convert(curr1, curr2, amount):
     # Try block handling various errors from module.
     try:
         # gets conversion amount, currency symbol and sets status to okay
-        conversion = c.convert(curr1, curr2, amount)
+        conversion = round(c.convert(curr1, curr2, amount),2)
         symbol = codes.get_symbol(curr2)
         status = 'okay'
     except RatesNotAvailableError:

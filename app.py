@@ -15,7 +15,12 @@ def convert_currency():
     # Get inputs from query string
     from_curr = request.args['from-currency']
     to_curr = request.args['to-currency']
-    amount = request.args['amount']
+    
+    try:
+        amount = float(request.args['amount'])
+    except ValueError:
+        flash('Invalid Amount', 'Error')
+        return redirect('/')
 
     # Calls conversion from forex.py
     conversion = convert(from_curr, to_curr, amount)
@@ -24,6 +29,7 @@ def convert_currency():
     if conversion['status'] != 'okay':
         flash(conversion['status'], 'Error')
         return redirect('/')
+    
     
     # If conversion status is okay, returns convert page displaying conversion amount
     return render_template('convert.html', conversion=conversion)
