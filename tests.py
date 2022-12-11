@@ -19,21 +19,20 @@ class FlaskTests(TestCase):
     def test_conversion_okay(self):
         with self.client as client:
             res = client.get('/convert?from-currency=USD&to-currency=GBP&amount=100')
+            self.assertEqual(request.args['from-currency'], 'USD')
+            self.assertEqual(request.args['to-currency'], 'GBP')
+            self.assertEqual(request.args['amount'], '100')
             self.assertEqual(res.status_code, 200)
             
     def test_conversion_invalid_currency(self):
         with self.client as client:
-            res = client.get('/convert?from-currency=&to-currency=GBP&amount=100')
-            # pdb.set_trace()
+            res = client.get('/convert?from-currency=XYZ&to-currency=GBP&amount=100')
             self.assertEqual(res.status_code, 302)
             self.assertEqual(res.location, '/')
-            self.assertEqual(request.args['from-currency'],"")
-            # self.assertEqual(conversion, 'Invalid currency')
+            self.assertEqual(request.args['from-currency'],"XYZ")
             
     def test_conversion_no_amount_entered(self):
         with self.client as client:
             res = client.get('/convert?from-currency=USD&to-currency=USD&amount=')
             self.assertEqual(res.status_code, 302)
-            # pdb.set_trace()
             self.assertEqual(res.location, '/')
-            # self.assertEqual(conversion, 'Invalid amount')
