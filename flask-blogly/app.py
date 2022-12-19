@@ -1,11 +1,8 @@
 """Blogly application."""
 
 from flask import Flask, request, render_template, redirect, flash
-from models import db, connect_db
+from models import db, connect_db, Users
 from flask_debugtoolbar import DebugToolbarExtension
-from models import Users
-
-default_image_url = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
 
 app = Flask(__name__)
 app.debug = True
@@ -18,6 +15,7 @@ app.config['SQLALCHEMY_ECHO'] = True
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
+
 db.create_all()
 
 @app.route('/')
@@ -29,7 +27,7 @@ def get_root():
 def get_add_user_page():
     render_template('new-user.html')
 
-@app.route('new-user', methods=['POST'])
+@app.route('/new-user', methods=['POST'])
 def add_new_user():
     first_name = request.form['first-name']
     last_name = request.form['last-name']
