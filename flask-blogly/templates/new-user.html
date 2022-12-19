@@ -1,0 +1,16 @@
+{% new-user.html extends base.html %}
+
+{% beginblock content %}
+    <div>
+        <form action="/new-user" method="POST"> 
+            <h1>Create a User</h1>
+            <label for="first-name">First Name:</label>
+            <input type="text" id="first-name" name="first-name">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="last-name">
+            <label for="image-url"></label>
+            <input type="text" id="image-url" name="image-url">
+            <button>Add</button>
+        </form>
+    </div>
+{% endblock %}
