@@ -66,7 +66,7 @@ VALUES
   ('Lady Gaga'),
   ('Bradley Cooper'),
   ('Nickelback'),
-  ('Jazy Z'),
+  ('Jay Z'),
   ('Alicia Keys'),
   ('Katy Perry'),
   ('Juicy J'),
