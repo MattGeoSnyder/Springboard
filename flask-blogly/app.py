@@ -16,16 +16,17 @@ toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 @app.route('/')
 def get_root():
     users = Users.query.all()
-    render_template('root.html', users)
+    return render_template('root.html', users=users)
 
 @app.route('/new-user')
 def get_add_user_page():
-    render_template('new-user.html')
+    return render_template('new-user.html')
 
 @app.route('/new-user', methods=['POST'])
 def add_new_user():
