@@ -3,6 +3,7 @@
 from flask import Flask, request, render_template, redirect, flash
 from models import db, connect_db, Users, default_image_url
 from flask_debugtoolbar import DebugToolbarExtension
+import pdb
 
 app = Flask(__name__)
 # app.debug = True
@@ -42,7 +43,6 @@ def add_new_user():
     new_user = Users(first_name=first_name, last_name = last_name, image_url=image_url)
     db.session.add(new_user)
     db.session.commit()
-
     flash("User added!")
 
     return redirect('/users')
@@ -69,7 +69,7 @@ def post_edit(user_id):
     user.last_name = last_name
     user.image_url = image_url
     db.session.commit()
-
+    pdb.set_trace()
     return redirect('/users')
 
 @app.route('/users/<int:user_id>/delete', methods=['POST'])
