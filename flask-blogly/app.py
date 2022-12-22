@@ -5,14 +5,14 @@ from models import db, connect_db, Users, default_image_url
 from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
-app.debug = True
+# app.debug = True
 
 app.config['SECRET_KEY'] = '$Boy07032018'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 
-toolbar = DebugToolbarExtension(app)
+# toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 
@@ -24,7 +24,7 @@ def go_to_users():
     return redirect('/users')
 
 @app.route('/users')
-def get_root():
+def get_users():
     users = Users.query.all()
     return render_template('root.html', users=users)
 
