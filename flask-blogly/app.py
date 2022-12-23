@@ -69,7 +69,6 @@ def post_edit(user_id):
     user.last_name = last_name
     user.image_url = image_url
     db.session.commit()
-    pdb.set_trace()
     return redirect('/users')
 
 @app.route('/users/<int:user_id>/delete', methods=['POST'])

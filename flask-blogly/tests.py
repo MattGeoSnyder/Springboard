@@ -4,7 +4,7 @@ import pdb
 
 from models import db, Users
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://blogly'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://blogly_test'
 app.config['SQLALCHEMY_ECHO'] = False
 
 
@@ -19,15 +19,15 @@ with app.app_context():
 class BloglyViewsTestCase(TestCase):
 
     def setUp(self):
-
-        user = Users(first_name='Rachel', last_name='Wakeman', image_url='')
-
         with app.app_context():
+            user = Users(first_name='Rachel', last_name='Wakeman', image_url='')
             db.session.add(user)
             db.session.commit()
-
+            self.user_id = user.id
+        
         # This throws an error and I don't know why
         # self.user_id = user.id
+        # Answer: Works within app.app_context()
 
     def tearDown(self):
        
@@ -57,7 +57,6 @@ class BloglyViewsTestCase(TestCase):
             res = client.post('/users/new', data={'first-name':"Matthew",
                                                   'last-name': "Snyder",
                                                   'image-url': ""}, follow_redirects=True)
-            # pdb.set_trace()
             html = res.get_data(as_text=True)
             user = Users.query.filter_by(last_name='Snyder').first()
 
@@ -67,14 +66,26 @@ class BloglyViewsTestCase(TestCase):
             db.session.delete(user)
             db.session.commit()
 
-    def test_edit_user(self):
+    def test_edit_user(self, user_id=1):
+        
         with app.test_client() as client:
-            res = client.post('/users/1/edit', data={'first-name': 'Samantha',
-                                                 'last-name': 'Wakeman',
-                                                 'image-url': ""}, follow_redirects=True)
+            res = client.post(f"/users/{self.user_id}/edit", data={
+                                                'first-name': 'Samantha',
+                                                'last-name': 'Wakeman',
+                                                'image-url': ""}, follow_redirects=True)
             html = res.get_data(as_text=True)
             user = Users.query.filter_by(last_name='Wakeman').first()
 
             self.assertEqual(user.first_name, 'Samantha')
             self.assertIn('Samantha Wakeman', html)
 
+    def test_delete_user(self):
+        with app.test_client() as client:
+            res = client.post('/users/new', data={'first-name': "Matthew",
+                                                  'last-name': 'Snyder',
+                                                  'image-url': ""}, follow_redirects=True)
+            user = Users.query.filter_by(last_name="Snyder").first()
+            self.assertEqual(user.last_name, "Snyder")
+            res = client.post(f'/users/{user.id}/delete', follow_redirects=True)
+            user = Users.query.filter_by(last_name="Snyder").first()
+            self.assertIsNone(user)
