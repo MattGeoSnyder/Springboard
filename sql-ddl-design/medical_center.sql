@@ -22,47 +22,27 @@ CREATE TABLE patients_diseases (
 CREATE TABLE doctors (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    specialty TEXT
+    specialty TEXT,
+    medical_center_id REFERENCES medical_centers
 );
 
-CREATE TABLE doctors_patients (
-    doctor_id INTEGER REFERENCES doctors,
-    patient_id INTEGER REFERENCES patients
+CREATE TABLE visits 
+(
+    id SERIAL PRIMARY KEY,
+    doctor_id REFERENCES doctors,
+    patient_id REFERENCES patients,
+    diagnosis REFERENCES diseases
+);
+
+CREATE TABLE diagnoses
+(
+    id SERIAL PRIMARY KEY,
+    visit_id REFERENCES visits,
+    disease_id REFERENCES diseases
 );
 
 CREATE TABLE medical_centers (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    doctor_id INTEGER REFERENCES doctors
+    name TEXT NOT NULL
 );
 
-INSERT INTO diseases (name) 
-VALUES
-    ('pneumonia'),
-    ('heart disease'),
-    ('cancer'),
-    ('diabetes'),
-    ('strept throat'),
-    ('mono'),
-    ('psychosis');
-
-INSERT INTO patients (name)
-VALUES 
-    ('Matt'),
-    ('Rachel');
-
-INSERT INTO doctors (name, specialty)
-VALUES
-    ('Dr. Gottron', 'GP'),
-    ('Dr. Bauer', 'Psychiatrist');
-
-INSERT INTO doctors_patients (doctor_id, patient_id)
-VALUES
-    (1,1),
-    (1,2),
-    (2,1);
-
-INSERT INTO medical_centers (name, doctor_id) 
-VALUES
-    ('Irwin Family Care', 1),
-    ('Western Psych', 2);
