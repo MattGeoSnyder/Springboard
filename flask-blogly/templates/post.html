@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <h1>{{post.title}}</h1>
+        <p>{{post.content}}</p>
+    </div>
+    <div>
+        <form action="/posts/{{post.id}}/edit">
+            <button>Edit</button>
+        </form>
+        <form action="/posts/{{post.id}}/delete" method="POST">
+            <button>Delete</button>
+        </form>
+    </div>
+{% endblock %}
