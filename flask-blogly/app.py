@@ -6,14 +6,14 @@ from flask_debugtoolbar import DebugToolbarExtension
 import pdb
 
 app = Flask(__name__)
-app.debug = True
+#app.debug = True
 
 app.config['SECRET_KEY'] = '$Boy07032018'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 
-toolbar = DebugToolbarExtension(app)
+#toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 
@@ -68,6 +68,7 @@ def post_edit(user_id):
     user.first_name = first_name
     user.last_name = last_name
     user.image_url = image_url
+    # pdb.set_trace()
     db.session.commit()
     return redirect('/users')
 
