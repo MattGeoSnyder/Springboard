@@ -135,16 +135,21 @@ def create_new_tag():
 
 @app.route('/tags/new', methods=['POST'])
 def submit_new_tag():
-    tag_name = request.form['tag-name']
-    tag_post_ids = request.form.getlist('posts')
-    tag = Tag(name=tag_name)
-    posts = []
-    for post_id in tag_post_ids:
-        post = Post.query.get(int(post_id))
-        posts.append(post)
-    tag.posts = posts
-    db.session.add(tag)
-    db.session.commit()
+    try:
+        tag_name = request.form['tag-name']
+        tag_post_ids = request.form.getlist('posts')
+        tag = Tag(name=tag_name)
+        posts = []
+        for post_id in tag_post_ids:
+            post = Post.query.get(int(post_id))
+            posts.append(post)
+        tag.posts = posts
+        db.session.add(tag)
+        db.session.commit()
+    except Exception as err:
+        print(err)
+        return redirect('/tags/new')
+    
     return redirect('/tags')
 
 @app.route('/tags/<int:tag_id>/edit')
@@ -156,16 +161,21 @@ def get_edit_tag(tag_id):
 
 @app.route('/tags/<int:tag_id>/edit', methods=['POST'])
 def submit_edit_tag(tag_id):
-    tag = Tag.query.get(tag_id)
-    new_name = request.form['tag-name']
-    tag_post_ids = request.form.getlist('posts')
-    posts = []
-    for post_id in tag_post_ids:
-        post = Post.query.get(int(post_id))
-        posts.append(post)
-    tag.name = new_name
-    tag.posts = posts
-    db.session.commit()
+    try:
+        tag = Tag.query.get(tag_id)
+        new_name = request.form['tag-name']
+        tag_post_ids = request.form.getlist('posts')
+        posts = []
+        for post_id in tag_post_ids:
+            post = Post.query.get(int(post_id))
+            posts.append(post)
+        tag.name = new_name
+        tag.posts = posts
+        db.session.commit()
+    except Exception as err:
+        print(err)
+        return redirect(f'/tags/{tag_id}/edit')
+        
     return redirect('/tags')
     
 @app.route('/tags/<int:tag_id>/delete', methods=['POST'])
@@ -174,3 +184,4 @@ def delete_tag(tag_id):
     db.session.delete(tag)
     db.session.commit()
     return redirect('/tags')
+

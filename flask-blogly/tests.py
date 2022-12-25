@@ -2,19 +2,16 @@ from unittest import TestCase
 from app import app
 import pdb
 
-from models import db, Users, Post
+from models import db, Users, Post, Tag
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://blogly_test'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
-app.debug = False
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-# Why do I need this app.app_context()?
 with app.app_context():
     db.drop_all()
     db.create_all()
-
-# To complete Unit tests makes sure toolbar in app.py is
-# commented out.
 
 class BloglyViewsTestCase(TestCase):
 
@@ -25,19 +22,14 @@ class BloglyViewsTestCase(TestCase):
             db.session.commit()
 
             self.user_id = user.id
-        
-        # This throws an error and I don't know why
-        # self.user_id = user.id
-        # Answer: Works within app.app_context()
+            
+            post = Post(title='Test Post', content='This is a test post.', user_id=self.user_id)
+            db.session.add(post)
+            db.session.commit()
+            
+            self.post_id = post.id
 
     def tearDown(self):
-       
-        # user = Users.query.get(1)
-        # db.session.delete(user)
-        # throws error. Why?
-        # also can't do Users.query.get(1).delete()
-        # says Users objects has no delete attribute?
-
         with app.app_context():
             user = Users.query.filter_by(last_name='Wakeman').first()
             db.session.delete(user)
@@ -56,10 +48,11 @@ class BloglyViewsTestCase(TestCase):
 
     def test_add_new_user(self):
         with app.test_client() as client:
-            res = client.post('/users/new', data={'first-name':"Matthew",
-                                            'last-name': "Snyder",
-                                            'image-url': ""}, 
-                                            follow_redirects=True)
+            res = client.post('/users/new', 
+                            data={'first-name':"Matthew",
+                                'last-name': "Snyder",
+                                'image-url': ""}, 
+                            follow_redirects=True)
             html = res.get_data(as_text=True)
             user = Users.query.filter_by(last_name='Snyder').first()
 
@@ -70,23 +63,23 @@ class BloglyViewsTestCase(TestCase):
 
     def test_edit_user(self):
         with app.test_client() as client:
-            res = client.post(f"/users/{self.user_id}/edit", data={
-                                                            'first-name': 'Samantha',
-                                                            'last-name': 'Wakeman',
-                                                            'image-url': ""}, 
-                                                            follow_redirects=True)
+            res = client.post(f"/users/{self.user_id}/edit", 
+                            data={'first-name': 'Samantha',
+                                'last-name': 'Wakeman',
+                                'image-url': ""}, 
+                            follow_redirects=True)
             html = res.get_data(as_text=True)
             user = Users.query.filter_by(first_name='Samantha').first()
-            # pdb.set_trace()
             self.assertIsNotNone(user)
             self.assertIn('Samantha Wakeman', html)
 
     def test_delete_user(self):
         with app.test_client() as client:
-            res = client.post('/users/new', data={'first-name': "Matthew",
-                                            'last-name': 'Snyder',
-                                            'image-url': ""},
-                                            follow_redirects=True)
+            res = client.post('/users/new', 
+                                data={'first-name': "Matthew",
+                                    'last-name': 'Snyder',
+                                    'image-url': ""},
+                                follow_redirects=True)
             user = Users.query.filter_by(last_name="Snyder").first()
             self.assertEqual(user.last_name, "Snyder")
             res = client.post(f'/users/{user.id}/delete', follow_redirects=True)
@@ -126,14 +119,14 @@ class BloglyViewsTestCase(TestCase):
                 self.assertIn(title, html)
                 
                 user = Users.query.get(self.user_id)
-                post = user.posts[0]
+                post = user.posts[-1]
                                 
                 res = client.post(f'/posts/{post.id}/edit',
                                 data={'title':'First Post',
                                     'content':'This is my first post.'},
                                 follow_redirects=True)
                 html = res.get_data(as_text=True)
-                edit_post = user.posts[0]
+                edit_post = user.posts[-1]
                 self.assertEqual(post.id, edit_post.id)
                 self.assertIn(edit_post.title, html)
                 
@@ -159,3 +152,75 @@ class BloglyViewsTestCase(TestCase):
                 res = client.post(f'/posts/{post_id}/delete')
                 post = Post.query.get(post_id)
                 self.assertIsNone(post)
+                
+    def test_create_tag(self):
+        with app.test_client() as client:
+            with app.app_context():
+                name = "Newbie"
+                user = Users.query.get(self.user_id)
+                post_ids = [post.id for post in user.posts]
+                res = client.post('/tags/new', 
+                                data={'tag-name':name,
+                                        'posts': post_ids}, 
+                                follow_redirects=True)
+                post = Post.query.get(self.post_id)
+                tag_id = post.tags[0].id
+                tag_name = post.tags[0].name
+                res = client.get(f'/tags/{tag_id}')
+                html = res.get_data(as_text=True)
+                self.assertIn(tag_name, html)
+                self.assertIn(post.title, html)
+                
+    def test_edit_tag(self):
+        with app.test_client() as client:
+            with app.app_context():
+                post = Post.query.get(self.post_id)
+                name = 'Test'
+                tag = Tag(name=name)
+                
+                db.session.add(tag)
+                db.session.commit()
+                
+                post.tags.append(tag)
+                db.session.commit()
+                
+                post_ids = [post.id]
+                tag_id = tag.id
+                
+                res = client.post(f'/tags/{tag.id}/edit',
+                        data={'tag-name': 'First Post',
+                            'posts': post_ids},
+                        follow_redirects=True)
+                
+                edit_tag = post.tags[-1]
+                edit_tag_id = post.tags[-1].id
+                
+                self.assertEqual(tag_id, edit_tag_id)
+                self.assertNotEqual(name, edit_tag.name)
+                
+    def test_delete_tag(self):
+        with app.test_client() as client:
+            with app.app_context():
+                post = Post.query.get(self.post_id)
+                name = 'Test'
+                tag = Tag(name=name)
+                
+                db.session.add(tag)
+                post.tags.append(tag)
+                db.session.commit()
+                
+                tag_id = post.tags[-1].id
+                res = client.post(f'/tags/{tag_id}/delete',
+                                follow_redirects=True)
+                self.assertEqual(post.tags, [])
+                
+                
+                
+                
+                
+                
+        
+            
+            
+            
+            
