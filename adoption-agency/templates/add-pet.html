@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Add Pet</h1>
+<form action="/add" method="POST">
+    {{ form.hidden_tag() }}
+    {% for field in form 
+        if field.widget.input_type != 'hidden' %}
+        <div>
+            {{field.label}}: {{field}}
+            {% for err in form.errors %}
+            {{err}}
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <button>Submit</button>
+</form>
+{% endblock %}
