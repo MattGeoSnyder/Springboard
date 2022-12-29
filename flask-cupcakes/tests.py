@@ -42,6 +42,7 @@ class CupcakeViewsTestCase(TestCase):
         db.session.commit()
 
         self.cupcake = cupcake
+        self.base_url
 
     def tearDown(self):
         """Clean up fouled transactions."""
@@ -107,3 +108,7 @@ class CupcakeViewsTestCase(TestCase):
             })
 
             self.assertEqual(Cupcake.query.count(), 2)
+
+    def test_edit_cupcake(self):
+        with app.test_client() as client:
+            url = "/"
