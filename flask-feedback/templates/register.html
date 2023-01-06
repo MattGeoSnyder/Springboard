@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>Register</h1>
+{% endblock %}
+
+
+{% block content %}
+<div>
+    <form action="/register" method="POST">
+        {{ form.hidden_tag() }}
+        {% for field in form 
+            if field.widget.input_type != 'hidden' %}
+
+            <div>
+                {{field.label}}: {{field}}
+            </div>
+
+        {% endfor %}
+        <button>Submit</button>
+    </form>
+</div>
+{% endblock %}
