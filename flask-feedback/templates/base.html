@@ -12,9 +12,10 @@
     {% if 'user_id' in session %}
     <div>
         <form action="/logout"><button>Logout</button></form>
+        <form action="/users/{{session['user_id']}}/delete" method="POST"><button>Delete Account</button></form>
     </div>
     {% endif %}
-    
+
     {% block header %}
 
     {% endblock %}
