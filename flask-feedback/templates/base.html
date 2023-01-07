@@ -8,10 +8,17 @@
     <title>{% block home_name %} {% endblock %}</title>
 </head>
 <body>
+    
+    {% if 'user_id' in session %}
+    <div>
+        <form action="/logout"><button>Logout</button></form>
+    </div>
+    {% endif %}
+    
     {% block header %}
 
     {% endblock %}
-
+    
     {% for msg in get_flashed_messages() %}
         <div>
             {{msg}}
