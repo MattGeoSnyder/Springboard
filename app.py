@@ -1,11 +1,12 @@
 import os
+import pdb
 
 from flask import Flask, render_template, request, flash, redirect, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
-from forms import UserAddForm, LoginForm, MessageForm
-from models import db, connect_db, User, Message
+from forms import UserAddForm, LoginForm, MessageForm, UserProfileForm
+from models import db, connect_db, User, Message, bcrypt
 
 CURR_USER_KEY = "curr_user"
 
@@ -17,7 +18,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
     os.environ.get('DATABASE_URL', 'postgresql:///warbler'))
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO'] = False
+app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 toolbar = DebugToolbarExtension(app)
@@ -45,12 +46,14 @@ def do_login(user):
 
     session[CURR_USER_KEY] = user.id
 
-
+@app.route('/logout')
 def do_logout():
     """Logout user."""
 
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
+    flash("Successfully Logged Out!", 'success')
+    return redirect('/login')
 
 
 @app.route('/signup', methods=["GET", "POST"])
@@ -139,7 +142,7 @@ def list_users():
 @app.route('/users/<int:user_id>')
 def users_show(user_id):
     """Show user profile."""
-
+    # pdb.set_trace()
     user = User.query.get_or_404(user_id)
 
     # snagging messages in order from the database;
@@ -212,6 +215,33 @@ def profile():
     """Update profile for current user."""
 
     # IMPLEMENT THIS
+    if not g.user:
+        flash("Access unauthorized", "danger")
+        return redirect('/')
+    
+    # pdb.set_trace()
+    form = UserProfileForm()
+    if form.validate_on_submit():
+        try:
+            if not bcrypt.check_password_hash(g.user.password, form.password.data):
+                raise ValueError
+            g.user.username = form.username.data
+            g.user.email = form.email.data
+            g.user.image_url = form.image_url.data or User.image_url.default.arg
+            g.user.header_image_url = form.header_image_url.data
+            g.user.bio = form.bio.data
+            db.session.commit()
+            flash("Successfully Updated User Info", 'success')
+            return redirect(f'/users/{g.user.id}')
+        except IntegrityError:
+            flash("Username Taken")
+            return redirect('/')
+        except ValueError:
+            flash('Incorrect Password')
+            return redirect('/')
+    else:
+        return render_template('users/edit.html', form=form)
+        
 
 
 @app.route('/users/delete', methods=["POST"])

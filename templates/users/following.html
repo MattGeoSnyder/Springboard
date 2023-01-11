@@ -16,6 +16,23 @@
                   <img src="{{ followed_user.image_url }}" alt="Image for {{ followed_user.username }}" class="card-image">
                   <p>@{{ followed_user.username }}</p>
                 </a>
+                <!-- Maybe come back and template this -->
+                <p>
+                  Bio:
+                  {% if user.bio %}
+                    {{user.bio}}
+                  {% else %}
+                    Unavailable
+                  {% endif %}
+                </p>
+                <p>
+                  <span class="fa fa-map-marker"></span>
+                  {% if user.location %}
+                    {{user.location}}
+                  {% else %}
+                    Unavailable
+                  {% endif %}
+                </p>
                 {% if g.user.is_following(followed_user) %}
                   <form method="POST"
                         action="/users/stop-following/{{ followed_user.id }}">
