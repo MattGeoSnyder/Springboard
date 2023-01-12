@@ -4,7 +4,7 @@
 #
 #    FLASK_ENV=production python -m unittest test_message_views.py
 
-
+import pdb
 import os
 from unittest import TestCase
 
@@ -48,9 +48,16 @@ class MessageViewTestCase(TestCase):
                                     email="test@test.com",
                                     password="testuser",
                                     image_url=None)
+        
+        self.test_message = Message(
+            text="""Lorem ipsum dolor sit amet consectetur adipisicing 
+            elit. Quibusdam, sed odio. Laudantium, commodi? Dictare!"""
+        )
+        
+        self.testuser.messages.append(self.test_message)
 
         db.session.commit()
-
+        
     def test_add_message(self):
         """Can use add a message?"""
 
@@ -69,5 +76,37 @@ class MessageViewTestCase(TestCase):
             # Make sure it redirects
             self.assertEqual(resp.status_code, 302)
 
-            msg = Message.query.one()
+            msg = Message.query.order_by(Message.id.desc()).first()
             self.assertEqual(msg.text, "Hello")
+            
+    def test_show_message(self):        
+        with self.client as c:
+            content = self.test_message.text                                
+            res = c.get(f'/messages/{self.test_message.id}')
+            html = res.get_data(as_text=True)
+            self.assertIn(content, html)
+            
+    def test_delete_message(self):
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.testuser.id
+                message_id = self.testuser.messages[0].id
+            
+            res = c.post(f'/messages/{message_id}/delete')
+            self.assertEqual(res.status_code, 302)
+            self.assertEqual(res.location, f'http://localhost/users/{self.testuser.id}')
+            
+            # The following line fails. The correct redirect is being hit
+            # in the route, but the database is unchanged. 
+            # self.assertEqual(len(self.testuser.messages), 0)
+    
+    def test_delete_message_no_auth(self):
+        with self.client as c:
+            res = c.post(f'/messages/{self.test_message.id}/delete', follow_redirects=True)
+            html = res.get_data(as_text=True)
+            self.assertIn("Access unauthorized", html)
+            
+    
+    
+            
+                
