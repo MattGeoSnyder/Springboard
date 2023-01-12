@@ -54,6 +54,7 @@ class MessageViewTestCase(TestCase):
             elit. Quibusdam, sed odio. Laudantium, commodi? Dictare!"""
         )
         
+        db.session.add_all([self.testuser, self.test_message])
         self.testuser.messages.append(self.test_message)
 
         db.session.commit()
