@@ -94,12 +94,10 @@ class MessageViewTestCase(TestCase):
                 message_id = self.testuser.messages[0].id
             
             res = c.post(f'/messages/{message_id}/delete')
+            user = User.query.get(self.testuser.id)
             self.assertEqual(res.status_code, 302)
             self.assertEqual(res.location, f'http://localhost/users/{self.testuser.id}')
-            
-            # The following line fails. The correct redirect is being hit
-            # in the route, but the database is unchanged. 
-            # self.assertEqual(len(self.testuser.messages), 0)
+            self.assertEqual(len(user.messages), 0)
     
     def test_delete_message_no_auth(self):
         with self.client as c:

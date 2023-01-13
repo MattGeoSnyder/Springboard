@@ -1,4 +1,3 @@
-
 # run these tests like:
 #
 #    FLASK_ENV=production python -m unittest test_message_views.py
@@ -47,10 +46,11 @@ class UserViewsTestCase(TestCase):
                                     image_url=None)
         
         self.testmessage = Message(text="""Lorem ipsum dolor sit amet consectetur adipisicing 
-                                elit. Quibusdam, sed odio. Laudantium, commodi? Dictare!""")
+                                elit. Quibusdam, sed odio.""")
         
         db.session.add(self.testuser)
         self.testuser.messages.append(self.testmessage)
+
         
         
     def test_users_search(self):
@@ -78,6 +78,7 @@ class UserViewsTestCase(TestCase):
             db.session.commit()
             
             leader_id = leader.id
+            follower_id = follower.id
             
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = follower.id
@@ -85,10 +86,23 @@ class UserViewsTestCase(TestCase):
             res = c.post(f'/users/follow/{leader_id}', follow_redirects=True)
             html = res.get_data(as_text=True)
             
+            leader = User.query.get(leader_id)
+            follower = User.query.get(follower_id)
             
             self.assertIn(leader.username, html)
-            self.assertEqual(len(followers), 1)
-            self.assertEqual(len(following), 1)
+            self.assertEqual(len(leader.followers), 1)
+            self.assertEqual(len(follower.following), 1)
+            
+            # lets also test the following pages
+            following_res = c.get(f'/users/{follower_id}/following')
+            following_page = following_res.get_data(as_text=True)
+            
+            follower_res = c.get(f'/users/{leader_id}/followers')
+            follower_page = follower_res.get_data(as_text=True)
+            
+            self.assertIn(leader.username, following_page)
+            self.assertIn(follower.username, follower_page)
+
             
             # try again without session key
             with c.session_transaction() as sess:
@@ -102,30 +116,88 @@ class UserViewsTestCase(TestCase):
             with c.session_transaction() as sess:
                 sess[CURR_USER_KEY] = follower.id
                 
+            leader = User.query.get(leader_id)
+            follower = User.query.get(follower_id)
+                
             res = c.post(f'/users/stop-following/{leader_id}')
             self.assertEqual(len(leader.followers), 0)
             self.assertEqual(len(follower.following), 0)
             
+            
     def test_edit_profile(self):
         with self.client as c:
             db.session.commit()
-            
+            user_id = self.testuser.id
             # First, let's test without creditials
             res = c.get('/users/profile', follow_redirects=True)
             html = res.get_data(as_text=True)
             self.assertIn("Access unauthorized", html)
+
                   
             # Now we'll test get method
             with c.session_transaction() as sess:  
-                sess[CURR_USER_KEY] = self.testuser.id
+                sess[CURR_USER_KEY] = user_id
                 
-            res = res.get('/users/profile')
+            res = c.get('/users/profile')
             html = res.get_data(as_text=True)
             self.assertIn('<form method="POST" id="user_form">', html) 
             
+            res = c.post('/users/profile', data={
+                                                    "username": "testy",
+                                                    "email": "test@test.com",
+                                                    "bio": "",
+                                                    "image_url": "",
+                                                    "header_image_url": "",
+                                                    "password": "testuser"
+                                                })
             
-
+            user = User.query.get(user_id)
+            self.assertEqual(user.username, 'testy')
             
+    def test_delete_user(self):
+        with self.client as c:
+            db.session.commit()
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = self.testuser.id
             
-             
-                                
+            res = c.post('/users/delete')
+            user = User.query.get(self.testuser.id)
+            self.assertIsNone(user)
+            
+    def test_message_likes(self):
+        with self.client as c:
+            user = User(
+                username='message liker',
+                email='like@message.com',
+                password='message',
+                image_url=''
+            )
+            db.session.add(user)
+            db.session.commit()
+            
+            user_id = user.id
+            message_id = self.testmessage.id
+            
+            with c.session_transaction() as sess:
+                sess[CURR_USER_KEY] = user_id
+                
+            # test like added
+            res = c.post(f'/users/add_like/{message_id}')
+            user = User.query.get(user_id)
+            self.assertEqual(len(user.likes), 1)
+            
+            # test that liked message is displayed on likes page
+            res = c.get(f'/users/{user_id}/likes')
+            html = res.get_data(as_text=True)
+            self.assertIn(self.testmessage.text, html)
+            
+            # test like removed
+            res = c.post(f'/users/remove_like/{message_id}')
+            user = User.query.get(user_id)
+            self.assertEqual(len(user.likes), 0)
+            
+            #test that liked message is remoed on likes page
+            res = c.get(f'/users/{user_id}/likes')
+            html = res.get_data(as_text=True)
+            self.assertNotIn(self.testmessage.text, html)
+            
