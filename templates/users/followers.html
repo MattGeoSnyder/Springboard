@@ -16,38 +16,13 @@
                 <a href="/users/{{ follower.id }}" class="card-link">
                   <img src="{{ follower.image_url }}" alt="Image for {{ follower.username }}" class="card-image">
                   <p>@{{ follower.username }}</p>
-                  <!-- Maybe come back and template this -->
                 </a>
-
-                {% if g.user.is_following(follower) %}
-                  <form method="POST"
-                        action="/users/stop-following/{{ follower.id }}">
-                    <button class="btn btn-primary btn-sm">Unfollow</button>
-                  </form>
-                {% else %}
-                  <form method="POST" action="/users/follow/{{ follower.id }}">
-                    <button class="btn btn-outline-primary btn-sm">Follow</button>
-                  </form>
-                {% endif %}
+                
+                {% import 'follow-button.html' as button %}
+                {{button.render_follow_button(follower)}}
 
               </div>
-              <p class="card-bio">
-                Bio:
-                    {% if user.bio %}
-                      {{user.bio}}
-                    {% else %}
-                      Unavailable
-                    {% endif %}
-              </p>
-              <p class="card-location">
-                <span class="fa fa-map-marker"></span>
-                {% if user.location %}
-                  {{user.location}}
-                {% else %}
-                  Unavailable
-                {% endif %}
-              </p>
-
+              {% include 'users/user-info.html' %}
             </div>
           </div>
         </div>

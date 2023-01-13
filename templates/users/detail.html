@@ -60,20 +60,7 @@
 <div class="row">
   <div class="col-sm-3">
     <h4 id="sidebar-username">@{{ user.username }}</h4>
-    <p>Bio: 
-      {% if user.bio %}
-        {{user.bio}}
-      {% else %}
-        Unavailable
-      {% endif %}
-    </p>
-    <p class="user-location"><span class="fa fa-map-marker"></span>
-      {% if user.location %}
-        {{user.location}}
-      {% else %}
-        Unavailable
-      {% endif %}
-    </p>
+    {% include 'users/user-info.html' %}
   </div>
 
   {% block user_details %}

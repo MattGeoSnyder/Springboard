@@ -17,34 +17,12 @@
                   <p>@{{ followed_user.username }}</p>
                 </a>
                 <!-- Maybe come back and template this -->
-                {% if g.user.is_following(followed_user) %}
-                  <form method="POST"
-                        action="/users/stop-following/{{ followed_user.id }}">
-                    <button class="btn btn-primary btn-sm">Unfollow</button>
-                  </form>
-                {% else %}
-                  <form method="POST" action="/users/follow/{{ followed_user.id }}">
-                    <button class="btn btn-outline-primary btn-sm">Follow</button>
-                  </form>
-                {% endif %}
+                
+                {% import 'follow-button.html' as button %}
+                {{button.render_follow_button(followed_user)}}
 
               </div>
-              <p class="card-bio">
-                  Bio:
-                  {% if user.bio %}
-                    {{user.bio}}
-                  {% else %}
-                    Unavailable
-                  {% endif %}
-              </p>
-              <p class="card-location">
-                <span class="fa fa-map-marker"></span>
-                {% if user.location %}
-                  {{user.location}}
-                {% else %}
-                  Unavailable
-                {% endif %}
-              </p>
+              {% include 'users/user-info.html' %}
             </div>
           </div>
         </div>

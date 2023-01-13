@@ -528,6 +528,13 @@ p.card-location {
 
 /* ================================ 404 page */
 
+#logo-404 {
+  background-image: url("/static/images/warbler-hero.jpg");
+  background-size: cover;
+  background-position: center center;
+}
+
+
 .message-404 {
   color: white;
   margin-top: 2em;

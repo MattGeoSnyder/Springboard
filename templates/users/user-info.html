@@ -1,0 +1,16 @@
+<p class="card-bio">
+    Bio:
+    {% if user.bio %}
+      {{user.bio}}
+    {% else %}
+      Unavailable
+    {% endif %}
+</p>
+<p class="card-location">
+  <span class="fa fa-map-marker"></span>
+  {% if user.location %}
+    {{user.location}}
+  {% else %}
+    Unavailable
+  {% endif %}
+</p>
