@@ -9,7 +9,7 @@ function queryItem(name) {
     if (item[0]) {
         return item[0];
     } else {
-        throw new QueryError(400);
+        throw new QueryError(404);
     }
 }
 
