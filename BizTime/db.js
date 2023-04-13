@@ -3,7 +3,7 @@ const { Client } = require('pg');
 
 let DB_URI;
 
-process.env.PGUSER = 'postgres';
+process.env.PGUSER = 'mattgeosnyder';
 process.env.PGPASSWORD = '$Boy07032018';
 
 if (process.env.NODE_ENV === 'test') {
