@@ -31,17 +31,17 @@ router.post('/', async (req, res, next) => {
     try {
         let result = await db.query('INSERT INTO companies (code, name, description) VALUES ($1, $2, $3) RETURNING code, name, description', 
                                     [req.body.code, req.body.name, req.body.description]);
-        return res.json({ company: result.rows[0] });
+        return res.status(201).json({ company: result.rows[0] });
     } catch (error) {
         return next()
     }
 })
 
 router.patch('/:code', async (req, res, next) => {
-    let results = await db.query('UPDATE companies SET name = $1, description = $2 WHERE code = $3 RETURNING *', 
+    let results = await db.query('UPDATE companies SET name = $1, description = $2 WHERE code = $3 RETURNING *;', 
                                 [req.body.name, req.body.description, req.params.code]);
     try {
-        checkQueryResults(results);
+        checkQueryResults(results.rows);
     } catch (error) {
         return next(error);
     }
@@ -53,7 +53,7 @@ router.delete('/:code', async (req, res, next) => {
     let results = await db.query('DELETE FROM companies WHERE code = $1 RETURNING *', [req.params.code]);
     
     try {
-        checkQueryResults(results);
+        checkQueryResults(results.rows);
     } catch (error) {
         return next(error);
     }
