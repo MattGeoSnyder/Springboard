@@ -78,13 +78,13 @@ class User {
    */
 
   static async messagesFrom(username) { 
-    let results = await db.query(`SELECT m.id, m.to_username, m.body, m.sent_at, m.read_at
+    let results = await db.query(`SELECT m.id, m.to_username, m.body, m.sent_at, m.read_at,
                                   u.username, u.first_name, u.last_name, u.phone
                                   FROM messages m 
                                   JOIN users u ON u.username = m.to_username
                                   WHERE m.from_username = $1;`, [username]);
     return results.rows.map(m => {
-      return {
+      return ({
         id: m.id,
         to_user: {
           username: m.to_username,
@@ -95,7 +95,7 @@ class User {
         body: m.body,
         sent_at: m.sent_at,
         read_at: m.read_at
-      }
+      })
     });
   }
 
@@ -108,13 +108,26 @@ class User {
    */
 
   static async messagesTo(username) {
-    let results = await db.query(`SELECT m.id, m.to_username, m.body, m.sent_at, m.read_at
-                                  u.username, u.first_name, u.last_name, u.phone
-                                  FROM users u 
-                                  JOIN messages m ON u.username = m.from_username
-                                  WHERE m.to_username = $1;`, [username]);
+    let results = await db.query(`SELECT 
+                                    m.id, 
+                                    m.body, 
+                                    m.sent_at, 
+                                    m.read_at,
+                                    m.from_username,
+                                    u.username,
+                                    u.first_name,
+                                    u.last_name,
+                                    u.phone
+                                  FROM 
+                                    messages m
+                                  JOIN 
+                                    users u 
+                                  ON
+                                    u.username = m.from_username
+                                  WHERE 
+                                    m.to_username = $1;`, [username]);
     return results.rows.map(m => {
-      return {
+      return ({
         id: m.id,
         from_user: {
           username: m.from_username,
@@ -125,7 +138,7 @@ class User {
         body: m.body,
         sent_at: m.sent_at,
         read_at: m.read_at
-      }
+      })
     })
   }
 }

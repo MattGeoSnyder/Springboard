@@ -4,7 +4,7 @@ const router = new express.Router();
 let Message = require('../models/message.js');
 const ExpressError = require('../expressError');
 
-const { authenticateJWT, ensureLoggedIn, ensureCorrectUser } = require('../middleware/auth.js');
+const { ensureLoggedIn, ensureCorrectUser } = require('../middleware/auth.js');
 
 /** GET /:id - get detail of message.
  *
