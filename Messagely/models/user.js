@@ -29,7 +29,7 @@ class User {
     let results = await db.query(`SELECT username, password FROM users WHERE username = $1;`, [username]);
     let user = results.rows[0];
     if (!user){
-      throw new ExpressError('User not found', 404);
+      throw new ExpressError('Invalid username/password', 400);
     }
     let auth = await bcrypt.compare(password, user.password);
     return auth;

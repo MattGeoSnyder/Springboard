@@ -19,13 +19,13 @@ router.post('/login', async (req, res, next) => {
         if (!username || !password) {
             throw new ExpressError("Username and Password required", 400);
         }
-        let auth = User.authenticate(username, password);
+        let auth = await User.authenticate(username, password);
         if (auth) {
-            let token = jwt.sign({username}, SECRET_KEY);
-            User.updateLoginTimestamp(username);
+            let iat = parseInt(await User.updateLoginTimestamp(username));
+            let token = jwt.sign({ username, iat }, SECRET_KEY);
             return res.json({ token });
         }
-        throw new ExpressError("Invalid username/password", 400);
+        throw new ExpressError('Invalid username/password', 400);
     } catch (error) {
         return next(error);
     }
@@ -43,8 +43,8 @@ router.post('/register', async (req, res, next) => {
     // debugger;
     try {
         let { username } = await User.register(req.body);
-        let token = jwt.sign({ username }, SECRET_KEY);
-        await User.updateLoginTimestamp(username);
+        let iat = parseInt(await User.updateLoginTimestamp(username));
+        let token = jwt.sign({ username, iat }, SECRET_KEY);
         return res.json({ token });    
     } catch (error) {
         return next(error);

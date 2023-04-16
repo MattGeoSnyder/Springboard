@@ -12,7 +12,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-debugger;
 // // allow connections to all routes from any browser
 app.use(cors());
 
