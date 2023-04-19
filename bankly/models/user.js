@@ -81,11 +81,11 @@ class User {
 
   static async getAll(username, password) {
     const result = await db.query(
+      // 2.
+      //Removed email and phone. We only wanted basic info
       `SELECT username,
                 first_name,
-                last_name,
-                email,
-                phone
+                last_name
             FROM users 
             ORDER BY username`
     );

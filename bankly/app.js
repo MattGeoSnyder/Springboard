@@ -3,6 +3,7 @@
 const express = require('express');
 const app = express();
 const ExpressError = require("./helpers/expressError");
+const { authUser } = require('./middleware/auth');
 
 
 app.use(express.json());
@@ -35,4 +36,5 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-module.exports = app;
+// duplicate module.exports
+// module.exports = app;
