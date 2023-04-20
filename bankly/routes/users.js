@@ -69,6 +69,7 @@ router.patch('/:username', authUser, requireLogin, requireAdmin, async function(
   next
 ) {
   try {
+
     if (!req.curr_admin && req.curr_username !== req.params.username) {
       throw new ExpressError('Only  that user or admin can edit a user.', 401);
     }
@@ -77,6 +78,18 @@ router.patch('/:username', authUser, requireLogin, requireAdmin, async function(
     let fields = { ...req.body };
     delete fields._token;
 
+    // 3. No check done for valid fields
+    let validField = {first_name: '', last_name: '', email: '', phone: ''}
+    if (Object.keys(fields).length === 0) {
+      throw new ExpressError('You must submit data to change')
+    }
+    for (key in fields){
+      console.log(key);
+      console.log(key in validField);
+      if (!(key in validField)) throw new ExpressError(`Cannot change field ${key}`, 400)
+    }
+
+    
     let user = await User.update(req.params.username, fields);
     return res.json({ user });
   } catch (err) {
