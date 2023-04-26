@@ -12,18 +12,20 @@ const useFlip = () => {
     return [flip, toggleFlip];
 }
 
-const useAxios = (url) => {
+const useAxios = (baseURL) => {
     const [resData, setResData] = useState([]);
-    console.log(url);
+    const [url, setURL] = useState(baseURL)
 
-    const addData = () => {
+    const addData = (endURL="") => {
         const makeReq = async () => {
-            let res = await axios.get(url);
-            return res.data;
+            try {
+                let res = await axios.get(url + endURL);
+                setResData(data => [...data, {...res.data, id: uuid()} ])
+            } catch (error) {
+                alert(error.stack);                
+            }
         }
-        const data = makeReq(url);
-        console.log(data);
-        setResData([...resData, {...data, id: uuid()}]);
+        makeReq();
     }
 
     return [resData, addData]
