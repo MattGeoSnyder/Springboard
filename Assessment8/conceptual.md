@@ -62,3 +62,5 @@ Answer the following questions below:
     1. To store information in order to access the DOM directly.
 
 - What is a custom hook in React? When would you want to write one?
+
+  - Custom hooks allow use to make logic resuable and share is amongst components.
