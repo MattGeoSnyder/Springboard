@@ -1,7 +1,9 @@
-const Story = ({noun1, noun2, adjective, color}) => {
+const Story = ({formData, story}) => {
+    console.log(story)
+    story.fields = {...formData}
     return (
         <div>
-            <p>{story}</p>
+            <p>{story.getStory()}</p>
         </div>
     )
 }

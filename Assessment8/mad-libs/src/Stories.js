@@ -1,12 +1,25 @@
 const stories = [
     {
         name: 'Sitting Story',
-        story: `The ${noun1} sat on the ${adjective} ${color} ${noun2}`
-
+        fields: {
+            noun1: '',
+            noun2: '',
+            adjective: '',
+            color: '' },
+        getStory() {
+            return`The ${this.fields.noun1} sat on the ${this.fields.color} ${this.fields.adjective} ${this.fields.noun2}`
+        }
     },
-    {
-        name: 'Love Story', 
-        story: `There was a ${color} ${noun1} who love a ${adjective} ${noun2}`
+    {   
+        name: 'Love Story',
+        fields: {
+            noun1: '',
+            noun2: '',
+            adjective: '',
+            color: '' },
+        getStory() {
+            return `There was a ${this.fields.color} ${this.fields.noun1} who loved a ${this.fields.adjective} ${this.fields.noun2}`
+        }
     }
 ]
 

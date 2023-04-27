@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import MadlibForm from "./MadlibForm";
-import Story from './Story'
+import Story from './Story';
+import stories from './Stories';
 
 const Madlib = () => {
     const initialData = {
@@ -26,7 +27,7 @@ const Madlib = () => {
             )}
             {submitted && (
                 <>
-                <Story noun1={formData.noun1} noun2={formData.noun2} adjective={formData.adjective} color={formData.color}/>
+                <Story story={stories[formData.storyIdx]} formData={formData}/>
                 <button onClick={reset}>Reset</button>
                 </>
             )}

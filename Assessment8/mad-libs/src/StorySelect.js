@@ -1,6 +1,9 @@
-const StorySelect = ({stories}) => {
+const StorySelect = ({stories, handleChange}) => {
     return (
-        <select>
+        <select 
+            name='storyIdx'
+            onChange={handleChange}
+        >
             {stories.map((story, idx) => (
                 <option key={idx} value={idx}>
                     {story.name}

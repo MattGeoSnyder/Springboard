@@ -2,7 +2,7 @@ import {useState} from 'react';
 import StorySelect from "./StorySelect";
 import stories from './Stories';
 
-const MadlibForm = ({initialData, formData, setFormData, setSubmitted}) => {
+const MadlibForm = ({formData, setFormData, setSubmitted}) => {
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -13,14 +13,15 @@ const MadlibForm = ({initialData, formData, setFormData, setSubmitted}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (Object.values(formData).every((val) => val)) {
+        console.log(formData)
+        if (Object.values(formData).every((val) => val !== '')) {
             setSubmitted(submit => !submit);
         }
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <StorySelect stories={stories} onChange={handleChange} formData={formData}/>
+            <StorySelect formData={formData} stories={stories}  handleChange={handleChange}/>
             <input
                 name='noun1'
                 value={formData.noun1}
