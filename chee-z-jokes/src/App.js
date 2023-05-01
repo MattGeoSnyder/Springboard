@@ -1,5 +1,5 @@
 import JokeListClass from "./JokeListClass";
-
+import './Joke.css';
 function App() {
   return (
     <div className="App">

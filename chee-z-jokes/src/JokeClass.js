@@ -4,8 +4,9 @@ import "./Joke.css";
 class JokeClass extends React.Component {
     constructor(props) {
         super(props);
-        this.upVote = props.vote.call(this, props.id, 1);
-        this.downVote = props.vote.call(this, props.id, -1)
+        this.upVote = 
+        this.upVote = () => this.props.vote(this.props.id, 1);
+        this.downVote = () => this.props.vote(this.props.id, -1);
     }
 
     render() {

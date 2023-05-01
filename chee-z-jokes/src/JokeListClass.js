@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from "axios";
 import JokeClass from './JokeClass';
+import './JokeList.css';
 
 class JokeListClass extends React.Component {
     constructor(props) {
@@ -9,28 +10,26 @@ class JokeListClass extends React.Component {
         this.getJokes = this.getJokes.bind(this);
         this.generateNewJokes = this.generateNewJokes.bind(this);
         this.vote = this.vote.bind(this);
-
     }
 
     componentDidMount() {
         const asyncGetJokes = async () => {
             if (this.state.jokes.length === 0){
                 await this.getJokes();
-                this.sortJokes();
             }
         }
         asyncGetJokes();
     }
 
     async getJokes() {
+        console.log('Getting Jokes');
         let j = [...this.state.jokes];
         let seenJokes = new Set();
         try {
-          for (let i = 0; i < this.props.numJokesToGet; i++) {
+          while (j.length < this.props.numJokesToGet) {
             let res = await axios.get("https://icanhazdadjoke.com", {
               headers: { Accept: "application/json" }
             });
-            console.log(res);
             let { status, ...jokeObj } = res.data;
     
             if (!seenJokes.has(jokeObj.id)) {
@@ -39,45 +38,47 @@ class JokeListClass extends React.Component {
             } else {
               console.error("duplicate found!");
             }
-          }
-          this.setState({ jokes: j })
+        }
+            console.log(j);
+            // console.log({ jokes: j });
+            this.setState({ jokes: j });
         } catch (e) {
           console.log(e);
         }  
     }
 
-    generateNewJokes() {
-        this.setState({ jokes: [] });
+    componentDidUpdate() {
         const asyncGetJokes = async () => {
-            if (this.state.jokes === 0) {
+            if (this.state.jokes.length === 0) {
                 await this.getJokes();
-                this.sortJokes();
             }
         }
         asyncGetJokes();
     }
 
-    sortJokes() {
-        this.setState({jokes: this.state.jokes.sort((a,b) => b.votes - a.votes)})
+    generateNewJokes() {
+        this.setState({ jokes: [] });
     }
 
     vote(id,delta) {
-        this.setState({ jokes: this.state.jokes.map(j => (j.id === id ? {...j, votes: j.votes + delta } : j))})
+        console.log('voting');
+        let j = this.state.jokes.map(joke => joke.id === id ? {...joke, votes: joke.votes + delta} : joke);
+        this.setState({jokes: j})
     }
 
     render() {
-
-            return (
-                <div className="JokeList">
-                <button className="JokeList-getmore" onClick={this.generateNewJokes}>
-                  Get New Jokes
-                </button>
-          
-                {this.state.jokes.map(j => (
-                  <JokeClass text={j.joke} key={j.id} id={j.id} votes={j.votes} vote={this.vote} />
-                ))}
-                </div>        
-            )
+        let jokes = this.state.jokes.sort((a,b) => b.votes - a.votes);
+        return (
+            <div className="JokeList">
+            <button className="JokeList-getmore" onClick={this.generateNewJokes}>
+                Get New Jokes
+            </button>
+        
+            {jokes.map(j => (
+                <JokeClass text={j.joke} key={j.id} id={j.id} votes={j.votes} vote={this.vote} />
+            ))}
+            </div>        
+        )
     }
 }
 
