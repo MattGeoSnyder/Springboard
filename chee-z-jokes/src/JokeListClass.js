@@ -30,6 +30,7 @@ class JokeListClass extends React.Component {
             let res = await axios.get("https://icanhazdadjoke.com", {
               headers: { Accept: "application/json" }
             });
+            console.log(res);
             let { status, ...jokeObj } = res.data;
     
             if (!seenJokes.has(jokeObj.id)) {

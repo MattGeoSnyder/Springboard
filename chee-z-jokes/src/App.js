@@ -1,4 +1,3 @@
-import React from "react-dom/client";
 import JokeListClass from "./JokeListClass";
 
 function App() {
