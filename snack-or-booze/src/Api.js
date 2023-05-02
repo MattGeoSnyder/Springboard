@@ -21,9 +21,10 @@ class SnackOrBoozeApi {
     return result.data;
   }
 
-  static async addSnack() {
-    
-  }
+  static async addSnack(data, route) {
+    const result = await axios.post(`${BASE_API_URL}/${route}`, params={ data });
+    return result.data;
+  } 
 
 }
 
