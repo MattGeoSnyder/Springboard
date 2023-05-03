@@ -7,6 +7,7 @@ import NavBar from "./NavBar";
 import { Route, Switch } from "react-router-dom";
 import Menu from "./FoodMenu";
 import Snack from "./FoodItem";
+import Form from './FoodForm';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -49,6 +50,9 @@ function App() {
             </Route>
             <Route exact path='/drinks'>
               <Menu items={drinks} food={false} title="Drinks" />
+            </Route>
+            <Route exact path='/drinks/new'>
+              <Form route='drinks' />
             </Route>
             <Route path="/drinks/:id">
               <Snack items={drinks} cantFind='/drinks' />
