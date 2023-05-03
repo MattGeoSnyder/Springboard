@@ -27,6 +27,13 @@
       "description": "Crisp!",
       "recipe": "Open can.",
       "serve": "Immediately."
+    },
+    {
+      "id": "old-fashioned",
+      "name": "Old Fashioned",
+      "description": "A classic whiskey drink",
+      "recipe": "2oz rye whiskey",
+      "serve": "In a tumbler over ice."
     }
   ],
   "snacks": [

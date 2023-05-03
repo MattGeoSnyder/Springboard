@@ -1,0 +1,10 @@
+#menu-form {
+    display: flex;
+    flex-direction: column;
+    padding: 0rem 1rem 1.5rem 1rem;
+}
+
+#recipe, #serve {
+    height: 100px;
+    padding: 5px;
+}

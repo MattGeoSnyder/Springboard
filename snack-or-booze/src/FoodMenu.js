@@ -11,10 +11,15 @@ import {
 } from "reactstrap";
 
 function FoodMenu({ items, food }) {
+  //maybe shouldn't have used boolean, but works well for 
+  //two different subroutes
+  //would not expand well if we added desserts for instance.
 
+  //descriptions for each menu
   const foodDescription = `Some light and tasty bites to keep you satisfied. The Nachos are a crowd favorite!`
   const drinkDescription = `Our drinks are classic, but made with the best spirits available. We also have non-alcoholic option(s)`
 
+  //choose description based on boolean food
   let textBody = food ? foodDescription : drinkDescription;
 
   return (

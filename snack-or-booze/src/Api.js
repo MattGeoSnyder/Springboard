@@ -16,13 +16,16 @@ class SnackOrBoozeApi {
     return result.data;
   }
 
+  //probably should have modified get route to be like post route.
+  //Alas it is what it is now.
   static async getDrinks() {
     const result = await axios.get(`${BASE_API_URL}/drinks`);
     return result.data;
   }
 
+  //post route to add new drink or snack
   static async addSnack(data, route) {
-    const result = await axios.post(`${BASE_API_URL}/${route}`, { data });
+    const result = await axios.post(`${BASE_API_URL}/${route}`, data={ ...data });
     return result.data;
   } 
 

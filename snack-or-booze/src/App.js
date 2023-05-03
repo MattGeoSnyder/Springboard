@@ -7,7 +7,7 @@ import NavBar from "./NavBar";
 import { Route, Switch } from "react-router-dom";
 import Menu from "./FoodMenu";
 import Snack from "./FoodItem";
-import Form from './FoodForm';
+import Form from './MenuForm';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -45,12 +45,17 @@ function App() {
             <Route exact path="/snacks">
               <Menu items={snacks} food={true} title="Snacks" />
             </Route>
+            {/* Route needs to be here to intercept /snacks/:id */}
+            <Route exact path='/snacks/new'>
+              <Form route='snacks' />
+            </Route>
             <Route path="/snacks/:id">
               <Snack items={snacks} cantFind="/snacks" />
             </Route>
             <Route exact path='/drinks'>
               <Menu items={drinks} food={false} title="Drinks" />
             </Route>
+            {/* Likewise for this drinks route as well */}
             <Route exact path='/drinks/new'>
               <Form route='drinks' />
             </Route>
