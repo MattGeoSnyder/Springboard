@@ -1,0 +1,12 @@
+.product {
+    border: 1px solid black;
+    width: 300px;
+    height: 300px;
+}
+
+.product .image {
+    background-size: contain;
+    height: 150px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
