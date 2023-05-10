@@ -8,8 +8,8 @@ export const cart = createSlice({
     },
     reducers: {
         addnew: (state, action) => {
-            const { id, name, price, description } = action.payload;
-            state.products = {...state.products, [id]: {name, price, description, quantity: 1}}
+            const { id, name, price, description, image_url } = action.payload;
+            state.products = {...state.products, [id]: {name, price, description, image_url, quantity: 1}}
             state.total += price;
         },
         addone: (state, action) => {

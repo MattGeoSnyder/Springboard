@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addnew, remove } from './reducers/cart';
-import { useState, useEffect, useRef} from 'react';
+import { useState, useEffect } from 'react';
 import Quantity from "./Quantity";
 import "./Product.css";
 import { Link } from 'react-router-dom';
@@ -9,8 +9,6 @@ const Product = ({id, product, detail}) => {
     const {name, price, description, image_url} = product;
     const cart = useSelector(state => state.cart);
     const dispatch = useDispatch();
-    const link = useRef();
-    console.log(link.current);
 
     const [inCart, setInCart] = useState(false);
 
@@ -24,11 +22,11 @@ const Product = ({id, product, detail}) => {
         } else {
             setInCart(false);
         }
-    }, [cart])
+    }, [cart, id])
 
     return (
         <div className={detail ? 'product-detail' : "product"}>
-                <Link to={`/products/${id}`} ref={link}>
+                <Link to={`/products/${id}`} >
                     <div className="image" style={{backgroundImage: `url(${image_url})`}}></div>
                     <div>{name} {price}</div>
                 </Link>
@@ -36,7 +34,7 @@ const Product = ({id, product, detail}) => {
                 {!inCart && 
                     <button 
                     onClick={() => dispatch(
-                        addnew({id, name, price, description}))}>
+                        addnew({id, name, price, description, image_url}))}>
                     Add to cart
                     </button>}
                 {inCart && 
