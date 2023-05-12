@@ -33,7 +33,7 @@ class API {
 
     static async newComment(comment) {
         console.log(comment);
-        let res = await this.request(`/posts/:id/comments`, comment, 'post');
+        let res = await this.request(`/posts/${comment.id}/comments`, comment, 'post');
     }
 }
 

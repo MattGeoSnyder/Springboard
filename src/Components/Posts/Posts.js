@@ -8,11 +8,6 @@ const Posts = () => {
     const posts = useSelector(state => state.posts);
     const postArr = Object.entries(posts);
 
-
-    useEffect(() => {
-        dispatch(fetchPosts());
-    }, [])
-
     return (
         <div id='posts'>
             {postArr.map(([key, value]) => (

@@ -13,7 +13,7 @@ const fetchPostById = createAsyncThunk('posts/fetchPostById', async (id) => {
 
 const postComment = createAsyncThunk('posts/postComment', async (comment) => {
     const post = await API.newComment(comment);
-    return post;
+    return comment;
 })
 
 export const posts = createSlice({
@@ -35,6 +35,7 @@ export const posts = createSlice({
             return state;
         })
         builder.addCase(postComment.fulfilled, (state, action) => {
+            console.log(action);
             const {id, text} = action.payload;
             if(state[id].comments) {
                 state[id].comments.push(action.payload);

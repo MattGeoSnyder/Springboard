@@ -7,8 +7,12 @@ import { BrowserRouter } from 'react-router-dom';
 import Nav from './Nav';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import { fetchPosts } from './store/reducers/posts';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+store.dispatch(fetchPosts());
+
 root.render(
     <Provider store={store}> 
       <BrowserRouter>

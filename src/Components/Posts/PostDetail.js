@@ -13,7 +13,7 @@ const PostDetail = () => {
 
     useEffect(() => {
         dispatch(fetchPostById(id));
-    }, [post])
+    }, [])
 
     return (
         <div id='post'>

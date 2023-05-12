@@ -7,13 +7,15 @@ const CommentForm = ({postId}) => {
     const dispatch = useDispatch();
 
     const handleChange = (e) => {
-        const { val } = e.target;
-        setComment(val);
+        const { value } = e.target;
+        setComment(value);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(postComment({id: postId, text: comment}))
+        console.log(comment);
+        dispatch(postComment({id: postId, text: comment}));
+        setComment("");
     }
 
     return (
@@ -21,7 +23,7 @@ const CommentForm = ({postId}) => {
             <input 
                 name="comment"
                 placeholder="New comment"
-                val={comment}
+                value={comment}
                 onChange={handleChange}
             />
             <button>Post</button>
