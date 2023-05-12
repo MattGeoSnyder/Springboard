@@ -5,7 +5,7 @@ const Nav = () => {
   <div>
     <h1>Microblog</h1>
     <p>Get in the Rithm of blogging!</p>
-    <Link>Blog</Link>
+    <Link to='/'>Blog</Link>
     <Link to='/new'>New</Link>
   </div>
   )

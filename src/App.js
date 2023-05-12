@@ -7,9 +7,9 @@ import Posts from './Components/Posts/Posts';
 function App() {
   return (
     <Routes>
-      <Route path='/' />
+      <Route path='/' element={<Posts />}/>
       <Route path='/new' element={<NewPost />} />
-      <Route path='/post/:id' element={<PostDetail />}/>
+      <Route path='/posts/:id' element={<PostDetail />}/>
     </Routes>
   );
 }
