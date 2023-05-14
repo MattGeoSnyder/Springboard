@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useDispatch } from 'react-redux'
 import { postComment } from "../../store/reducers/posts";
+import './CommentForm.css'
 
 const CommentForm = ({postId}) => {
     const [comment, setComment] = useState("");
@@ -13,13 +14,14 @@ const CommentForm = ({postId}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(comment);
-        dispatch(postComment({id: postId, text: comment}));
-        setComment("");
+        if (comment) {
+            dispatch(postComment({id: postId, text: comment}));
+            setComment("");
+        }
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form id="comment-form" onSubmit={handleSubmit}>
             <input 
                 name="comment"
                 placeholder="New comment"

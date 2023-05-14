@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import Nav from './Nav';
+import Nav from './Components/Nav';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { fetchPosts } from './store/reducers/posts';

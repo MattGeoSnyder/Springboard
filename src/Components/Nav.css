@@ -1,0 +1,10 @@
+#Nav {
+    padding: 40px;
+    background-color: lightgrey;
+}
+
+#Nav a {
+    text-decoration: none;
+    margin: 10px;
+    color: blue;
+}

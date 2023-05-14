@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../../store/reducers/posts";
 import Post from "./Post";
+import './Posts.css';
 
 const Posts = () => {
-    const dispatch = useDispatch();
     const posts = useSelector(state => state.posts);
     const postArr = Object.entries(posts);
 

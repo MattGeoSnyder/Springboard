@@ -1,0 +1,15 @@
+.votebar, .votebar-detail {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.fa-thumbs-up {
+    color: green;
+    font-size: 1.5rem;
+}
+
+.fa-thumbs-down {
+    color: red; 
+    font-size: 1.5rem;
+}

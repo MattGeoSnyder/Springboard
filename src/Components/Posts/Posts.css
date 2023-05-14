@@ -1,0 +1,8 @@
+#posts {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 2rem;
+
+    gap: 20px
+}

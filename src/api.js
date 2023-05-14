@@ -20,8 +20,8 @@ class API {
         let postsRes = await this.request('/posts')
         const posts = {}
         for (let post of postsRes) {
-            const {id, title, description} = post;
-            posts[id] = {title, description}
+            const {id, title, description, votes} = post;
+            posts[id] = {title, description, votes}
         }
         return posts;
     }
@@ -31,9 +31,31 @@ class API {
         return post;
     }
 
+    static async addNewPost(post) {
+        let postRes = await this.request('/posts', post, 'post');
+        return postRes;
+    }
+
+    static async editPost(post) {
+        let postRes = await this.request(`/posts/${post.id}`, post, 'put');
+        return postRes;
+    }
+
+    static async deletePost(postId) {
+        await this.request(`/posts/${postId}`, {}, 'delete');
+    }
+
     static async newComment(comment) {
-        console.log(comment);
         let res = await this.request(`/posts/${comment.id}/comments`, comment, 'post');
+    }
+
+    static async deleteComment(postId, commentId) {
+        let res = await this.request(`/posts/${postId}/comments/${commentId}`, {}, 'delete');
+    }
+
+    static async vote(id, direction) {
+        let votes = await this.request(`/posts/${id}/vote/${direction}`, {} ,'post');
+        return votes;
     }
 }
 
