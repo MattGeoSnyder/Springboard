@@ -1,12 +1,9 @@
 function curriedAdd(total) {
-    let sum = 0;
-    if (total) {
-        sum += total;
-        return function () {
-            return sum;
-        }
-    } else {
-        return sum;
+    if (total === undefined) return 0;
+    return function add(num) {
+        if (num === undefined) return total;
+        total += num;
+        return add;
     }
 }
 
