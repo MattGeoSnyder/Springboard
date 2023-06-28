@@ -1,0 +1,28 @@
+#scroll-clicker {
+    display: flex;
+    justify-content: center;
+}
+
+#scroll-clicker i {
+    size: 20px;
+    pointer-events: fill;
+}
+
+#scroll-clicker > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-basis: 50%;
+}
+
+#scroll-clicker div .dot {
+    border: 1px solid lightgray;
+    border-radius: 999%;
+    width: 5px;
+    height: 5px;
+}
+
+#scroll-clicker div .active {
+    background-color: lightgray;
+}

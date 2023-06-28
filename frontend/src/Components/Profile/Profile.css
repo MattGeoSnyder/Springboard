@@ -1,0 +1,20 @@
+#profile-page {
+  
+  grid-template-columns: 450px 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+#profile-form {
+  grid-row: 2 / 3;
+
+}
+
+
+#navbar {
+  grid-row: 1 / 2;
+}
+
+#root {
+  display: grid;
+  grid-template-rows: 60px 1fr;
+}

@@ -1,0 +1,16 @@
+#home-container {
+    display: flex;
+
+    height: 100%;
+    width: 100%;
+}
+
+#message-sidebar {
+    width: 30%;
+    height: 100%;
+
+    border-left: 2px solid black;
+    display: flex;
+    flex-direction: column;
+}
+  

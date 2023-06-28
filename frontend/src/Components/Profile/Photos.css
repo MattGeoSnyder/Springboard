@@ -1,0 +1,30 @@
+#photos {
+  --photobar-height: 50vh;
+  
+  grid-column: 2 / -1;
+  grid-row: 1 / 2;
+
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc(var(--photobar-height) * 0.8);
+  align-items: center;
+
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  scroll-snap-type: inline mandatory;
+  overscroll-behavior-inline: contain;
+
+  scroll-margin-inline: 100px;
+
+  box-sizing: border-box;
+
+  margin: 0 auto;
+
+  gap: 50px;
+  height: var(--photobar-height);
+  margin: 0;
+
+  padding-top: 50px;
+}
+

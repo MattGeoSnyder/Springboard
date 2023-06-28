@@ -1,0 +1,9 @@
+.hates-container {
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hates {
+  flex: 1;
+}

@@ -1,0 +1,9 @@
+#profile-section {
+    width: 70%;
+    display: flex;
+}
+
+#photo-section, #bio-section {
+    flex: 1;;
+}
+

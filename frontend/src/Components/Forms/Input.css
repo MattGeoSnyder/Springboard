@@ -1,0 +1,29 @@
+.input {
+  position: relative;
+}
+
+.input input {
+  outline: none;
+}
+
+.validation #title {
+  color: #d80f24;
+  margin: 0;
+  font-size: 14px;
+}
+
+.validation .err-list {
+  margin: 0;
+  font-size: 12px;
+}
+
+.validation .err-msg {
+  color: #d80f24;
+  margin: 0;
+}
+
+.input i {
+  position: absolute;
+  right: -5px;
+  top: 25px;
+}
