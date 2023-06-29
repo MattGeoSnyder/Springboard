@@ -13,7 +13,7 @@ const Profile = () => {
     <div id="profile-page">
         <BioSection user={user}/>
         <Photos user={user}/>
-        {/* <Prompts user={user}/> */}
+        <Prompts user={user}/>
     </div>
       </form>
   )

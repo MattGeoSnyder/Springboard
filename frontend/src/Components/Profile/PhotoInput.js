@@ -50,6 +50,7 @@ const PhotoInput = ({ name, username, photoLabel }) => {
         <img src={image}/>
         {!hasImage && <input 
           type="file"
+          id={name}
           name={name}
           accept="image/png, image/jpeg"
           onChange={handleChange}

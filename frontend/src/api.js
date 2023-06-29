@@ -26,6 +26,11 @@ class API {
         return user;
     }
 
+    static async getPrompts() {
+        let prompts = await this.request('/prompts');
+        return prompts;
+    }
+
     static async getMatches(userId) {
         let matches = await this.request(`/users/${userId}/matches`);
         return matches;

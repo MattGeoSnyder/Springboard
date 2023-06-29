@@ -1,5 +1,10 @@
 .prompts-container {
   box-sizing: border-box;
-  height: 500px;
-  width: 500px;
+  grid-row: 2 / 3;
+  grid-column: 2 / -1;
+
+  width: 90%;
+  height: 90%;
+
+  overflow: hidden;
 }

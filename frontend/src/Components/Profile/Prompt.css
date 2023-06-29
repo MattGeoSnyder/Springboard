@@ -1,0 +1,51 @@
+.prompt {
+  border-radius: 20px;
+  background-color: rgba(138, 43, 226, 0.9);
+  color: white;
+  box-sizing: border-box;
+  padding: 5px 40px 30px; 
+  width: fit-content;
+  position: relative;
+  box-shadow: 0 0 5px gray;
+}
+
+.prompt p {
+  margin-right: 200px;
+}
+
+.prompt i {
+  position: absolute;
+  right: 40px;
+  top: 20px;
+}
+
+.prompt .options {
+  padding: 5px 10px;
+  position: absolute;
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  top: 50px;
+  left: 50px;
+
+  height: 150px;
+
+  overflow: scroll;
+  scroll-margin: 5px;
+
+  box-shadow: 0 5px 10px black;
+}
+
+.prompt .options .option {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px;
+
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.prompt .options .option:hover {
+  background-color: blueviolet;
+  color: white;
+}

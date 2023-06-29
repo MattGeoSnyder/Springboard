@@ -16,6 +16,7 @@ const BioSection = ({ user={} }) => {
           <p>Bio</p>
           <textarea 
             className='content'
+            placeholder='Tell us all about you!'
           >
 
           </textarea>
