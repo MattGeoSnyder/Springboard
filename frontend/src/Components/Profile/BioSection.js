@@ -8,15 +8,17 @@ const BioSection = ({ user={} }) => {
   const bio = user.bio || "";
 
   return (
-    <div className="bio-container">
-      <div className="bio"> 
+    <div className="bio-wrapper">
+      <div className="bio-container"> 
         <UserBanner user={user}/>
         <Hates user={user}/>
         <div className='bio-content'>
           <p>Bio</p>
-          <textarea 
+          <textarea
+            id='bio'
+            name='bio' 
             className='content'
-            placeholder='Tell us all about you!'
+            placeholder='Tell us all about yourself!'
           >
 
           </textarea>

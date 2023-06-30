@@ -12,7 +12,7 @@ body {
     display: flex;
     flex-direction: column;
 
-    background-color: rgba(138, 43, 226, 0.05)
+    background-color: var(--main-bg-color);
 }
 
 ::-webkit-scrollbar {
@@ -27,7 +27,7 @@ body {
     border-radius: 20px;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: blueviolet;
+    background-color: var(--accent-one);
     border-radius: 5px;
 }
 
@@ -39,3 +39,8 @@ body {
     display: none;
 }
 
+:root {
+    --dark-red: #d80f24;
+    --main-bg-color: rgba(138, 43, 226, 0.05);
+    --accent-one: blueviolet;
+}

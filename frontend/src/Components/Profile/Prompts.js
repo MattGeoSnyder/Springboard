@@ -19,7 +19,7 @@ const Prompts = () => {
 
   return (
     <div className="prompts-container">
-      <Prompt prompts={prompts}/>
+      <Prompt prompts={prompts} promptname="prompt1" order='first'/>
     </div>
   )
 }

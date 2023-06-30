@@ -22,7 +22,8 @@ const PhotoInput = ({ name, username, photoLabel }) => {
     setHasImage(true);
   }
 
-  const removePhoto = () => {
+  const removePhoto = (e) => {
+    e.stopPropagation();
     setImage("");
     setHasImage(false);
   }

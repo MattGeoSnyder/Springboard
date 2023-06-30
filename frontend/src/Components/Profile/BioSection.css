@@ -1,4 +1,4 @@
-.bio-container {
+.bio-wrapper {
   height: 90vh;
   padding: 50px;
   box-sizing: border-box;
@@ -7,7 +7,7 @@
   grid-row: 1 / 4;
 }
 
-.bio {
+.bio-container {
   height: 100%;
   width: 350px;
   min-width: 350px;
@@ -37,4 +37,13 @@
   border: none;
   resize: none;
   padding: 10px;
+}
+
+#bio {
+  font-family: 'Montserrat', 'sans-serif';
+}
+
+#bio:focus {
+  border-radius: 10px;
+  outline: 1px solid var(--accent-one);
 }

@@ -3,7 +3,7 @@
   flex: 1;
   position: relative;
   height: var(--input-height);
-  aspect-ratio: 4 / 5;
+  width: calc(var(--input-height) * 0.8);
   box-sizing: border-box;
 
   align-self: center;
@@ -13,6 +13,12 @@
 
   border-radius: 10px;
   box-shadow: 0px 0px 5px gray;
+
+  transition: height 0.5s ease, width 0.5s ease;
+}
+
+.photo-input:hover {
+  --input-height: 92%;
 }
 
 
@@ -25,7 +31,7 @@
 
   background-color: white;
 
-  z-index: 500;
+  z-index: 5;
 }
 
 .photo-input button {
@@ -40,7 +46,7 @@
   width: 30px;
   border-radius: 999%;
 
-  background-color: black;
+  background-color: var(--dark-red);
 
   position: absolute;
   top: -12px;
@@ -63,13 +69,14 @@
   top: 0;
   left: 0;
 
-
   border-radius: 10px;
   border: none;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  pointer-events: none;
 }
 
 .photo-input input[type="file"] {

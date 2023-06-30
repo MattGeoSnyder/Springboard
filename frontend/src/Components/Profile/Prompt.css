@@ -1,16 +1,20 @@
 .prompt {
   border-radius: 20px;
-  background-color: rgba(138, 43, 226, 0.9);
+  background-color: var(--accent-one);
   color: white;
   box-sizing: border-box;
   padding: 5px 40px 30px; 
   width: fit-content;
   position: relative;
-  box-shadow: 0 0 5px gray;
+  box-shadow: 0 0 5px black;
 }
 
 .prompt p {
   margin-right: 200px;
+}
+
+.prompt div:not(div.options):not(div.option), p, i {
+  pointer-events: none;
 }
 
 .prompt i {
@@ -48,4 +52,21 @@
 .prompt .options .option:hover {
   background-color: blueviolet;
   color: white;
+}
+
+.prompt .prompt-input {
+  width: 100%;
+  height: 75px;
+  resize: none;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: 'Montserrat', 'sans-serif';
+}
+
+.prompt .prompt-input:focus {
+  outline: none;
+  box-shadow: inset 0 0 5px blueviolet;
+  border: 2px solid blueviolet;
 }
