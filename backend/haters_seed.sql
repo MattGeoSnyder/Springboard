@@ -11,9 +11,10 @@ CREATE TABLE prompts(
     prompt varchar NOT NULL
 );
 
-CREATE TABLE disinterests(
+CREATE TABLE hates(
     id serial PRIMARY KEY,
-    disinterest varchar
+    category varchar,
+    hate varchar
 );
 
 CREATE TABLE users(
@@ -80,3 +81,67 @@ INSERT INTO matches
 VALUES
     (1,2);
 
+
+INSERT INTO prompts
+    (prompt)
+VALUES
+    ('My biggest pet peeve is...'),
+    ('It''s a dealbreaker if...'),
+    ('One thing I can''t stand doing is...'),
+    ('We won''t get along if...'),
+    ('My personal hell is...'),
+    ('My least favorite quality in a person is...'),
+    ('You won''t ever catch me...'),
+    ('I would rather ___ than ___');
+
+INSERT INTO hates 
+    (category, hate)
+VALUES
+    ('events', 'weddings 👰')
+    ('events', 'parties 🎊'),
+    ('events', 'family gatherings 👪'),
+    ('events', 'birthdays 🎂'),
+    ('events', 'concerts 🎵'),
+    ('events', 'sports events 🏈'),
+    ('weather', 'heat ☀️'),
+    ('weather', 'cold 🧊'),
+    ('weather', 'snow ❄️'),
+    ('weather', 'storms 🌩️'),
+    ('food', 'fruits 🍑'),
+    ('food', 'veggies 🍃'),
+    ('food', 'meat 🥓'),
+    ('food', 'fish 🐟')
+    ('food', 'sweets 🍫'),
+    ('food', 'beer 🍺'),
+    ('food', 'cocktails 🍸'),
+    ('food', 'carbs 🍞'),
+    ('food', 'coffee ☕')
+    ('music', 'country 🎵'),
+    ('music', 'rap 🎵'),
+    ('music', 'metal 🎵'),
+    ('music', 'punk 🎵'),
+    ('music', 'pop 🎵'),
+    ('music', 'reggae 🎵'),
+    ('music', 'rock 🎵'),
+    ('music', 'ska 🎵'),
+    ('activities', 'baseball ⚾'),
+    ('activities', 'basketball 🏀'),
+    ('activities', 'biking 🚴'),
+    ('activities', 'football 🏈'),
+    ('activities', 'soccer ⚽'),
+    ('activities', 'rock climbing 🧗'),
+    ('activities', 'running 🏃'),
+    ('activities', 'skiing ⛷️'),
+    ('activities', 'snowboarding 🏂'),
+    ('activities', 'surfing 🏄'),
+    ('activities', 'tennis 🎾'),
+    ('animals', 'cats 🐱'),
+    ('animals', 'dogs 🐶'),
+    ('animals', 'snakes 🐍'),
+    ('animals', 'birds 🐦'),
+    ('animals', 'bugs 🐛'),
+    ('animals', 'rodents 🐭');
+
+
+
+    
