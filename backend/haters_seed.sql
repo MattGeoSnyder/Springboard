@@ -33,9 +33,11 @@ CREATE TABLE users(
     prompt1_res varchar(140),
     prompt2_res varchar(140),
     prompt3_res varchar(140),
-    disinterest1 int REFERENCES disinterests,
-    disinterest2 int REFERENCES disinterests,
-    disinterest3 int REFERENCES disinterests
+    hate1 int REFERENCES hates,
+    hate2 int REFERENCES hates,
+    hate3 int REFERENCES hates,
+    hate4 int REFERENCES hates,
+    hate5 int REFERENCES hates
 );
 
 CREATE TABLE photos(
@@ -97,7 +99,7 @@ VALUES
 INSERT INTO hates 
     (category, hate)
 VALUES
-    ('events', 'weddings 👰')
+    ('events', 'weddings 👰'),
     ('events', 'parties 🎊'),
     ('events', 'family gatherings 👪'),
     ('events', 'birthdays 🎂'),
@@ -110,12 +112,12 @@ VALUES
     ('food', 'fruits 🍑'),
     ('food', 'veggies 🍃'),
     ('food', 'meat 🥓'),
-    ('food', 'fish 🐟')
+    ('food', 'fish 🐟'),
     ('food', 'sweets 🍫'),
     ('food', 'beer 🍺'),
     ('food', 'cocktails 🍸'),
     ('food', 'carbs 🍞'),
-    ('food', 'coffee ☕')
+    ('food', 'coffee ☕'),
     ('music', 'country 🎵'),
     ('music', 'rap 🎵'),
     ('music', 'metal 🎵'),

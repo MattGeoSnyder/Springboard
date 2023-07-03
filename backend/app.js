@@ -9,6 +9,7 @@ import userRoutes from './routes/users.js';
 import messageRoutes from './routes/messages.js';
 import imageRoutes from './routes/images.js';
 import promptRoutes from './routes/prompts.js';
+import hatesRoutes from './routes/hates.js';
 import Message from './models/message.js';
 
 import cors from 'cors';
@@ -24,6 +25,7 @@ app.use('/users', userRoutes);
 app.use('/messages', messageRoutes);
 app.use('/images', imageRoutes);
 app.use('/prompts', promptRoutes);
+app.use('/hates', hatesRoutes);
 
 app.ws('/chat/:matchId', function(ws, req, next){
     try {
