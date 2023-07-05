@@ -12,7 +12,7 @@ class API {
             const res = (await axios({url, method, data, params, validateStatus})).data;
             return res;
         } catch (error) {
-            console.log(error.toJSON());
+            console.log(error);
         }
     }
 
@@ -31,6 +31,17 @@ class API {
         return prompts;
     }
 
+    static async getHates() {
+        let hates = await this.request('/hates');
+        return hates;
+    }
+
+    static async addHates(hatesArr, userId) {
+        const hates = JSON.stringify(hatesArr);
+        let result = this.request('/hates', { hates, userId }, 'post');
+        return result;
+    }
+
     static async getMatches(userId) {
         let matches = await this.request(`/users/${userId}/matches`);
         return matches;
@@ -40,6 +51,22 @@ class API {
         let messages = await this.request(`/messages/match/${matchId}?offset=${offset}`);
         return messages;
     }
+
+    static async addPhoto(imageData) {
+        let photo = await this.request('/images/add', imageData, 'post');
+        return photo;
+    }
+
+    static async addBio(bioData) {
+        let bio = await this.request('/users/bio', bioData, 'post');
+        return bio;
+    }
+
+    static async addPrompt(promptData, userId) {
+        let prompts = await this.request(`/users/${userId}/prompts`, promptData, 'post');
+        return prompts;
+    }
+
 }
 
 export default API;

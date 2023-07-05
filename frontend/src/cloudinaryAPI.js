@@ -25,7 +25,6 @@ class CloudinaryAPI {
     }) 
 
     const res = await axios.post(`${CLOUDINARY_BASE_URL}/${CLOUD_NAME}/image/upload`, formData, {validateStatus: (status) => status < 500});
-    console.log(res);
     return res.data;
   }
 }

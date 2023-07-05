@@ -14,11 +14,15 @@
   border-radius: 10px;
   box-shadow: 0px 0px 5px gray;
 
-  transition: height 0.5s ease, width 0.5s ease;
+  outline: none;
+
+  transition: height 0.5s ease, width 0.5s ease, outline 0.25s ease, box-shadow 0.5s ease;
 }
 
 .photo-input:hover {
   --input-height: 92%;
+  outline: 2px solid var(--accent-one);
+  box-shadow: 0px 0px 25px gray;
 }
 
 
@@ -79,6 +83,10 @@
   pointer-events: none;
 }
 
+.icon-container i {
+  color: lightgray;
+}
+
 .photo-input input[type="file"] {
   height: 100%;
   width: 100%;
@@ -89,6 +97,10 @@
   left: 0px;
   border-radius: 10px;
   border: none;
+}
+
+.photo-input input[type='file'].hasImage {
+  pointer-events: none;
 }
 
 .photo-input label {

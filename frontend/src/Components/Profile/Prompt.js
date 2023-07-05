@@ -1,4 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { changePrompt } from '../../store/reducers/profileForm';
+import { useState, useEffect, useMemo } from 'react';
+import PromptOption from './PromptOption';
 import { v4 as uuid } from 'uuid';
 import './Prompt.css';
 
@@ -6,60 +9,79 @@ import './Prompt.css';
 //There is a crucial snippet of CSS to make this work.
 //See Prompt.css:16
 
-const Prompt = ({ prompts, promptname, order="" }) => {
-  const defaultPrompt = `Choose your ${order} prompt`;
+const Prompt = ({ prompts, name: name, order="", idx, value }) => {
+  const defaultPrompt = { id: 0, prompt: `Choose your ${order} prompt`};
+  const dispatch = useDispatch();
 
-  const [ select, setSelect ] = useState(false);
+  const [ optionsActive, setOptionsActive ] = useState(false);
   const [ prompt, setPrompt ] = useState(defaultPrompt);
-  const [ promptChosen, setPromptChosen ] = useState(prompt !== defaultPrompt);
+  const [ promptChosen, setPromptChosen ] = useState(prompt.id !== 0);
+  const [ textareaActive, setTextareaActive ] = useState(false);
 
+  const status = useSelector(state => state.profileForm.status);
+  const promptRes = useSelector(state => (
+    state.profileForm.formData[name].promptRes));
+  
 
   useEffect(() => {
-    setPromptChosen(prompt !== defaultPrompt);
+    setPromptChosen(prompt.id !== 0);
   }, [prompt]);
 
-  //Event listener for the document. 
-  //This will unselect our prompt when we 
-  //click elsewhere on the page
   useEffect(() => {
-    document.addEventListener('click', (e) => {
-      console.log('doc click');
+    setTextareaActive(promptChosen || promptRes);
+  }, [promptChosen, promptRes]);
+
+  useEffect(() => {
+    if (status === 'pending' && promptRes) {
+
+    }
+  }, [status])
+
+  //Event listener for the document. 
+  //This will unselect options when we click off of the prompt.
+  //It will also collapse textarea if it is empty and we click
+  //off of the prompt.
+  useEffect(() => {  
+    const optionsOff = (e) => {
       console.log(e.target);
-      if (e.target.id !== promptname){
-        setSelect(false);
-        setPrompt(defaultPrompt);
+      if (e.target.id !== name){
+        setOptionsActive(false);
       }
-    })
-  }, [])
+      if (!promptRes) {
+        console.log(promptRes);
+        setPrompt(defaultPrompt);
+      }  
+    }
+
+    document.addEventListener('click', optionsOff);
+
+    return () => {document.removeEventListener('click', optionsOff)};
+  }, [promptRes]);
 
   //Selects the prompt when we click on it
   const selectPrompt = (e) => {
-    console.log('prompt click');
     e.stopPropagation();
-    if (e.target.id === promptname) setSelect(!select);
+    if (e.target.id === name) setOptionsActive(!optionsActive);
   }
 
-  //Selects the option when we click on it
-  const selectOption = (e) => {
-    console.log('option click');
-    e.stopPropagation();
-    const val = e.target.innerText;
-    setPrompt(val);
-    setSelect(false);
+  const handleChange = (e) => {
+    const promptRes = e.target.value;
+    dispatch(changePrompt({ name, id: prompt.id, promptRes }));
   }
 
   return (
-    <div id={promptname} className='prompt' onClick={selectPrompt}>
+    <div id={name} className='prompt' onClick={selectPrompt}>
       <i className="fa-solid fa-plus"></i>
-      <div><p>{prompt}</p></div>
-      {promptChosen && <textarea
-        className='prompt-input'
-        id={`${promptname}-input`}
-        name={`${promptname}-input`}
-      />}
-        {select && <div className='options'>
-        {prompts.map((p) => (
-          <div key={uuid()} className='option' onClick={selectOption}>{p.prompt}</div>
+      <div><p>{prompt.prompt}</p></div>
+      <textarea
+        className={`prompt-input ${textareaActive ? 'active' : ''}`}
+        id={`${name}-input`}
+        name={`${name}-input`}
+        onChange={handleChange}
+      />
+        {<div className={`options ${optionsActive ? 'active' : ""}`}>
+        {prompts.map((prompt) => (
+          <PromptOption key={uuid()} prompt={prompt} setPrompt={setPrompt} setActive={setOptionsActive}/>
         ))}
       </div>}
     </div>

@@ -1,10 +1,24 @@
 .prompts-container {
   box-sizing: border-box;
   grid-row: 2 / 3;
-  grid-column: 2 / -1;
+  grid-column: 1 / -1;
 
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 40vw;
 
   overflow: hidden;
+
+  padding-top: 2rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-y: scroll;
+  align-items:initial;
+
+  display: grid;
+  grid-auto-rows: 100%;
+  grid-auto-columns: 50%;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }

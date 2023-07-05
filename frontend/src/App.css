@@ -42,5 +42,6 @@ body {
 :root {
     --dark-red: #d80f24;
     --main-bg-color: rgba(138, 43, 226, 0.05);
+    --main-bg-color-solid: #f9f4fe;
     --accent-one: blueviolet;
 }

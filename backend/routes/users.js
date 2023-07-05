@@ -14,4 +14,25 @@ router.get('/:userId/matches', async function(req, res, next) {
     }
 });
 
+router.post('/bio', async function (req, res, next) {
+    try {
+        const { bio, userId } = req.body;
+        let query = await User.addBio({ bio, userId });
+        return res.status(201).json(query);
+    } catch (error) {
+        return next(error);
+    }
+});
+
+router.post('/:userId/prompts', async function (req, res, next) {
+    try {
+        const promptData = req.body;
+        const { userId } = req.params;
+        let query = await User.addPrompt(promptData, userId);
+        return res.status(201).json(query);
+    } catch (error) {
+        return next(error);
+    }
+})
+
 export default router;

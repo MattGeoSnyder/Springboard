@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import moment from "moment";
 import './UserBanner.css';
 

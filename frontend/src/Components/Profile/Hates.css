@@ -1,9 +1,89 @@
-.hates-container {
-  height: 25%;
+#hates {
+  position: absolute;
+  right: 0;
+
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+
+  justify-content: flex-start;
+
+  width: 40%;
+  height: 100%;
+
+  z-index: 10;
+
+  transition: left 1s ease;
+
+  background-color: var(--main-bg-color-solid);
+
+  opacity: 1;
+
+  max-width: 0%;
+
+  box-sizing: border-box;
+
+  overflow-y: scroll;
+
+  transition: max-width 1s ease, padding 0.5s ease;
+
 }
 
-.hates {
-  flex: 1;
+#hates.active {
+  padding: 1rem;
+  max-width: 100%;
+} 
+
+#hates .hate-category {
+  box-sizing: border-box;
+
+  height: fit-content;
+  width: 100%;
 }
+
+#hates .category-title {
+  margin: 0;
+  margin-bottom: 2rem;
+}
+
+#hates .hates-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: fit-content;
+  grid-auto-flow: row;
+
+  row-gap: 20px;
+}
+
+.hate {
+  border-radius: 50px;
+  
+  padding: 15px;
+  width: fit-content;
+  height: fit-content;
+
+  justify-self: center;
+
+  position: relative;
+
+  color: white;
+  background-color: var(--accent-one);
+  z-index: 11;
+}
+
+.hate i {
+  padding-left: 0.5rem;
+  color: black;
+}
+
+#hates span {
+  position: absolute;
+  font-size: 18px;
+  right: 30px;
+  top: 20px;
+
+  z-index: 11;
+  size: fit-content;
+}
+
+

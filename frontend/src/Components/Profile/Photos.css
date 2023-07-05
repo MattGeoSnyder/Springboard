@@ -28,3 +28,7 @@
   padding-top: 50px;
 }
 
+#photos::-webkit-scrollbar {
+  height: 10px;
+}
+

@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import CloudinaryAPI from '../../cloudinaryAPI';
 import API from '../../api.js';
 
 const registerUser = createAsyncThunk('/users/registerUser', async (userData) => {
@@ -13,7 +14,17 @@ const authUser = createAsyncThunk('/users/authUser', async (userData, { rejectWi
         return rejectWithValue(error);
     }
     return res;
-})
+});
+
+const uploadPhoto = createAsyncThunk('/users/uploadPhoto', async (payload) => {
+    const { image, options, name, userId } = payload;
+    console.log('uploading photo...')
+    const res = await CloudinaryAPI.uploadImage(image, options);
+    console.log(res);
+    const query = await API.addPhoto({ userId, publicId: res.public_id, imageUrl: res.secure_url });
+    return { name, ...query};
+});
+  
 
 export const user = createSlice({
     name: 'user',
@@ -22,15 +33,19 @@ export const user = createSlice({
         status: 'idle',
         user: { username: 'rachwake23' },
         id: 1,
-        testuser: { id: 24, 
+        testuser: { id: 3, 
                     username: 'rachwake23',
                     first_name: 'Rachel', 
-                    birthday: '1999-03-23',
+                    birthday: '2000-03-23',
                     user_sex: 'female',
                     sex_preference: 'male',
+                    photos: {},
+                    hates: []
                     }
     },
-    reducers: {},
+    reducers: {
+        
+    },
     extraReducers(builder) {
         builder.addCase(registerUser.fulfilled, (state, action) => {
             state.status = 'success';
@@ -50,9 +65,17 @@ export const user = createSlice({
             const { message } = action.payload;
             state.status = 'rejected';
             state.errMsg = message;
-        })
+        });
+        builder.addCase(uploadPhoto.pending, (state, action) => {
+
+        });
+        builder.addCase(uploadPhoto.fulfilled, (state, action) => {
+            const { name, public_id, image_url } = action.payload;
+            state.testuser.photos[name] = { publicId: public_id, image_url }
+        });
     }
 });
 
-export { registerUser, authUser } 
+export { registerUser, authUser, uploadPhoto } 
+export const { addHate, removeHate } = user.actions;
 export default user.reducer;

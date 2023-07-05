@@ -23,13 +23,17 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-start;
+
+  position: relative;
 }
 
 .bio-content {
-  height: 25%;
   display: flex;
   flex-direction: column;
+  flex: 1;
+ 
+  margin-bottom: 1em;
 }
 
 .content {
@@ -46,4 +50,21 @@
 #bio:focus {
   border-radius: 10px;
   outline: 1px solid var(--accent-one);
+}
+
+.bio-container button {
+  flex-basis: fit-content;
+  display: inline-block;
+  box-sizing: border-box;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 15px;
+
+  border-radius: 20px;
+  border: none;
+  background-color: var(--accent-one);
+  color: white;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
 }

@@ -1,11 +1,18 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { uploadPhoto } from '../../store/reducers/user';
+import { setOverlayActive, setOverlayImage } from '../../store/reducers/overlay';
 import CloudinaryAPI from '../../cloudinaryAPI';
 import './PhotoInput.css';
 
 const PhotoInput = ({ name, username, photoLabel }) => {
+  const dispatch = useDispatch();
+
+  //Todo: update userId away from testuser after testing.
+  const userId = useSelector(state => state.user.testuser.id);
+  const status = useSelector(state => state.profileForm.status);
   const [ image, setImage ]  = useState();
   const [ hasImage, setHasImage ] = useState(false);
-  const [ select, setSelect ] = useState(false);
   const input = useRef(null);
 
   const options = {
@@ -16,6 +23,13 @@ const PhotoInput = ({ name, username, photoLabel }) => {
     //async
     //eager
   }
+
+  useEffect(() => {
+    console.log(status, hasImage);
+    if (status === 'pending' && hasImage) {
+      dispatch(uploadPhoto({ image: input.current.files[0], options, name, userId }))
+    }
+  }, [hasImage, status, input, userId])
 
   const handleChange = (e) => {
     setImage(URL.createObjectURL(e.target.files[0]));
@@ -28,31 +42,30 @@ const PhotoInput = ({ name, username, photoLabel }) => {
     setHasImage(false);
   }
 
-  const uploadPhoto = async () => {
-    const res = await CloudinaryAPI.uploadImage(input.current.files[0], options);
-    console.log(res);
+  const selectPhoto = (e) => {
+    e.stopPropagation();
+    dispatch(setOverlayActive(true));
+    dispatch(setOverlayImage(image));
   }
 
-  const selectPhoto = (e) => {
-    if (hasImage){
-      console.log('image clicked');
-      console.log(e.target);
-      setSelect(val => !val);
-    }
-  }
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   dispatch(uploadPhoto({ image: image.current.files[0], options }))
+  // }
 
   return (
-      <div className={`photo-input ${select ? 'select' : ''}`}>
+      <div className='photo-input'>
         {hasImage && <div className='delete-btn' onClick={removePhoto}><i className="fa-solid fa-x"></i></div>}
         <div className='icon-container'> 
           {!hasImage && <i className="fa-solid fa-plus fa-4x"></i>}
         </div>
         <label htmlFor={name}>{photoLabel}</label>
-        <img src={image}/>
-        {!hasImage && <input 
+        <img src={image} onClick={selectPhoto}/>
+        {<input 
           type="file"
           id={name}
           name={name}
+          className={hasImage ? 'hasImage' : ''}
           accept="image/png, image/jpeg"
           onChange={handleChange}
           ref={input}

@@ -1,17 +1,33 @@
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeBio, postBio } from '../../store/reducers/profileForm';
 import UserBanner from './UserBanner';
-import Hates from './Hates';
+import UserHates from './UserHates';
 import './BioSection.css';
 
 const BioSection = ({ user={} }) => {
 
-  //going to have to pass in form data for bio
-  const bio = user.bio || "";
+  const dispatch = useDispatch();
+
+
+  const bio = useSelector(state => state.profileForm.formData.bio);
+  const status = useSelector(state => state.profileForm.status);
+
+  useEffect(() => {
+    if (status === 'pending') {
+      dispatch(postBio({ bio, userId: user.id }));
+    }
+  }, [bio, status])
+
+  const handleChange = (e) => {
+    dispatch(changeBio(e.target.value));
+  }
 
   return (
     <div className="bio-wrapper">
       <div className="bio-container"> 
         <UserBanner user={user}/>
-        <Hates user={user}/>
+        <UserHates user={user}/>
         <div className='bio-content'>
           <p>Bio</p>
           <textarea
@@ -19,9 +35,8 @@ const BioSection = ({ user={} }) => {
             name='bio' 
             className='content'
             placeholder='Tell us all about yourself!'
-          >
-
-          </textarea>
+            onChange={handleChange}
+          />
         </div>
         <button>Update Profile</button>
       </div>

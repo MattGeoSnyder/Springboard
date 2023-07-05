@@ -1,10 +1,26 @@
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { postPrompts } from '../../store/reducers/profileForm';
 import API from '../../api';
 import Prompt from './Prompt';
 import './Prompts.css';
+import { v4 as uuid } from 'uuid';
 
 const Prompts = () => {
+  const dispatch = useDispatch();
+
   const [prompts, setPrompts] = useState([]);
+
+  // const userPrompts = useSelector(state => state.profileForm.formData.prompts);
+  // const userId = useSelector(state => state.user.testuser.id);
+  // const status = useSelector(state => state.profileForm.status);
+
+
+  // useEffect(() => {
+  //   if (status === 'pending') {
+  //     dispatch(postPrompts({ prompts: userPrompts, userId}));
+  //   } 
+  // }, [status, userPrompts])
 
   useEffect(() => {
     const loadPrompts = async () => {
@@ -15,11 +31,11 @@ const Prompts = () => {
     loadPrompts();
   }, []);
 
-  console.log(prompts);
-
   return (
     <div className="prompts-container">
-      <Prompt prompts={prompts} promptname="prompt1" order='first'/>
+      <Prompt key={uuid()} prompts={prompts} name="prompt1" order='first' idx={0} />
+      {/* <Prompt key={uuid()} prompts={prompts} promptname="prompt2" order='second' idx={1}/>
+      <Prompt key={uuid()} prompts={prompts} promptname="prompt3" order='last' idx={2}/> */}
     </div>
   )
 }

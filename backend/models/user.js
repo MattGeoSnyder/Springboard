@@ -94,6 +94,32 @@ class User {
         }, {});
     }
 
+    static async addPhoto({ userId, publicId, imageUrl}) {
+        const result = await db.query(`INSERT INTO photos
+                                        (user_id, public_id, image_url)
+                                    VALUES
+                                        ($1, $2, $3)
+                                    RETURNING user_id, public_id, image_url`, [userId, publicId, imageUrl]);
+        return result.rows[0];
+    }
+
+    static async addBio({ bio, userId }) {
+        const result = await db.query(`UPDATE users
+                                    SET bio = $1 
+                                    WHERE id = $2
+                                    RETURNING bio`, [bio, userId]);
+        return result.rows[0].bio;
+    }
+
+    static async addPrompt(prompt, userId) {
+        const { name, id = null, promptRes=null } = prompt;
+        const result = await db.query(`UPDATE users
+                        SET ${name} = $1,
+                            ${name}_res = $2
+                        WHERE id = $3
+                        RETURNING ${name}, ${name}_res`, [id, promptRes, userId]);
+        return result.rows[0];
+    }
 }
 
 export default User;

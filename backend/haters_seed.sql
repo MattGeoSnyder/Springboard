@@ -42,8 +42,9 @@ CREATE TABLE users(
 
 CREATE TABLE photos(
     id serial PRIMARY KEY,
-    image_url varchar,
-    user_id int REFERENCES users
+    user_id int REFERENCES users,
+    public_id varchar,
+    image_url varchar
 );
 
 CREATE TABLE matches(
@@ -77,7 +78,6 @@ INSERT INTO users
 VALUES
     ('test1@test.com', 'test1', 'user A', '1996-08-11', 'male', 'female'),
     ('test2@test.com', 'test2', 'user B', '1996-06-07', 'female', 'male');
-
 INSERT INTO matches
     (user1_id, user2_id)
 VALUES

@@ -3,6 +3,7 @@
 
   display: flex;
   gap: 25px;
+  flex-basis: fit-content;
 }
 
 .user-banner .user-icon {

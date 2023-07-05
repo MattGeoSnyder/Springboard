@@ -34,11 +34,13 @@ const SignupForm = ({ page, setPage }) => {
     // set to true for testing. Change later.
     username: true,
     pw: true,
-    pw_ver: true,
+    //Todo: fix pw_ver
+    // pw_ver: true,
     first_name: true,
     birthday: true
   })
 
+  console.log(valid);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -107,7 +109,8 @@ const SignupForm = ({ page, setPage }) => {
               [formData.pw.length < 21, "Password can't be longer than 20 characters"]
             ]}
             setFormData={setFormData}
-            setValid={setValid}
+            //Todo: Fix pw_ver
+            // setValid={setValid}
           />
         </div>
         <div className='page' style={{top: `${tops[1]}%`}}>
