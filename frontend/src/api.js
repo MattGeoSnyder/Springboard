@@ -6,13 +6,13 @@ class API {
     static async request(endpoint, data={}, method='get') {
         const url = `${BASE_URL}${endpoint}`;
         const params = (method === 'get') ? data : {};
-        const validateStatus = (status) => status < 500;
+        const validateStatus = (status) => status <= 500;
 
         try {
             const res = (await axios({url, method, data, params, validateStatus})).data;
             return res;
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);
         }
     }
 
@@ -36,12 +36,6 @@ class API {
         return hates;
     }
 
-    static async addHates(hatesArr, userId) {
-        const hates = JSON.stringify(hatesArr);
-        let result = this.request('/hates', { hates, userId }, 'post');
-        return result;
-    }
-
     static async getMatches(userId) {
         let matches = await this.request(`/users/${userId}/matches`);
         return matches;
@@ -57,14 +51,20 @@ class API {
         return photo;
     }
 
-    static async addBio(bioData) {
-        let bio = await this.request('/users/bio', bioData, 'post');
+    static async addBio(bioData, userId) {
+        let bio = await this.request(`/users/${userId}/bio`, bioData, 'post');
         return bio;
     }
 
+    static async addHates(hatesArr, userId) {
+        const hates = JSON.stringify(hatesArr);
+        const result = await this.request(`/users/${userId}/hates`, { hates }, 'post');
+        return result;
+    }
+
     static async addPrompt(promptData, userId) {
-        let prompts = await this.request(`/users/${userId}/prompts`, promptData, 'post');
-        return prompts;
+        let prompt = await this.request(`/users/${userId}/prompts`, promptData, 'post');
+        return prompt;
     }
 
 }

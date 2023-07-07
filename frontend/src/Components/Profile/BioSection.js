@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeBio, postBio } from '../../store/reducers/profileForm';
 import UserBanner from './UserBanner';
@@ -12,15 +12,32 @@ const BioSection = ({ user={} }) => {
 
   const bio = useSelector(state => state.profileForm.formData.bio);
   const status = useSelector(state => state.profileForm.status);
+  const [ pending, setPending ] = useState(false);
 
   useEffect(() => {
     if (status === 'pending') {
       dispatch(postBio({ bio, userId: user.id }));
     }
-  }, [bio, status])
+  }, [bio, status]);
+
+  useEffect(() => {
+    if (status === 'pending') {
+      setPending(true);
+    } else {
+      setPending(false);
+    }
+  }, [status])
 
   const handleChange = (e) => {
     dispatch(changeBio(e.target.value));
+  }
+
+  const loadingButton = () => {
+    if (pending) {
+      return <div><i className="fa-solid fa-spinner"></i></div>
+    } else {
+      return <button>Update Profile</button>
+    }
   }
 
   return (
@@ -38,7 +55,7 @@ const BioSection = ({ user={} }) => {
             onChange={handleChange}
           />
         </div>
-        <button>Update Profile</button>
+        {loadingButton()}
       </div>
     </div>
   )

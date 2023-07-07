@@ -21,9 +21,9 @@
 
   max-width: 0%;
 
-  box-sizing: border-box;
-
   overflow-y: scroll;
+
+  box-sizing: border-box;
 
   transition: max-width 1s ease, padding 0.5s ease;
 

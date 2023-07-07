@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { changePrompt } from '../../store/reducers/profileForm';
+import { changePrompt, postPrompt } from '../../store/reducers/profileForm';
 import { useState, useEffect, useMemo } from 'react';
 import PromptOption from './PromptOption';
 import { v4 as uuid } from 'uuid';
@@ -18,10 +18,10 @@ const Prompt = ({ prompts, name: name, order="", idx, value }) => {
   const [ promptChosen, setPromptChosen ] = useState(prompt.id !== 0);
   const [ textareaActive, setTextareaActive ] = useState(false);
 
+  const userId = useSelector(state => state.user.testuser.id);
   const status = useSelector(state => state.profileForm.status);
   const promptRes = useSelector(state => (
     state.profileForm.formData[name].promptRes));
-  
 
   useEffect(() => {
     setPromptChosen(prompt.id !== 0);
@@ -33,9 +33,9 @@ const Prompt = ({ prompts, name: name, order="", idx, value }) => {
 
   useEffect(() => {
     if (status === 'pending' && promptRes) {
-
+      dispatch(postPrompt({ name, id: prompt.id, promptRes, userId }));
     }
-  }, [status])
+  }, [status, prompt, promptRes, userId])
 
   //Event listener for the document. 
   //This will unselect options when we click off of the prompt.
@@ -78,6 +78,7 @@ const Prompt = ({ prompts, name: name, order="", idx, value }) => {
         id={`${name}-input`}
         name={`${name}-input`}
         onChange={handleChange}
+        value={promptRes}
       />
         {<div className={`options ${optionsActive ? 'active' : ""}`}>
         {prompts.map((prompt) => (

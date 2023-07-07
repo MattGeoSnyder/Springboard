@@ -14,7 +14,7 @@ router.get('/:userId/matches', async function(req, res, next) {
     }
 });
 
-router.post('/bio', async function (req, res, next) {
+router.post('/:userId/bio', async function (req, res, next) {
     try {
         const { bio, userId } = req.body;
         let query = await User.addBio({ bio, userId });
@@ -23,6 +23,18 @@ router.post('/bio', async function (req, res, next) {
         return next(error);
     }
 });
+
+router.post('/:userId/hates', async function(req, res, next) {
+    try {
+        const { userId } = req.params;
+        const hates = JSON.parse(req.body.hates);
+        const hateIds = hates.map(hate => hate.id);
+        const query = await User.addHates(hateIds, userId);
+        return res.status(201).json(Object.values(query));
+    } catch (error) {
+        next(error);    
+    }
+});  
 
 router.post('/:userId/prompts', async function (req, res, next) {
     try {

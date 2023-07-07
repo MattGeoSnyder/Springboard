@@ -3,20 +3,19 @@ import API from "../../api";
 
 const postHates = createAsyncThunk('/hates/add', async (payload) => {
   const { hates, userId } = payload;
-  console.log(hates, userId);
   const res = await API.addHates(hates, userId);
-  return JSON.parse(res);
+  return res;
 });
 
 const postBio = createAsyncThunk('/bio/post', async (payload) => {
   const res = await API.addBio(payload);
-  console.log(res);
-  return res;
+  return res
 });
 
-const postPrompts = createAsyncThunk('/prompts/add', async (payload) => {
+const postPrompt = createAsyncThunk('/prompts/add', async (payload) => {
+  console.log(payload);
   const { userId, ...promptData } = payload;
-  const res = await API.addPrompts(promptData, userId);
+  const res = await API.addPrompt(promptData, userId);
   return res;
 });
 
@@ -67,17 +66,20 @@ export const profileForm = createSlice({
     });
     builder.addCase(postBio.fulfilled, (state, action) => {
       state.status = 'success';
+      state.formData.bio = action.payload;
     }); 
-    builder.addCase(postPrompts.pending, (state, action) => {
+    builder.addCase(postPrompt.pending, (state, action) => {
       state.status = 'pending';
     });
-    builder.addCase(postPrompts.fulfilled, (state, action) => {
+    builder.addCase(postPrompt.fulfilled, (state, action) => {
       state.status = 'success';
       console.log(action.payload);
+      const { name, id, promptres: promptRes } = action.payload;
+      state.formData[name] = { id, promptRes };
     });
   }
 });
 
 export const { addHate, removeHate, changeBio, changePrompt, submitForm } = profileForm.actions;
 export default profileForm.reducer;
-export { postHates, postBio, postPrompts };
+export { postHates, postBio, postPrompt };

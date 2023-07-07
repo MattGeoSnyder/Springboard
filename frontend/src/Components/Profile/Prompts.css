@@ -4,7 +4,7 @@
   grid-column: 1 / -1;
 
   width: 100%;
-  height: 40vw;
+  height: 100%;
 
   overflow: hidden;
 
@@ -13,12 +13,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  overflow-y: scroll;
   align-items:initial;
 
   display: grid;
-  grid-auto-rows: 100%;
-  grid-auto-columns: 50%;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 450px 1fr 1fr 1fr;
+
 }
