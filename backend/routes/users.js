@@ -4,6 +4,38 @@ import ExpressError from '../helpers/expressError.js';
 
 const router = new Router();
 
+router.get('/:userId', async function (req, res, next) {
+    const { userId } = req.params;
+    try {
+        let user = await User.getUserById(userId);
+        return res.json(user);
+    } catch (error) {
+        next(error);
+    }
+})
+
+router.get('/:userId/users', async function(req, res, next) {
+    const { userId } = req.params;
+    const { offset } = req.body;
+    try {
+        let userIds = await User.queryUserIds({ userId, offset });
+        return res.json(userIds);
+    } catch (error) {
+        next(error);
+    }
+});
+
+
+router.get('/:userId/photos', async function(req, res, next) {
+    const { userId } = req.params;
+    try {
+        let photos = await User.getUserPhotos(userId);
+        return res.json(photos);
+    } catch (error) {
+        next(error);
+    }
+})
+
 router.get('/:userId/matches', async function(req, res, next) {
     try {
         const { userId } = req.params;
@@ -16,8 +48,10 @@ router.get('/:userId/matches', async function(req, res, next) {
 
 router.post('/:userId/bio', async function (req, res, next) {
     try {
-        const { bio, userId } = req.body;
-        let query = await User.addBio({ bio, userId });
+        const { bioData } = req.body;
+        console.log(req.body);
+        const { userId } = req.params;
+        let query = await User.addBio({ bio: bioData, userId });
         return res.status(201).json(query);
     } catch (error) {
         return next(error);
@@ -45,6 +79,6 @@ router.post('/:userId/prompts', async function (req, res, next) {
     } catch (error) {
         return next(error);
     }
-})
+});
 
 export default router;

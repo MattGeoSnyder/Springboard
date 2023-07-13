@@ -25,14 +25,14 @@ CREATE TABLE users(
     birthday DATE NOT NULL,
     user_sex sex NOT NULL,
     sex_preference sex NOT NULL,
-    bio varchar(200),
+    bio varchar(200) DEFAULT '',
     is_admin boolean NOT NULL DEFAULT 'false',
     prompt1 int REFERENCES prompts,
     prompt2 int REFERENCES prompts,
     prompt3 int REFERENCES prompts,
-    prompt1_res varchar(140),
-    prompt2_res varchar(140),
-    prompt3_res varchar(140),
+    prompt1_res varchar(140) DEFAULT '',
+    prompt2_res varchar(140) DEFAULT '',
+    prompt3_res varchar(140) DEFAULT '',
     hate1 int REFERENCES hates,
     hate2 int REFERENCES hates,
     hate3 int REFERENCES hates,
@@ -41,9 +41,8 @@ CREATE TABLE users(
 );
 
 CREATE TABLE photos(
-    id serial PRIMARY KEY,
+    public_id varchar PRIMARY KEY,
     user_id int REFERENCES users,
-    public_id varchar,
     image_url varchar
 );
 
@@ -64,25 +63,13 @@ CREATE TABLE messages(
 
 CREATE TABLE likes(
     liker_id int REFERENCES users,
-    likee_id int REFERENCES users,
-    PRIMARY KEY(liker_id, likee_id)
+    likee_id int REFERENCES users
 );
 
-INSERT INTO users 
-    (username, 
-    pw,
-    first_name,
-    birthday,
-    user_sex,
-    sex_preference)
-VALUES
-    ('test1@test.com', 'test1', 'user A', '1996-08-11', 'male', 'female'),
-    ('test2@test.com', 'test2', 'user B', '1996-06-07', 'female', 'male');
-INSERT INTO matches
-    (user1_id, user2_id)
-VALUES
-    (1,2);
-
+CREATE TABLE dislikes(
+    disliker_id INT REFERENCES users,
+    dislikee_id INT REFERENCES users
+);
 
 INSERT INTO prompts
     (prompt)
@@ -143,7 +130,6 @@ VALUES
     ('animals', 'birds 🐦'),
     ('animals', 'bugs 🐛'),
     ('animals', 'rodents 🐭');
-
 
 
     
