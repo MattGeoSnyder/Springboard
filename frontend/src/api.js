@@ -26,14 +26,44 @@ class API {
         return user;
     }
 
+    static async getUserById(userId) {
+        let user = await this.request(`/users/${userId}`);
+        return user;
+    }
+
+    static async getUserIds({ userId, offset }) {
+        let userIds = await this.request(`/users/${userId}/users`, { offset });
+        return userIds;
+    }
+
     static async getPrompts() {
         let prompts = await this.request('/prompts');
         return prompts;
     }
 
+    static async getPromptById(promptId) {
+        let prompt = await this.request(`/prompts/${promptId}`);
+        return prompt;
+    }
+
     static async getHates() {
         let hates = await this.request('/hates');
         return hates;
+    }
+
+    static async getHateById(hateId) {
+        let hate = await this.request(`/hates/${hateId}`);
+        return hate;
+    }
+
+    static async getUserPhotoById(username, name) {
+        let photo = await this.request(`/images/${username}/${name}`);
+        return photo;
+    }
+
+    static async getUserPhotos(userId) {
+        let photos = await this.request(`/users/${userId}/photos`);
+        return photos;
     }
 
     static async getMatches(userId) {
@@ -52,7 +82,7 @@ class API {
     }
 
     static async addBio(bioData, userId) {
-        let bio = await this.request(`/users/${userId}/bio`, bioData, 'post');
+        let bio = await this.request(`/users/${userId}/bio`, { bioData }, 'post');
         return bio;
     }
 

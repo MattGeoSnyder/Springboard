@@ -1,16 +1,24 @@
 #home-container {
-    display: flex;
+    overflow-x: hidden;
+    position: relative;
 
-    height: 100%;
-    width: 100%;
+    grid-row: 2 / -1;
 }
 
 #message-sidebar {
     width: 30%;
     height: 100%;
 
+    position: absolute;
+
+    right: 0;
+
+    background-color: var(--main-bg-color-solid);
+
     border-left: 2px solid black;
     display: flex;
     flex-direction: column;
+
+    z-index: 10;
 }
   

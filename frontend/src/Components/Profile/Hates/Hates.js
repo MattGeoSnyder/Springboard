@@ -1,15 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { setActive } from '../../store/reducers/hatesSidebar';
-import Hate from './Hate';
-import API from '../../api';
+import { setActive } from '../../../store/reducers/hatesSidebar';
+import Hate from '../Hate';
+import API from '../../../api';
 import { v4 as uuid } from 'uuid';
 import './Hates.css';
 
 
 const Hates = () => {
 
-  const [ hates, setHates ] = useState({});
+  const [ hates, setHates ] = useState([]);
   const active = useSelector(state => state.hatesSidebar.active)
   const dispatch = useDispatch();
 

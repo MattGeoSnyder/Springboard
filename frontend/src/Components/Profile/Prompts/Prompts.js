@@ -1,14 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { postPrompts } from '../../store/reducers/profileForm';
-import API from '../../api';
+import API from '../../../api';
 import Prompt from './Prompt';
 import './Prompts.css';
 import { v4 as uuid } from 'uuid';
 
 const Prompts = () => {
-  const dispatch = useDispatch();
-
   const [prompts, setPrompts] = useState([]);
 
   // const userPrompts = useSelector(state => state.profileForm.formData.prompts);

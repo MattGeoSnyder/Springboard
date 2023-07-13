@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { addHate, removeHate } from '../../store/reducers/profileForm';
+import './Hate.css';
 
 const Hate = ({ hate, edit }) => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const Hate = ({ hate, edit }) => {
 
   return (
     <div className={`hate ${active ? 'active' : ''}`}onClick={handleClick}>
-      {hate.hate}
+      {hate?.hate}
       {edit && active && <span><i className="fa-solid fa-x del"></i></span>}
     </div>
   )

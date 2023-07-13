@@ -1,34 +1,54 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { submitForm } from "../../store/reducers/profileForm";
-import Photos from "./Photos";
-import BioSection from "./BioSection";
-import Prompts from './Prompts';
-import Hates from "./Hates";
-import Overlay from "./Overlay";
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserById, setStatus, setEditPermissions } from '../../store/reducers/currentUser';
+import { setDefault } from '../../store/reducers/profileForm';
+import Photos from "./Photos/Photos";
+import BioSection from "./BioSection/BioSection";
+import Prompts from './Prompts/Prompts';
+import Hates from "./Hates/Hates";
+import Overlay from "./Overlay/Overlay";
 import './Profile.css'
 
-
-const Profile = () => {
-  const user = useSelector(state => (state.user.testuser));
+const Profile = ({ currentUserId }) => {
   const dispatch = useDispatch();
+  const userId = useSelector(state => state.user.user.id);
+  const currentUser = useSelector(state => state.currentUser.user);
+  const status = useSelector(state => state.currentUser.status);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(submitForm());
-    console.log('submitting...')
-  }
+  console.log(userId, currentUserId);
+  
+  useEffect(() => {
+    if (userId === currentUserId) {
+      dispatch(setEditPermissions(true));
+    }
+  }, [userId, currentUserId, dispatch]);
+
+  useEffect(() => {
+    const { bio, hates, prompts }  = currentUser;
+    dispatch(setDefault({ bio, hates, prompts }));
+  }, [currentUser, dispatch]);
+  
+  useEffect(() => {
+    if (status === 'success' || status === 'rejected') {
+      setTimeout(() => {
+        dispatch(setStatus('idle'));
+      }, 3000);
+    }
+  }, [status, dispatch]);
+
+  useEffect(() => {
+      dispatch(getUserById(currentUserId));
+  }, [currentUserId, dispatch]);
 
   return (
-    <form  id="profile-form" encType="multipart/form-data" onSubmit={handleSubmit}>
+    
       <div id="profile-page" >
-          <BioSection user={user}/>
-          <Photos user={user}/>
-          <Prompts user={user}/>
+          <BioSection user={currentUser}/>
+          <Photos user={currentUser}/>
+          <Prompts user={currentUser}/>
           <Hates />
           <Overlay />
       </div>
-    </form>
   )
 }
 

@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setOverlayActive } from '../../store/reducers/overlay';
+import { setOverlayActive } from '../../../store/reducers/overlay';
 import './Overlay.css';
 
 const Overlay = () => {

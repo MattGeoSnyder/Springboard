@@ -14,6 +14,7 @@ class CloudinaryAPI {
 
   static async uploadImage(file, options={}) {
     const { signature } = (await this.requestSignature(options));
+    console.log(signature);
     const formData = new FormData();
     formData.append('timestamp', Math.floor(Date.now()/1000));
     formData.append('signature', signature);
@@ -22,7 +23,7 @@ class CloudinaryAPI {
     
     Object.entries(options).forEach(([key, val]) => {
       formData.append(key,val);
-    }) 
+    }); 
 
     const res = await axios.post(`${CLOUDINARY_BASE_URL}/${CLOUD_NAME}/image/upload`, formData, {validateStatus: (status) => status < 500});
     return res.data;

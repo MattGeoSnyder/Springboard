@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { changePrompt, postPrompt } from '../../store/reducers/profileForm';
+import { changePrompt } from '../../../store/reducers/profileForm';
 import { useState, useEffect, useMemo } from 'react';
+import API from '../../../api';
 import PromptOption from './PromptOption';
 import { v4 as uuid } from 'uuid';
 import './Prompt.css';
@@ -9,33 +10,41 @@ import './Prompt.css';
 //There is a crucial snippet of CSS to make this work.
 //See Prompt.css:16
 
-const Prompt = ({ prompts, name: name, order="", idx, value }) => {
-  const defaultPrompt = { id: 0, prompt: `Choose your ${order} prompt`};
-  const dispatch = useDispatch();
+const Prompt = ({ prompts, name, order="" }) => {
+  const defaultPrompt = useMemo(() => ({id: 0, prompt: `Choose your ${order} prompt`}), [order]);
 
+  const dispatch = useDispatch();
+  
   const [ optionsActive, setOptionsActive ] = useState(false);
   const [ prompt, setPrompt ] = useState(defaultPrompt);
   const [ promptChosen, setPromptChosen ] = useState(prompt.id !== 0);
   const [ textareaActive, setTextareaActive ] = useState(false);
 
-  const userId = useSelector(state => state.user.testuser.id);
-  const status = useSelector(state => state.profileForm.status);
+  const promptId = useSelector(state => state.profileForm.formData.prompts[name]?.id);
   const promptRes = useSelector(state => (
-    state.profileForm.formData[name].promptRes));
+    state.profileForm.formData.prompts[name]?.promptRes));
+
+  const editable = useSelector(state => state.currentUser.editable);
+
+  useEffect(() => {
+    if(promptId) {
+      const getPromptById = async () => {
+        const prompt = await API.getPromptById(promptId);
+        setPrompt(prompt);
+      }
+      
+      getPromptById();
+    } 
+  }, [promptId, setPrompt]);
+  
 
   useEffect(() => {
     setPromptChosen(prompt.id !== 0);
-  }, [prompt]);
+  }, [prompt, setPromptChosen]);
 
   useEffect(() => {
     setTextareaActive(promptChosen || promptRes);
-  }, [promptChosen, promptRes]);
-
-  useEffect(() => {
-    if (status === 'pending' && promptRes) {
-      dispatch(postPrompt({ name, id: prompt.id, promptRes, userId }));
-    }
-  }, [status, prompt, promptRes, userId])
+  }, [promptChosen, promptRes, setTextareaActive]);
 
   //Event listener for the document. 
   //This will unselect options when we click off of the prompt.
@@ -43,7 +52,6 @@ const Prompt = ({ prompts, name: name, order="", idx, value }) => {
   //off of the prompt.
   useEffect(() => {  
     const optionsOff = (e) => {
-      console.log(e.target);
       if (e.target.id !== name){
         setOptionsActive(false);
       }
@@ -56,7 +64,7 @@ const Prompt = ({ prompts, name: name, order="", idx, value }) => {
     document.addEventListener('click', optionsOff);
 
     return () => {document.removeEventListener('click', optionsOff)};
-  }, [promptRes]);
+  }, [promptRes, defaultPrompt, name]);
 
   //Selects the prompt when we click on it
   const selectPrompt = (e) => {
@@ -69,18 +77,26 @@ const Prompt = ({ prompts, name: name, order="", idx, value }) => {
     dispatch(changePrompt({ name, id: prompt.id, promptRes }));
   }
 
+  const renderText = () => {
+    const textarea = <textarea
+      className={`prompt-input ${textareaActive ? 'active' : ''}`}
+      id={`${name}-input`}
+      name={`${name}-input`}
+      onChange={handleChange}
+      value={promptRes}
+    />
+
+    const div = <div>{promptRes}</div>
+
+    return editable ? textarea : div;
+  }
+
   return (
     <div id={name} className='prompt' onClick={selectPrompt}>
-      <i className="fa-solid fa-plus"></i>
+      {editable && <i className="fa-solid fa-plus"></i>}
       <div><p>{prompt.prompt}</p></div>
-      <textarea
-        className={`prompt-input ${textareaActive ? 'active' : ''}`}
-        id={`${name}-input`}
-        name={`${name}-input`}
-        onChange={handleChange}
-        value={promptRes}
-      />
-        {<div className={`options ${optionsActive ? 'active' : ""}`}>
+      {renderText()}
+        {editable && <div className={`options ${optionsActive ? 'active' : ""}`}>
         {prompts.map((prompt) => (
           <PromptOption key={uuid()} prompt={prompt} setPrompt={setPrompt} setActive={setOptionsActive}/>
         ))}
