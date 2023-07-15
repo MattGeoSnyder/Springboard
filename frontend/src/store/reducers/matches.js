@@ -18,33 +18,37 @@ const queryMoreMessages = createAsyncThunk('/matches/queryMoreMessages', async (
 
 export const matches = createSlice({
     name: 'matches',
-    initialState: {},
+    initialState: {
+        status: 'idle',
+        active: false,
+        matches: {}
+    },
     reducers: {
         addNewMessage: (state, action) => {
             const { matchId, message } = action.payload;
             const messages = [...state[matchId].messages];
             messages.unshift(message);
-            state[matchId].messages = messages;
+            state.matches[matchId].messages = messages;
             return state;
         }
     },
     extraReducers(builder) {
         builder.addCase(fetchMatches.fulfilled, (state, action) => {
             const { matches } = action.payload;
-            state = matches;
+            state.matches = matches;
             return state;
         });
         builder.addCase(fetchConversation.fulfilled, (state, action) => {
             const { matchId, messages } = action.payload;
-            state[matchId].messages = messages;
+            state.matches[matchId].messages = messages;
         });
         builder.addCase(queryMoreMessages.fulfilled, (state, action) => {
             const { matchId, messages } = action.payload;
-            state[matchId].messages = state[matchId].messages.concat(messages);
+            state.matches[matchId].messages = state[matchId].messages.concat(messages);
         });
     }
 });
 
 export { fetchMatches, fetchConversation, queryMoreMessages }
-export const { addNewMessage } = matches.actions;
+export const { addNewMessage, setActive } = matches.actions;
 export default matches.reducer;

@@ -18,7 +18,7 @@ const Hates = () => {
       const res = await API.getHates();
       setHates(res);
     }
-
+    
     queryHates();
   }, []);
 

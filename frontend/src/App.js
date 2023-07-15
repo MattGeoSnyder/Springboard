@@ -9,6 +9,7 @@ import Messages from './Components/UserHome/Messages/Messages';
 import Signup from './Components/Signup/Signup';
 import Login from './Components/Login/Login';
 import Profile from './Components/Profile/Profile';
+import Hates from './Components/Profile/Hates/Hates';
 
 function App() {
   const userId = useSelector(state => state.user.user.id);
@@ -24,7 +25,9 @@ function App() {
         <Route path='matches/:matchId' element={<Messages/>}/>
         <Route path='*'/>
       </Route>
-      <Route path='/users/:userId/profile' element={<Profile currentUserId={userId}/>} />
+      <Route path='/users/:userId/profile' element={<Profile currentUserId={userId}/>} >
+        <Route path='' element={<Hates />} />
+      </Route>
       <Route path='*'/> {/* Not Found Route */}
     </Routes>
   );
