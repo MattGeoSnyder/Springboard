@@ -7,7 +7,6 @@ import bcrypt from 'bcrypt';
 import db from '../db.js';
 import ExpressError from '../helpers/expressError.js';
 import { BCRYPT_WORK_FACTOR } from "../config.js";
-import format from 'pg-format';
 
 class User {
 

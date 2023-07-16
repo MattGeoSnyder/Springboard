@@ -12,7 +12,7 @@ router.get('/:userId', async function (req, res, next) {
     } catch (error) {
         next(error);
     }
-})
+});
 
 router.get('/:userId/users', async function(req, res, next) {
     const { userId } = req.params;
@@ -42,7 +42,7 @@ router.get('/:userId/matches', async function(req, res, next) {
         let matches = await User.queryMatches(userId);
         return res.json({ matches });
     } catch (error) {
-        return next(error);
+        next(error);
     }
 });
 
@@ -54,7 +54,7 @@ router.post('/:userId/bio', async function (req, res, next) {
         let query = await User.addBio({ bio: bioData, userId });
         return res.status(201).json(query);
     } catch (error) {
-        return next(error);
+        next(error);
     }
 });
 
@@ -77,7 +77,7 @@ router.post('/:userId/prompts', async function (req, res, next) {
         let query = await User.addPrompt(promptData, userId);
         return res.status(201).json(query);
     } catch (error) {
-        return next(error);
+        next(error);
     }
 });
 

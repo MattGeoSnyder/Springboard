@@ -10,6 +10,8 @@ import messageRoutes from './routes/messages.js';
 import imageRoutes from './routes/images.js';
 import promptRoutes from './routes/prompts.js';
 import hatesRoutes from './routes/hates.js';
+import likeRoutes from './routes/likes.js';
+import dislikeRoutes from './routes/dislikes.js';
 import Message from './models/message.js';
 
 import cors from 'cors';
@@ -26,6 +28,8 @@ app.use('/messages', messageRoutes);
 app.use('/images', imageRoutes);
 app.use('/prompts', promptRoutes);
 app.use('/hates', hatesRoutes);
+app.use('/likes', likeRoutes);
+app.use('/dislikes', dislikeRoutes);
 
 app.ws('/chat/:matchId', function(ws, req, next){
     try {
