@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { loadFeed } from '../../store/reducers/feed';
+import { setLikes } from '../../store/reducers/currentUser'
+import { loadFeed, getNextUser } from '../../store/reducers/feed';
 import { useParams } from 'react-router-dom';
 import Profile from "../Profile/Profile"
 
@@ -11,6 +12,7 @@ const UserHome = () => {
     const dispatch = useDispatch();
 
     const [offset, setOffset] = useState(0);
+    const likes = useSelector(state => state.currentUser.likes);
     const userIds = useSelector(state => state.feed.userIds);
 
     useEffect(() => {
@@ -20,8 +22,17 @@ const UserHome = () => {
         }
     }, [userIds, dispatch]);
 
+    useEffect(() => {
+        if (likes !== null) {
+            setTimeout(() => {
+                dispatch(getNextUser());
+                dispatch(setLikes(null));
+            }, 250);
+        }
+    }, [likes, dispatch])
+
     return (
-        <Profile currentUserId={userIds[0]}/>
+        <Profile id={userIds[0]} />
     )
 }
 

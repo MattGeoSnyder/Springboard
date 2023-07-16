@@ -8,11 +8,13 @@ const getUserById = createAsyncThunk('/currentUser/getById', async (userId) => {
   return { user, photos, hates }
 });
 
+
 export const currentUser = createSlice({
   name: 'currentUser',
   initialState: {
     status: 'idle',
     editable: false,
+    likes: null,
     user: {
       id: 3, 
       first_name: 'Rachel',
@@ -30,6 +32,9 @@ export const currentUser = createSlice({
     },
     setEditPermissions: (state, action) => {
       state.editable = action.payload;
+    },
+    setLikes: (state, action) => {
+      state.likes = action.payload;
     }
   },
   extraReducers(builder) {
@@ -46,4 +51,4 @@ export const currentUser = createSlice({
 
 export { getUserById }
 export default currentUser.reducer;
-export const { setStatus, setEditPermissions } = currentUser.actions;
+export const { setStatus, setEditPermissions, setLikes } = currentUser.actions;

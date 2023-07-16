@@ -5,7 +5,7 @@ import './Conversations.css';
 
 const Conversations = () => {
 
-    const matches = useSelector(state => state.matches);
+    const matches = useSelector(state => state.matches.matches);
 
     return (
         <>

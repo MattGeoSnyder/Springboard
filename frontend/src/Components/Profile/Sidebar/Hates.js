@@ -9,18 +9,20 @@ import './Hates.css';
 
 const Hates = () => {
 
-  const [ hates, setHates ] = useState([]);
-  const active = useSelector(state => state.hatesSidebar.active)
+  // const [ hates, setHates ] = useState([]);
+  const active = useSelector(state => state.hatesSidebar.active);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const queryHates = async () => {
-      const res = await API.getHates();
-      setHates(res);
-    }
+  const hates = useSelector(state => state.hatesSidebar.hates);
+
+  // useEffect(() => {
+  //   const queryHates = async () => {
+  //     const res = await API.getHates();
+  //     setHates(res);
+  //   }
     
-    queryHates();
-  }, []);
+  //   queryHates();
+  // }, []);
 
   const hide = (e) => {
     e.stopPropagation();

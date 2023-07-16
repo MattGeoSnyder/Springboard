@@ -18,7 +18,7 @@ const Prompt = ({ prompts, name, order="" }) => {
   const [ optionsActive, setOptionsActive ] = useState(false);
   const [ prompt, setPrompt ] = useState(defaultPrompt);
   const [ promptChosen, setPromptChosen ] = useState(prompt.id !== 0);
-  const [ textareaActive, setTextareaActive ] = useState(false);
+  // const [ textareaActive, setTextareaActive ] = useState(false);
 
   const promptId = useSelector(state => state.profileForm.formData.prompts[name]?.id);
   const promptRes = useSelector(state => (
@@ -42,9 +42,12 @@ const Prompt = ({ prompts, name, order="" }) => {
     setPromptChosen(prompt.id !== 0);
   }, [prompt, setPromptChosen]);
 
-  useEffect(() => {
-    setTextareaActive(promptChosen || promptRes);
-  }, [promptChosen, promptRes, setTextareaActive]);
+  // useEffect(() => {
+  //   setTextareaActive(promptChosen || promptRes);
+  // }, [promptChosen, promptRes, setTextareaActive]);
+
+  const textareaActive = useMemo(() => promptChosen || promptRes, [promptChosen, promptRes]);
+
 
   //Event listener for the document. 
   //This will unselect options when we click off of the prompt.
@@ -52,6 +55,8 @@ const Prompt = ({ prompts, name, order="" }) => {
   //off of the prompt.
   useEffect(() => {  
     const optionsOff = (e) => {
+      e.stopPropagation();
+      console.log(e.target);
       if (e.target.id !== name){
         setOptionsActive(false);
       }

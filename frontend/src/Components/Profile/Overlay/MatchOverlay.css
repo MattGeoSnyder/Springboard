@@ -1,0 +1,52 @@
+#match-overlay {
+  background-color: var(--main-bg-color-solid);
+  width: 33%;
+  height: fit-content;
+  border-radius: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 100;
+}
+
+#match-overlay #match-message {
+  font-size: 40px;
+  text-align: center;
+}
+
+#match-overlay #image-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2rem;
+}
+
+#match-overlay #image-wrapper img {
+  width: 125px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background-position: center;
+  border-radius: 999%;
+
+  border: 1px solid gray;
+  box-shadow: 5px 5px 10px gray;
+}
+
+#match-overlay #options-wrapper {
+  width: 90%;
+  display: block;
+  margin: 0 auto;
+  bottom: 0;
+}
+
+#match-overlay #options {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#match-overlay #options p {
+  pointer-events: fill;
+  cursor: pointer;
+  display: block;
+  color: gray;
+}

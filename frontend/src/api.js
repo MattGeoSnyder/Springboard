@@ -97,6 +97,16 @@ class API {
         return prompt;
     }
 
+    static async like(likerId, likeeId) {
+        let result = await this.request(`/likes/${likerId}/${likeeId}`, {} ,'post');
+        return result;
+    }
+
+    static async dislike(dislikerId, dislikeeId) {
+        let dislike = await this.request(`/dislikes/${dislikerId}/${dislikeeId}`, {}, 'post');
+        return dislike;
+    }
+
 }
 
 export default API;

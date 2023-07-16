@@ -14,6 +14,18 @@ const fetchConversation = createAsyncThunk('/matches/fetchConversation', async (
 const queryMoreMessages = createAsyncThunk('/matches/queryMoreMessages', async ({ matchId, offset }) => {
     const messages = await API.getConversation(matchId, offset);
     return messages;
+});
+
+const addLike = createAsyncThunk('/matches/addLike', async (payload) => {
+    const { userId, currentUserId } = payload;
+    const res = await API.like(userId, currentUserId);
+    return res;
+});
+  
+const addDislike = createAsyncThunk('matches/addDislike', async (payload) => {
+    const { userId, currentUserId } = payload;
+    const dislike = await API.dislike(userId, currentUserId);
+    return dislike;
 })
 
 export const matches = createSlice({
@@ -46,9 +58,16 @@ export const matches = createSlice({
             const { matchId, messages } = action.payload;
             state.matches[matchId].messages = state[matchId].messages.concat(messages);
         });
+        builder.addCase(addLike.fulfilled, (state, action) => {
+            const { match } = action.payload;
+            if (!match) return;
+            
+            const { id, user } = match;
+            state.matches[id] = user;
+        });
     }
 });
 
-export { fetchMatches, fetchConversation, queryMoreMessages }
+export { fetchMatches, fetchConversation, queryMoreMessages, addLike, addDislike }
 export const { addNewMessage, setActive } = matches.actions;
 export default matches.reducer;

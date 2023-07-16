@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeBio } from '../../../store/reducers/profileForm';
 import ProfileButton from './ProfileButton';
@@ -12,8 +13,6 @@ const BioSection = ({ user={} }) => {
 
   const bio = useSelector(state => state.profileForm.formData.bio);
   const editable = useSelector(state => state.currentUser.editable);
-
-  console.log(editable);
 
   const handleChange = (e) => {
     dispatch(changeBio(e.target.value));
@@ -56,6 +55,6 @@ const BioSection = ({ user={} }) => {
       </div>
     </div>
   )
-}
+};
 
 export default BioSection;

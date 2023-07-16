@@ -7,11 +7,12 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/store.js';
-import { fetchMatches } from './store/reducers/matches';
+import { fetchMatches, fetchHates } from './store/reducers/hatesSidebar';
 
 
 //For now, we're fetching the matches for user with userId 1
 store.dispatch(fetchMatches(1));
+store.dispatch(fetchHates());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

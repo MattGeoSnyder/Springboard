@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setActive } from '../../../store/reducers/hatesSidebar';
+import { setActive, setContent } from '../../../store/reducers/hatesSidebar';
 import { Link } from 'react-router-dom';
 import Hate from '../Hate';
 import { v4 as uuid } from 'uuid';
@@ -14,6 +14,7 @@ const UserHates = () => {
   const showHates = (e) => {
     e.stopPropagation();
     if (editable) {
+      dispatch(setContent('hates'));
       dispatch(setActive(true));
     }
   }

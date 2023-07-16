@@ -5,7 +5,9 @@ const Photos = () => {
 
 
   return (
-    <div id='photos'>
+    <div id='photos'
+      onClick={(e) => {}}
+    >
       <PhotoInput name='photo1' photoLabel="Profile Photo" />
       <PhotoInput name='photo2' photoLabel="Photo 2" />
       <PhotoInput name='photo3' photoLabel="Photo 3" />

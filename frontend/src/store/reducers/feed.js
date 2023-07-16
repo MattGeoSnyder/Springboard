@@ -12,7 +12,11 @@ export const feed = createSlice({
     status: 'idle',
     userIds: []
   },
-  reducers: {},
+  reducers: {
+    getNextUser: (state, action) =>{
+      state.userIds.shift();
+    }
+  },
   extraReducers(builder) {
     builder.addCase(loadFeed.pending, (state, action) => {
       state.status = 'pending';
@@ -26,3 +30,4 @@ export const feed = createSlice({
 
 export default feed.reducer;
 export { loadFeed }
+export const { getNextUser } = feed.actions;

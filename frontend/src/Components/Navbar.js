@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setActive } from '../store/reducers/hatesSidebar';
+import { setActive, setContent } from '../store/reducers/hatesSidebar';
 
 import './Navbar.css';
 
@@ -11,6 +11,7 @@ const Navbar = () => {
   
   const handleClick = (e) => {
     console.log('showing sidebar');
+    dispatch(setContent('conversations'));
     dispatch(setActive(!active));
   }
 
