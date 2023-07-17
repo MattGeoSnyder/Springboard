@@ -1,10 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import API from '../../api';
 
+const PROFILE_PIC_BASE_URL = `https:randomuser.me/portraits`;
+
 const getUserById = createAsyncThunk('/currentUser/getById', async (userId) => {
   const user = await API.getUserById(userId);
-  const photos = await API.getUserPhotos(userId);
+  let photos = await API.getUserPhotos(userId);
   const hates = await Promise.all(user.hates.map(hateId => API.getHateById(hateId)));
+
+  if (userId < 102) {
+    const sex = user.user_sex === 'male' ? 'men' : 'women';
+    photos = { photo1: { public_id: `${userId}/photo1`, image_url: `${PROFILE_PIC_BASE_URL}/${sex}/${userId}` } };
+  }
   return { user, photos, hates }
 });
 

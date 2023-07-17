@@ -51,7 +51,6 @@ const MessageForm = ({ ws }) => {
         }
     }
 
-
     return (
         <div id='message-form'>
             <form onSubmit={handleSubmit} ref={form}>

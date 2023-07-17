@@ -37,7 +37,11 @@ const updateProfile = createAsyncThunk('/user/updateProfile', async (payload, { 
         return rejectWithValue("Your profile cannot be updated at this time");
     }
 });
-  
+
+const getUserById = createAsyncThunk('/user/getUserById', async (userId) => {
+    const user = await API.getUserById(userId);
+    return user;
+})
 
 export const user = createSlice({
     name: 'user',
@@ -108,9 +112,13 @@ export const user = createSlice({
             state.status = 'rejected';
             state.errMsg = action.payload;
         });
+        builder.addCase(getUserById.fulfilled, (state, action) => {
+            state.user = action.payload;
+            state.status = 'success';
+        });
     }
 });
 
-export { registerUser, authUser, uploadPhoto, updateProfile } 
+export { registerUser, authUser, uploadPhoto, updateProfile, getUserById } 
 export const { addHate, removeHate, setStatus } = user.actions;
 export default user.reducer;

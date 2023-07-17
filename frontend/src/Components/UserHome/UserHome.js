@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import { getUserById } from '../../store/reducers/user';
+import { fetchMatches } from '../../store/reducers/matches';
 import { setLikes } from '../../store/reducers/currentUser'
 import { loadFeed, getNextUser } from '../../store/reducers/feed';
 import { useParams } from 'react-router-dom';
@@ -14,6 +16,15 @@ const UserHome = () => {
     const [offset, setOffset] = useState(0);
     const likes = useSelector(state => state.currentUser.likes);
     const userIds = useSelector(state => state.feed.userIds);
+
+    useEffect(() => {
+        const loadUserOnLogin = () => {
+            dispatch(getUserById(userId));
+            dispatch(fetchMatches(userId));
+        }
+
+        loadUserOnLogin()
+    },[userId]);
 
     useEffect(() => {
         if (userIds.length === 0) {

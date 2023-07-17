@@ -1,27 +1,54 @@
 #message-form {
     min-height: 100px;
 
-    border-top: 1px solid black;
     flex-grow: .1;
+
+    background-color: var(--accent-one);
+    width: 100%;
+
+    border-radius: 10px;
+
+    box-shadow: 0px 0px 5px black;
 }
 
 #message-form form {
     height: 100%;
 
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
     align-items: center;
     padding-left: 20px;
+
+    justify-content: space-between;
 }
 
 #message-form #content {
-    border: ridge 1px;
     padding: 5px;
     min-height: 50px;
     overflow: auto;
 
-    flex: 1;
     margin: auto 0;
+
+    flex: 1;
+
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 2px black;
+}
+
+#message-form #content:focus {
+    outline: none;
+    box-shadow: 0 0 5px inset black;
+}
+
+#message-form button {
+    width: 5%;
+    height: fit-content;
+    padding: 5px 0;
+    margin: 0 20px;
+    font-size: 20px;
+    background-color: var(--main-bg-color-solid);
+    border: none;
+    border-radius: 5px;
 }
 

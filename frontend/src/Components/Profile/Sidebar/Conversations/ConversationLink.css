@@ -1,13 +1,39 @@
 .conversation-link {
-    /* width: 100%; */
+    width: 90%;
     padding: 20px;
     height: 50px;
 
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
 
-    border-bottom: 1px solid black;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 2px 1px 8px gray;
     cursor: pointer;
+    display: flex;
+    gap: 10px;
+    position: relative;
+}
+
+.conversation-link img {
+    height: 90%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 999%;
+}
+
+.conversation-link .conversation-info {
+    display: inline-block;
+}
+
+.conversation-link p {
+    display: inline-block;
+    margin: 0;
+}
+
+.conversation-link i {
+    position: absolute;
+    right: 20px;
+    align-self: center;
+    color: gray;
 }
 

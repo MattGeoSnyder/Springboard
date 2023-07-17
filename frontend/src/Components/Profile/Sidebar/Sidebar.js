@@ -1,6 +1,8 @@
 import Hates from './Hates';
 import Conversations from './Conversations/Conversations';
 import { useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
+import './Sidebar.css';
 
 const Sidebar = () => {
 
@@ -13,6 +15,8 @@ const Sidebar = () => {
         return <Hates />    
       case 'conversations':
         return <Conversations />
+      case 'messages':
+        return <Outlet />
       default:
         return <></>
     }

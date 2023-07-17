@@ -38,7 +38,7 @@ export const matches = createSlice({
     reducers: {
         addNewMessage: (state, action) => {
             const { matchId, message } = action.payload;
-            const messages = [...state[matchId].messages];
+            const messages = [...state.matches[matchId].messages];
             messages.unshift(message);
             state.matches[matchId].messages = messages;
             return state;
@@ -56,14 +56,14 @@ export const matches = createSlice({
         });
         builder.addCase(queryMoreMessages.fulfilled, (state, action) => {
             const { matchId, messages } = action.payload;
-            state.matches[matchId].messages = state[matchId].messages.concat(messages);
+            state.matches[matchId].messages = state.matches[matchId].messages.concat(messages);
         });
         builder.addCase(addLike.fulfilled, (state, action) => {
             const { match } = action.payload;
             if (!match) return;
             
             const { id, user } = match;
-            state.matches[id] = user;
+            state.matches[id] = {...user, messages: []};
         });
     }
 });

@@ -17,6 +17,7 @@ const PhotoInput = ({ name, photoLabel }) => {
   const [ hasImage, setHasImage ] = useState(false);
   const input = useRef(null);
 
+  //get photo on mount
   useEffect(() => {
     const getPhoto = async () => {
       const photo = await API.getUserPhotoById(username, name);
@@ -25,18 +26,22 @@ const PhotoInput = ({ name, photoLabel }) => {
         setHasImage(true);
       }
     }
-    
+
+    // set photo to url for bots
     if (userId < 101 && name === 'photo1') {
       const sex = userSex === "male" ? 'men' : 'women';
       const url = `https:randomuser.me/portraits/${sex}/${userId}.jpg`
       setImage(url);
       setHasImage(true);
-    } else {
+    //get photo by public id for regular user
+    } else if (userId) {
       getPhoto();
     }
 
   }, [username, userSex, userId, name])
 
+  // upload photo when update profile button is clicked
+  // triggers status pending
   useEffect(() => {
     const options = {
       public_id: name,
@@ -50,7 +55,7 @@ const PhotoInput = ({ name, photoLabel }) => {
     if (status === 'pending' && input.current.value) {
       dispatch(uploadPhoto({ image: input.current.files[0], options, name, userId }))
     }
-  }, [hasImage, status, input, userId, name, username, dispatch])
+  }, [hasImage, status, input, userId, name, username, dispatch]);
 
   const handleChange = (e) => {
     setImage(URL.createObjectURL(e.target.files[0]));

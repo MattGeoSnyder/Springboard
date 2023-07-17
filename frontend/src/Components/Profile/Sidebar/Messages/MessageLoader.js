@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { queryMoreMessages } from '../../../store/reducers/matches';
+import { queryMoreMessages } from '../../../../store/reducers/matches';
 import './MessageLoader.css';
 
 const MessageLoader = ({ offset }) => {

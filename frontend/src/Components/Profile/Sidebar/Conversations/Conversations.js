@@ -8,14 +8,15 @@ const Conversations = () => {
     const matches = useSelector(state => state.matches.matches);
 
     return (
-        <>
+        <div id='conversations'>
             <h2 id='conversation-header'>
                 Matches
             </h2>
-            {Object.entries(matches).map(([matchId, match]) => (
-                <ConversationLink key={uuid()} firstName={match.first_name} matchId={matchId} />
+            <hr />
+            {Object.keys(matches).map((matchId) => (
+                <ConversationLink key={uuid()} matchId={matchId} />
             ))}
-        </>
+        </div>
 
     )
 }
