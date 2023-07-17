@@ -62,7 +62,7 @@ class User {
 
     static async getUserById(userId) {
         const result = await db.query(`SELECT 
-                                        id,
+                                        users.id,
                                         first_name,
                                         birthday,
                                         user_sex,
@@ -78,11 +78,20 @@ class User {
                                         hate2,
                                         hate3,
                                         hate4,
-                                        hate5
+                                        hate5,
+                                        json_agg(photos.*) AS photos_arr
                                     FROM 
                                         users
-                                    WHERE id = $1`, [userId]);
+                                    LEFT JOIN
+                                        photos
+                                    ON
+                                        users.id = photos.user_id
+                                    WHERE 
+                                        id = $1
+                                    GROUP BY 
+                                        users.id;`, [userId]);
         const data = result.rows[0];
+        console.log(data);
         const { id, first_name, birthday, user_sex, sex_preference, bio } = data;
         const prompts = {}
         for (let i = 1; i <=3; i++) {
@@ -94,7 +103,11 @@ class User {
             }
         }
         const hates = [data.hate1, data.hate2, data.hate3, data.hate4, data.hate5].filter((val) => val !== null);
-        return { id, first_name, birthday, user_sex, sex_preference, bio, prompts, hates }
+        const { photos_arr } = data;
+        const photos = photos_arr.reduce((acc, photo, i) => {
+            return ({...acc, [`photo${i+1}`]: photo });
+        }, {})
+        return { id, first_name, birthday, user_sex, sex_preference, bio, prompts, hates, photos }
     }
 
     // Selects matched users for given userId
@@ -115,17 +128,29 @@ class User {
 
                                     SELECT
                                         matchedUsers.id AS match_id,
-                                        users.*
+                                        users.*,
+                                        json_agg(photos.*) AS photos_arr
                                     FROM 
                                         matchedUsers
                                     JOIN 
                                         users 
-                                    ON users.id = matchedUsers.user_id;
-                                    `,[userId])
+                                    ON 
+                                        users.id = matchedUsers.user_id
+                                    LEFT JOIN
+                                        photos
+                                    ON 
+                                        users.id = photos.user_id
+                                    GROUP BY 
+                                        matchedUsers.id, users.id;
+                                    `,[userId]);
         
         return result.rows.reduce((acc, match) => {
             const { match_id, ...user } = match;
-            acc[match_id] = user;
+            const { photos_arr } = user;
+            const photos = photos_arr.reduce((acc, photo, i) => {
+                return ({...acc, [`photo${i+1}`]: photo});
+            }, {})
+            acc[match_id] = {...user, photos, messages: []};
             return acc;
         }, {});
     }
@@ -173,7 +198,7 @@ class User {
                                     ORDER BY 
                                         public_id`, [userId]);
         return result.rows.reduce((acc, value, i) => {
-         return ({...acc, [`photo${i+1}`]: value })   
+            return ({...acc, [`photo${i+1}`]: value })   
         }, {});
     }
 

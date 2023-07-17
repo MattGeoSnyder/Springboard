@@ -47,9 +47,12 @@ app.ws('/chat/:matchId', function(ws, req, next){
             }
         });
     } catch (error) {
-    
+        next(error);
     }
 
+    ws.on('connection', () => {
+        console.log('conneted to WS');
+    });
 });
 
 app.use(function (err, req, res, next) {
