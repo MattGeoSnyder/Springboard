@@ -1,3 +1,34 @@
 .message {
-    overflow-wrap: break-word;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.message.sent {
+    flex-direction: row-reverse;
+}
+
+.message-content {
+    display: block;
+    border-radius: 10px;
+    max-width: 50%;
+    padding: 10px;
+}
+
+.message-content.sent {
+    background-color: gray;
+}
+
+.message-content.received {
+    background-color: var(--accent-one);
+    color: white;
+}
+
+.time {
+    width: 100%;
+    color: gray;
+    font-size: 10px;
+}
+
+.time.sent {
+    text-align: end;
 }

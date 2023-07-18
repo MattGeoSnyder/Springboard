@@ -15,14 +15,13 @@ const Hates = () => {
 
   const hates = useSelector(state => state.hatesSidebar.hates);
 
-  // useEffect(() => {
-  //   const queryHates = async () => {
-  //     const res = await API.getHates();
-  //     setHates(res);
-  //   }
-    
-  //   queryHates();
-  // }, []);
+  const sortedHates = Object.values(hates).reduce((acc, hate) => {
+    if (hate.category in acc) {
+      return ({...acc, [hate.category]: [...acc[hate.category], hate.id]})
+    } else {
+      return ({...acc, [hate.category]: [hate.id]})
+    }
+  }, {})
 
   const hide = (e) => {
     e.stopPropagation();
@@ -32,12 +31,12 @@ const Hates = () => {
   return (
     <div id="hates" className={`${active ? 'active' : ''}`}>
       <span onClick={hide}><i className="fa-solid fa-x"></i></span>
-      {Object.entries(hates).map(([ category, hates ]) => (
+      {Object.entries(sortedHates).map(([category, hates]) => (
         <div key={uuid()} className='hate-category'>
           <h2 className='category-title'>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
           <div key={uuid()} className='hates-container'>
-            {hates.map((hate) => (
-              <Hate key={uuid()} hate={hate}/>
+            {hates.map((id) => (
+              <Hate key={uuid()} hateId={id}/>
             ))}
           </div>
         </div>

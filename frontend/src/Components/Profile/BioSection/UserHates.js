@@ -8,7 +8,7 @@ import './UserHates.css'
 const UserHates = () => {
   const dispatch = useDispatch();
 
-  const hates = useSelector(state => state.profileForm.formData.hates);
+  const hatesIds = useSelector(state => state.profileForm.formData.hates);
   const editable = useSelector(state => state.currentUser.editable);
 
   const showHates = (e) => {
@@ -22,10 +22,10 @@ const UserHates = () => {
   return (
     <div className="user-hates-container">
       <p>Hates</p>
-      {hates.length === 0 && <p>Click here to add what irks you</p>}
+      {hatesIds.length === 0 && <p>Click here to add what irks you</p>}
         <div className="user-hates" onClick={showHates}>
-          {hates.map((hate) => (
-            <Hate key={uuid()} hate={hate} edit={editable}/>
+          {hatesIds.map((id) => (
+            <Hate key={uuid()} hateId={id} edit={editable}/>
             ))}
         </div>  
     </div>

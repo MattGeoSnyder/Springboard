@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import CloudinaryAPI from '../../cloudinaryAPI';
 import API from '../../api.js';
+import { updateUserProfile, uploadPhoto } from '../thunks';
 
 const registerUser = createAsyncThunk('/user/registerUser', async (userData) => {
     const newUser = await API.signup(userData);
@@ -14,14 +14,6 @@ const authUser = createAsyncThunk('/user/authUser', async (userData, { rejectWit
         return rejectWithValue(error);
     }
     return res;
-});
-
-const uploadPhoto = createAsyncThunk('/user/uploadPhoto', async (payload) => {
-    const { image, options, name, userId } = payload;
-    console.log(name);
-    const res = await CloudinaryAPI.uploadImage(image, options);
-    const query = await API.addPhoto({ userId, publicId: res.public_id, imageUrl: res.secure_url });
-    return { name, ...query};
 });
 
 const updateProfile = createAsyncThunk('/user/updateProfile', async (payload, { rejectWithValue }) => {
@@ -52,18 +44,6 @@ export const user = createSlice({
             id: 3, 
             username: 'rachwake23',
             first_name: 'Rachel',
-            birthday: '2000-03-23',
-            user_sex: 'female',
-            sex_preference: 'male',
-            photos: {},
-            prompts: {},
-            hates: []
-        },
-        id: 1,
-        testuser: { 
-            id: 3, 
-            username: 'rachwake23',
-            first_name: 'Rachel', 
             birthday: '2000-03-23',
             user_sex: 'female',
             sex_preference: 'male',
@@ -101,24 +81,17 @@ export const user = createSlice({
             const { name, public_id, image_url } = action.payload;
             state.testuser.photos[name] = { publicId: public_id, image_url };
         });
-        builder.addCase(updateProfile.pending, (state, action) => {
-            state.status = 'pending';
-        });
-        builder.addCase(updateProfile.fulfilled, (state, action) => {
-            state.testuser = {...state.testuser, ...action.payload};
-            state.status = 'success';
-        });
-        builder.addCase(updateProfile.rejected, (state, action) => {
-            state.status = 'rejected';
-            state.errMsg = action.payload;
-        });
         builder.addCase(getUserById.fulfilled, (state, action) => {
             state.user = action.payload;
             state.status = 'success';
         });
+        builder.addCase(updateUserProfile.fulfilled, (state, action) => {
+            const { hates, bio, prompts } = action.payload;
+            state.user = {...state.user, hates, bio, prompts};
+        });
     }
 });
 
-export { registerUser, authUser, uploadPhoto, updateProfile, getUserById } 
+export { registerUser, authUser, updateProfile, getUserById } 
 export const { addHate, removeHate, setStatus } = user.actions;
 export default user.reducer;

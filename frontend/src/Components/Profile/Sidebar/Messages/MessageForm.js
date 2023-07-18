@@ -12,8 +12,8 @@ const MessageForm = ({ ws }) => {
 
     //info we need to send message
     const { matchId } = useParams();
-    const fromUser = useSelector(state => state.user?.id);
-    const toUser = useSelector(state => state.matches[matchId]?.id);
+    const fromUser = useSelector(state => state.user.user.id);
+    const toUser = useSelector(state => state.matches.matches[matchId].id);
 
     //initial state of form data
     const initialData = {
@@ -47,7 +47,7 @@ const MessageForm = ({ ws }) => {
             const message = JSON.stringify(formData);
             ws.send(message);
             divInput.current.innerText = "";
-            setFormData(data => ({...data, content: ""}))
+            setFormData(data => ({...data, content: ""}));
         }
     }
 

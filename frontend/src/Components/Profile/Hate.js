@@ -3,9 +3,11 @@ import { useSelector } from 'react-redux';
 import { addHate, removeHate } from '../../store/reducers/profileForm';
 import './Hate.css';
 
-const Hate = ({ hate, edit }) => {
+const Hate = ({ hateId, edit }) => {
   const dispatch = useDispatch();
+  
   const count = useSelector(state => state.profileForm.formData.hates.length);
+  const hate = useSelector(state => state.hatesSidebar.hates[hateId]);
   const active = useSelector(state => state.hatesSidebar.active);
 
   const handleClick = (e) => {
@@ -13,11 +15,11 @@ const Hate = ({ hate, edit }) => {
     console.log('clicked');
     if (edit) {
       if (active){
-        dispatch(removeHate(hate.id));
+        dispatch(removeHate(hateId));
       }
     } else {
       if (count < 5) {
-        dispatch(addHate(hate));
+        dispatch(addHate(hateId));
       }
     }
   }

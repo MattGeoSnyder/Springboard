@@ -1,24 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import API from "../../api";
-
-
-const postHates = createAsyncThunk('/hates/add', async (payload) => {
-  const { hates, userId } = payload;
-  const res = await API.addHates(hates, userId);
-  return res;
-});
-
-const postBio = createAsyncThunk('/bio/post', async (payload) => {
-  const { bio, userId } = payload;
-  const res = await API.addBio(bio, userId);
-  return res;
-});
-
-const postPrompt = createAsyncThunk('/prompts/add', async (payload) => {
-  const { userId, ...promptData } = payload;
-  const res = await API.addPrompt(promptData, userId);
-  return res;
-});
+import { createSlice } from "@reduxjs/toolkit";
+import { updateUserProfile } from "../thunks";
 
 export const profileForm = createSlice({
   name: 'profileForm',
@@ -28,16 +9,21 @@ export const profileForm = createSlice({
       bio: '',
       hates: [],
       prompts: {}
-    }
+    },
+    errMsg: ''
   },
   reducers: {
     setDefault: (state, action) => {
+      console.log(action.payload);
       state.formData = action.payload;
     },
+    setStatus: (state, action) => {
+      state.status = action.payload;
+    },
     addHate: (state, action) => {
-      const hate = action.payload;
-      if (!state.formData.hates.map((hate) => hate.id).includes(hate.id)){
-        state.formData.hates = [...state.formData.hates, hate];
+      const hateId = action.payload;
+      if (!state.formData.hates.includes(hateId)){
+        state.formData.hates = [...state.formData.hates, hateId];
       }
     },
     removeHate: (state, action) => {
@@ -54,22 +40,18 @@ export const profileForm = createSlice({
     }
   },
   extraReducers(builder) {
-    builder.addCase(postHates.fulfilled, (state, action) => {
+    builder.addCase(updateUserProfile.pending, (state, action) => {
+      state.status = 'pending';
+    });
+    builder.addCase(updateUserProfile.fulfilled, (state, action) => {
       state.status = 'success';
     });
-    builder.addCase(postBio.fulfilled, (state, action) => {
-      state.status = 'success';
-      state.formData.bio = action.payload;
-    }); 
-    builder.addCase(postPrompt.fulfilled, (state, action) => {
-      state.status = 'success';
-      console.log(action.payload);
-      const { name, id, promptres: promptRes } = action.payload;
-      state.formData.prompts[name] = { id, promptRes };
-    });
+    builder.addCase(updateUserProfile.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.errMsg = action.payload;
+    })
   }
 });
 
-export const { addHate, removeHate, changeBio, changePrompt, setDefault } = profileForm.actions;
+export const { addHate, removeHate, changeBio, changePrompt, setDefault, setStatus } = profileForm.actions;
 export default profileForm.reducer;
-export { postHates, postBio, postPrompt };

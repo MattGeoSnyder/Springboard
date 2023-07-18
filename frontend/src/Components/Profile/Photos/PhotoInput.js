@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import API from '../../../api';
-import { uploadPhoto } from '../../../store/reducers/user';
+import { uploadPhoto } from '../../../store/thunks';
 import { setOverlayActive, setOverlayImage } from '../../../store/reducers/overlay';
+import API from '../../../api';
 import './PhotoInput.css';
 
 const PhotoInput = ({ name, photoLabel }) => {
@@ -12,7 +12,7 @@ const PhotoInput = ({ name, photoLabel }) => {
   const userSex = useSelector(state => state.currentUser.user.user_sex);
   const username = useSelector(state => state.currentUser.user.username);
   const editable = useSelector(state => state.currentUser.editable);
-  const status = useSelector(state => state.user.status);
+  const status = useSelector(state => state.profileForm.status);
   const [ image, setImage ]  = useState();
   const [ hasImage, setHasImage ] = useState(false);
   const input = useRef(null);

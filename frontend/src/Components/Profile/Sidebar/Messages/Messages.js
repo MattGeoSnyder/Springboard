@@ -15,12 +15,12 @@ const Messages = () => {
 
     const dispatch = useDispatch();
 
-    const { matchId } = useParams();
+    const { userId, matchId } = useParams();
     const matchedUser = useSelector(state => state.matches.matches[matchId]);
     const messages = useSelector(state => state.matches.matches[matchId]?.messages);
     const [ icon, setIcon ] = useState(matchedUser.photos?.photo1?.image_url);
 
-    console.log(messages);
+    console.log(userId);
 
     const ws = useMemo(() => {
       return new WebSocket(`ws://localhost:3001/chat/${matchId}`);
@@ -58,9 +58,9 @@ const Messages = () => {
             </div>
             <div id='messages-container'>
                 {messages.map(msg => (
-                  <Message key={uuid()} message={msg}/>
+                  <Message key={uuid()} message={msg} userId={userId}/>
                   ))}
-                <MessageLoader key={uuid()} offset={messages.length}/>
+                {/* <MessageLoader key={uuid()} offset={messages.length}/> */}
             </div>
             <MessageForm ws={ws}/>
         </div>

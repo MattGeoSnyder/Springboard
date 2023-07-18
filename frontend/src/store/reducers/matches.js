@@ -26,7 +26,7 @@ const addDislike = createAsyncThunk('matches/addDislike', async (payload) => {
     const { userId, currentUserId } = payload;
     const dislike = await API.dislike(userId, currentUserId);
     return dislike;
-})
+});
 
 export const matches = createSlice({
     name: 'matches',
@@ -41,7 +41,6 @@ export const matches = createSlice({
             const messages = [...state.matches[matchId].messages];
             messages.unshift(message);
             state.matches[matchId].messages = messages;
-            return state;
         }
     },
     extraReducers(builder) {

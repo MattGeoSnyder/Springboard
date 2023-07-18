@@ -6,13 +6,11 @@ class API {
     static async request(endpoint, data={}, method='get') {
         const url = `${BASE_URL}${endpoint}`;
         const params = (method === 'get') ? data : {};
-        const validateStatus = (status) => status <= 500;
-
         try {
-            const res = (await axios({url, method, data, params, validateStatus})).data;
+            const res = (await axios({url, method, data, params})).data;
             return res;
         } catch (error) {
-            console.log(error.response.data);
+            console.log(error);
         }
     }
 
@@ -82,8 +80,7 @@ class API {
     }
 
     static async addBio(bioData, userId) {
-        let bio = await this.request(`/users/${userId}/bio`, { bioData }, 'post');
-        return bio;
+        await this.request(`/users/${userId}/bio`, { bioData }, 'post');
     }
 
     static async addHates(hatesArr, userId) {
@@ -92,8 +89,8 @@ class API {
         return result;
     }
 
-    static async addPrompt(promptData, userId) {
-        let prompt = await this.request(`/users/${userId}/prompts`, promptData, 'post');
+    static async addPrompts(prompts, userId) {
+        let prompt = await this.request(`/users/${userId}/prompts`, { prompts }, 'post');
         return prompt;
     }
 

@@ -1,19 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { updateUserProfile, getCurrentUserById } from '../thunks';
 import API from '../../api';
 
 const PROFILE_PIC_BASE_URL = `https:randomuser.me/portraits`;
 
-const getUserById = createAsyncThunk('/currentUser/getById', async (userId) => {
-  const user = await API.getUserById(userId);
-  let photos = await API.getUserPhotos(userId);
-  const hates = await Promise.all(user.hates.map(hateId => API.getHateById(hateId)));
-
-  if (userId < 102) {
-    const sex = user.user_sex === 'male' ? 'men' : 'women';
-    photos = { photo1: { public_id: `${userId}/photo1`, image_url: `${PROFILE_PIC_BASE_URL}/${sex}/${userId}` } };
-  }
-  return { user, photos, hates }
-});
 
 
 export const currentUser = createSlice({
@@ -45,17 +35,19 @@ export const currentUser = createSlice({
     }
   },
   extraReducers(builder) {
-    builder.addCase(getUserById.pending, (state, action) => {
+    builder.addCase(getCurrentUserById.pending, (state, action) => {
       state.status = 'pending';
     });
-    builder.addCase(getUserById.fulfilled, (state, action) => {
-      const { user, photos, hates } = action.payload;
-      state.user = {...state.user, ...user, photos, hates}
-      state.status = 'success'; 
+    builder.addCase(getCurrentUserById.fulfilled, (state, action) => {
+      state.status = 'success';
+      state.user = action.payload;
+    })
+    builder.addCase(updateUserProfile.fulfilled, (state, action) => {
+      const { hates, bio, prompts } = action.payload;
+      state.user = {...state.user, hates, bio, prompts};
     });
   }
 });
 
-export { getUserById }
 export default currentUser.reducer;
 export const { setStatus, setEditPermissions, setLikes } = currentUser.actions;

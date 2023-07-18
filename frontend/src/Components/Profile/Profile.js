@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserById, setStatus, setEditPermissions, setLikes } from '../../store/reducers/currentUser';
+import { setStatus, setEditPermissions, setLikes } from '../../store/reducers/currentUser';
+import { getCurrentUserById } from '../../store/thunks';
 import { addLike, addDislike } from '../../store/reducers/matches';
 import { setDefault } from '../../store/reducers/profileForm';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
@@ -24,24 +25,21 @@ const Profile = ({ id }) => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.user.user.id);
   const currentUser = useSelector(state => state.currentUser.user);
-  const status = useSelector(state => state.currentUser.status);
-
-
-  const currentUserId = useMemo(() => id, [id]);
-  // const prompts = useMemo(() => (<Profile user={currentUser}/>), [currentUser]);
-  // const bio = useMemo(() => (<BioSection user={currentUser}/>), [currentUser]);
+  const loadStatus = useSelector(state => state.currentUser.status);
+  const updateStatus = useSelector(state => state.profileForm.status);
 
   // Get current user by id on render
   useEffect(() => {
-    dispatch(getUserById(currentUserId));
-  }, [currentUserId, dispatch]);
+    dispatch(getCurrentUserById(id));
+  }, [id, dispatch]);
 
-  // If current user profilef equals main user
+  // If current user profile equals main user
+  // set editPermission to true
   useEffect(() => {
-    if (userId === currentUserId) {
+    if (userId === id) {
       dispatch(setEditPermissions(true));
     }
-  }, [userId, currentUserId, dispatch]);
+  }, [userId, id, dispatch]);
 
   // Loads the formData with the values of the current User 
   useEffect(() => {
@@ -51,13 +49,16 @@ const Profile = ({ id }) => {
   
   // Changes status back to idle after loading the user is either accepted or rejected
   useEffect(() => {
-    if (status === 'success' || status === 'rejected') {
+    if (updateStatus === 'success' || updateStatus === 'rejected') {
       setTimeout(() => {
         dispatch(setStatus('idle'));
       }, 3000);
     }
-  }, [status, dispatch]);
+  }, [updateStatus, dispatch]);
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Code for swiping on users
+//////////////////////////////////////////////////////////////////////////////////////////////
 
   const { width, height } = useWindowDimensions();
   const [ initialMouseX, setInitialMouseX ] = useState(0);
@@ -97,12 +98,12 @@ const Profile = ({ id }) => {
     if (dragDistance < -20) {
       //dispatch dislike
       dispatch(setLikes(false));
-      dispatch(addDislike({ userId, currentUserId }));
+      dispatch(addDislike({ userId, currentUserId: id }));
       console.log('dislike');
     } else if (dragDistance > 20) {
       //dispatch like
       dispatch(setLikes(true));
-      dispatch(addLike({ userId, currentUserId}));
+      dispatch(addLike({ userId, currentUserId: id}));
       console.log('like');
     } 
     setDragDistance(0);
@@ -129,7 +130,7 @@ const Profile = ({ id }) => {
         onDragStart={handleDragStart} 
         onDrag={handleDrag}
         onDragEnd={handleDragEnd}
-        style={currentUserId !== userId ? {transform: `rotate(${tilt}) translate(${dragDistance}%, ${-Math.abs(dragDistance)}%)`} : {}}
+        style={id !== userId ? {transform: `rotate(${tilt}) translate(${dragDistance}%, ${-Math.abs(dragDistance)}%)`} : {}}
         >
         {/* {ProfileContent} */}
         <UserContent currentUser={currentUser} />

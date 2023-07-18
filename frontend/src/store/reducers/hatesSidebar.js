@@ -35,11 +35,6 @@ export const hatesSidebar = createSlice({
     }
   },
   extraReducers(builder) {
-    builder.addCase(fetchMatches.fulfilled, (state, action) => {
-      const { matches } = action.payload;
-      state.matches = matches;
-      return state;
-    });
     builder.addCase(fetchHates.fulfilled, (state, action) => {
       state.hates = action.payload;
     })
