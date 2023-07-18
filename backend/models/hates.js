@@ -2,17 +2,10 @@ import db from '../db.js';
 
 class Hates {
   static async getAllHates() {
-    const res = await db.query(`SELECT * FROM hates ORDER BY category, hate;`);
+    const res = await db.query(`SELECT * FROM hates;`);
 
-    const hates = res.rows.reduce((acc, {id, category, hate }) => {
-      
-      if (category in acc) {
-        const arr = [...acc[category], {id, hate}];
-        return {...acc, [category]: arr};
-      } else {
-        return {...acc, [category]: [{id, hate}]};
-      }
-
+    const hates = res.rows.reduce((acc, hate) => {
+      return ({...acc, [hate.id]: hate});
     }, {})
 
     return hates;

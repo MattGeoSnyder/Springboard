@@ -9,7 +9,6 @@ import ExpressError from '../helpers/expressError.js';
 import { BCRYPT_WORK_FACTOR } from "../config.js";
 
 class User {
-
     static async register({ username, pw, first_name, birthday, user_sex, sex_preference }) {
         const duplicateCheck = await db.query(`SELECT username FROM users WHERE username=$1`, [username]);
 
@@ -63,6 +62,7 @@ class User {
     static async getUserById(userId) {
         const result = await db.query(`SELECT 
                                         users.id,
+                                        username,
                                         first_name,
                                         birthday,
                                         user_sex,
@@ -92,7 +92,7 @@ class User {
                                         users.id;`, [userId]);
         const data = result.rows[0];
         console.log(data);
-        const { id, first_name, birthday, user_sex, sex_preference, bio } = data;
+        const { id, username, first_name, birthday, user_sex, sex_preference, bio } = data;
         const prompts = {}
         for (let i = 1; i <=3; i++) {
             const key = `prompt${i}`;
@@ -107,7 +107,7 @@ class User {
         const photos = photos_arr.reduce((acc, photo, i) => {
             return ({...acc, [`photo${i+1}`]: photo });
         }, {})
-        return { id, first_name, birthday, user_sex, sex_preference, bio, prompts, hates, photos }
+        return { id, username, first_name, birthday, user_sex, sex_preference, bio, prompts, hates, photos }
     }
 
     // Selects matched users for given userId
@@ -223,7 +223,7 @@ class User {
         return result.rows[0];
     }
 
-    static async addBio({ bio, userId }) {
+    static async addBio(bio, userId) {
         const result = await db.query(`UPDATE users
                                     SET bio = $1 
                                     WHERE id = $2
@@ -258,7 +258,7 @@ class User {
                                             hate4,
                                             hate5`, [hate1, hate2, hate3, hate4, hate5, userId]);
         
-        return res.rows[0];
+        return Object.values(res.rows[0]);
       }    
 }
 

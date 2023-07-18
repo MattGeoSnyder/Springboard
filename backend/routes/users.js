@@ -49,10 +49,10 @@ router.get('/:userId/matches', async function(req, res, next) {
 router.post('/:userId/bio', async function (req, res, next) {
     try {
         const { bioData } = req.body;
-        console.log(req.body);
         const { userId } = req.params;
-        let query = await User.addBio({ bio: bioData, userId });
-        return res.status(201).json(query);
+        const bio = await User.addBio(bioData, userId);
+        console.log(bio);
+        return res.status(201).json({ bio });
     } catch (error) {
         next(error);
     }
@@ -62,9 +62,8 @@ router.post('/:userId/hates', async function(req, res, next) {
     try {
         const { userId } = req.params;
         const hates = JSON.parse(req.body.hates);
-        const hateIds = hates.map(hate => hate.id);
-        const query = await User.addHates(hateIds, userId);
-        return res.status(201).json(Object.values(query));
+        const result = await User.addHates(hates, userId);
+        return res.status(201).json(result);
     } catch (error) {
         next(error);    
     }
@@ -72,10 +71,17 @@ router.post('/:userId/hates', async function(req, res, next) {
 
 router.post('/:userId/prompts', async function (req, res, next) {
     try {
-        const promptData = req.body;
+        const { prompts } = req.body;
         const { userId } = req.params;
-        let query = await User.addPrompt(promptData, userId);
-        return res.status(201).json(query);
+        const result = await Promise.all(Object.values(prompts).map(prompt => (
+            User.addPrompt(prompt, userId)
+        )));
+        
+        const res_obj = result.reduce((acc, prompt, i) => {
+            console.log(prompt);
+            return ({...acc, [`prompt${i+1}`]: { name: `prompt${i+1}`, id: prompt.id, promptRes: prompt.promptres}});
+        }, {});
+        return res.status(201).json(res_obj);
     } catch (error) {
         next(error);
     }
