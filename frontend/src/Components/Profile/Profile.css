@@ -11,6 +11,9 @@
   height: 100%;
 
   transition: transform 0.2s ease;
+}
+
+#profile-page[draggable='true'] {
   cursor: grab;
 }
 

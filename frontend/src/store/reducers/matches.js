@@ -1,10 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import API from '../../api.js';
-
-const fetchMatches = createAsyncThunk('/matches/fetchMatches', async (userId) => {
-    const matches = await API.getMatches(userId);
-    return matches;
-});
+import { loadUserOnLogin } from '../thunks.js';
 
 const fetchConversation = createAsyncThunk('/matches/fetchConversation', async (matchId) => {
     const conversation = await API.getConversation(matchId);
@@ -44,11 +40,6 @@ export const matches = createSlice({
         }
     },
     extraReducers(builder) {
-        builder.addCase(fetchMatches.fulfilled, (state, action) => {
-            const { matches } = action.payload;
-            state.matches = matches;
-            return state;
-        });
         builder.addCase(fetchConversation.fulfilled, (state, action) => {
             const { matchId, messages } = action.payload;
             state.matches[matchId].messages = messages;
@@ -62,11 +53,14 @@ export const matches = createSlice({
             if (!match) return;
             
             const { id, user } = match;
-            state.matches[id] = {...user, messages: []};
+            state.matches[id] = user;
+        });
+        builder.addCase(loadUserOnLogin.fulfilled, (state, action) => {
+            state.matches = action.payload.matches;
         });
     }
 });
 
-export { fetchMatches, fetchConversation, queryMoreMessages, addLike, addDislike }
+export { fetchConversation, queryMoreMessages, addLike, addDislike }
 export const { addNewMessage, setActive } = matches.actions;
 export default matches.reducer;

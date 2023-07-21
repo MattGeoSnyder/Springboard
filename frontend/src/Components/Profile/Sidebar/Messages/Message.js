@@ -4,7 +4,6 @@ import './Message.css';
 const Message = ({ message, userId }) => {
     const dir = message.from_user == userId ? 'sent' : 'received';
     const time = new Date(message.sent_at);
-    console.log(typeof time);
 
     return (
         <div className={`message ${dir}`}>

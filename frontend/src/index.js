@@ -11,7 +11,6 @@ import { fetchMatches, fetchHates } from './store/reducers/hatesSidebar';
 
 
 //For now, we're fetching the matches for user with userId 1
-store.dispatch(fetchMatches(3));
 store.dispatch(fetchHates());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

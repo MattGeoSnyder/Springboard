@@ -9,13 +9,11 @@ const ProfileSection = () => {
     const { userId } = useParams();
     const dispatch = useDispatch();
 
-    const [offset, setOffset] = useState(0);
     const userIds = useSelector(state => state.feed.userIds);
 
     useEffect(() => {
         if (userIds.length === 0) {
-            dispatch(loadFeed({ userId, offset }));
-            setOffset(state => state + 10);
+            dispatch(loadFeed({ userId }));
         }
     }, [userIds, dispatch]);
     

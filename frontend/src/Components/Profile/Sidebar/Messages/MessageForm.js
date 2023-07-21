@@ -1,9 +1,13 @@
 import { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setErrMsg } from '../../../../store/reducers/messages';
 import './MessageForm.css';
 
 const MessageForm = ({ ws }) => {
+
+    const dispatch = useDispatch();
 
     //We need references to our div input an the form to make an input 
     //that expands and reacts in the way we want it to.
@@ -43,11 +47,13 @@ const MessageForm = ({ ws }) => {
     //event handler for submitting form
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (formData.content.length <= 140) {
+        if (formData.content.length <= 200) {
             const message = JSON.stringify(formData);
             ws.send(message);
             divInput.current.innerText = "";
             setFormData(data => ({...data, content: ""}));
+        } else {
+            dispatch(setErrMsg("Your message must be less than 200 characters."))
         }
     }
 

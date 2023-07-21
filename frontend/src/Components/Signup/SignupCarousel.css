@@ -1,12 +1,12 @@
 #signup-carousel {
     flex: 1;
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 100%;
+    display: flex;
+    align-items: center;
     overflow: hidden;
     height: 80%;
     margin: auto 0;
     position: relative;
+    transform-style: flat;
 }
 
 .carousel-item {

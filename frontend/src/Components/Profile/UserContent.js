@@ -3,12 +3,13 @@ import Photos from "./Photos/Photos";
 import BioSection from "./BioSection/BioSection";
 import Prompts from './Prompts/Prompts';
 
-const UserContent = memo(({ currentUser }) => {
+const UserContent = memo(() => {
+
   return (
     <>
-      <BioSection user={currentUser}/>
-      <Photos user={currentUser}/>
-      <Prompts user={currentUser}/>
+      <BioSection />
+      <Photos />
+      <Prompts />
     </>
   )
 });

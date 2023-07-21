@@ -13,7 +13,7 @@ const Overlay = () => {
 
   const disableOverlay = (e) => {
     console.log(e.target);
-    dispatch(setOverlayActive({ active: false }));
+    dispatch(setOverlayActive(false));
   } 
 
   const disableMouseWheel = (e) => {
@@ -26,8 +26,8 @@ const Overlay = () => {
     let content;
     if (mode === 'match') {
       content = <MatchOverlay />
-    } else {
-      content = <img src={image} />
+    } else if (mode === 'image'){
+      content = <img id='overlay-image' src={image} />
     }
 
     return (

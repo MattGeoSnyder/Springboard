@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { registerUser } from '../../store/reducers/user';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { registerUser, setStatus, setErrMsg } from '../../store/reducers/user';
 import Input from '../Forms/Input';
 import ScrollClicker from './ScrollClicker';
 import moment from 'moment';
@@ -15,9 +15,22 @@ const SignupForm = ({ page, setPage }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const errMsg = useSelector(state => state.user.errMsg);
+  const userId = useSelector(state => state.user.user.id);
+  const status = useSelector(state => state.user.status);
+
   useEffect(() => {
     setTops([0, 100, 200].map((val) => page * -100 + val));
-  }, [page])
+  }, [page]);
+
+  useEffect(() => {
+    if (status === 'rejected' || status === 'success') {
+      setTimeout(() => {
+        dispatch(setStatus('idle'));
+        dispatch(setErrMsg(''));
+      }, 5000);
+    } 
+  }, [status])
 
   const initialData = {
     username: 'rachwake23',
@@ -32,15 +45,12 @@ const SignupForm = ({ page, setPage }) => {
   const [formData, setFormData] = useState(initialData);
   const [ valid, setValid ] = useState({
     // set to true for testing. Change later.
-    username: true,
-    pw: true,
+    username: false,
     //Todo: fix pw_ver
-    // pw_ver: true,
+    pw_ver: true,
     first_name: true,
     birthday: true
   })
-
-  console.log(valid);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,10 +59,13 @@ const SignupForm = ({ page, setPage }) => {
 
   const handleSubmit =  async (e) => {
     e.preventDefault();
+    console.log(valid);
     if (Object.values(valid).every(val => val)){
-      const res = await dispatch(registerUser(formData));
-      const { payload: { id } } = res;
-      navigate(`/users/${id}`);
+      dispatch(registerUser(formData));
+      if (status === 'success'){
+        dispatch(setStatus('idle'));
+        navigate(`/disclaimer`);
+      }
     }
   }
 
@@ -85,13 +98,12 @@ const SignupForm = ({ page, setPage }) => {
             setValid={setValid}
           />
           <Input 
-            labelText='Create a strong password'
+            labelText='Password'
             name='pw'
             type='password'
             value={formData.pw}
             iconClass='fa-solid fa-key'
             setFormData={setFormData}
-            setValid={setValid}
           />
           <Input 
             labelText='Confirm your password'
@@ -110,13 +122,13 @@ const SignupForm = ({ page, setPage }) => {
             ]}
             setFormData={setFormData}
             //Todo: Fix pw_ver
-            // setValid={setValid}
+            setValid={setValid}
           />
         </div>
         <div className='page' style={{top: `${tops[1]}%`}}>
           <section>
             <h1 className='title'>Tell us about yourself</h1>
-            <p className='subtitle'>We'll share this with others</p>
+            <p className='subtitle'>Your name and age are public</p>
           </section>
           <Input
             labelText='First name' 
@@ -160,8 +172,8 @@ const SignupForm = ({ page, setPage }) => {
               value={formData.value}
               onChange={handleChange}
             >
-            <option value='female'>Woman</option>
-            <option value='male'>Man</option>
+              <option value='female'>Woman</option>
+              <option value='male'>Man</option>
             </select>
             <label> looking for a </label>
             <select
@@ -176,7 +188,9 @@ const SignupForm = ({ page, setPage }) => {
           <button>Sign up</button>
         </div>
       </form>
+      <div id='login-prompt'>Already have an account? Login <Link to={'/login'}>here</Link></div>
       <ScrollClicker page={page} setPage={setPage}/>
+      {errMsg && <p id='err-msg'>{errMsg}</p>}
     </div>
   )
 }

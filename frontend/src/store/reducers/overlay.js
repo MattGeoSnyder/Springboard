@@ -11,9 +11,10 @@ export const overlay = createSlice({
   },
   reducers: {
     setOverlayActive: (state, action) => {
-      const { active, mode ='' } = action.payload;
-      state.active = active;
-      state.mode = mode;
+      state.active = action.payload;
+    },
+    setOverlayMode: (state, action) => {
+      state.mode = action.payload;
     },
     setOverlayImage: (state, action) => {
       state.image = action.payload;
@@ -33,5 +34,5 @@ export const overlay = createSlice({
   }
 });
 
-export const { setOverlayActive, setOverlayImage } = overlay.actions;
+export const { setOverlayActive, setOverlayImage, setOverlayMode } = overlay.actions;
 export default overlay.reducer;

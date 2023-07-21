@@ -8,6 +8,7 @@
 
 #messages #conversation-header {
     display: flex;
+    flex-direction: row-reverse;
     gap: 20px;
 }
 
@@ -17,14 +18,18 @@
     margin-top: 1rem;
     font-size: 30px;
     display: inline-block;
-    align-self: flex-start;
+    align-self: flex-end;
 }
 
-#messages #conversation-header img {
-    display: inline-block;
-    height: 75px;
-    aspect-ratio: 1 / 1;
-    border-radius: 999%;
+#messages #conversation-header i {
+    position: absolute;
+    left: 3rem;
+    top: 2rem;
+    font-size: 30px;
+    color: gray;
+
+    cursor: pointer;
+    pointer-events: fill;
 }
 
 #messages-container {

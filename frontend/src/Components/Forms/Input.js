@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import './Input.css';
 
-// Validated input component. To be placed in form with form data.
+// Validated input component. To be placed in parent with form data.
 // name (required): name & id of input 
 // value (required): value from state in form parent
 // setFormData (required): setState function from form parent
@@ -25,7 +25,7 @@ const Input = ({ name, type='text',
 
   useEffect(() => {
     setValid(val => ({ ...val, [name]: valid }))
-  }, [])
+  }, [valid, name, setValid])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,7 +59,10 @@ const Input = ({ name, type='text',
                   {val[1]}
                 </li>
               )
-            }})}
+            } else {
+              return <></>
+            }
+          })}
         </ul>
       </div>
     </div>

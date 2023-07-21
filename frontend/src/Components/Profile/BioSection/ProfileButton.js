@@ -10,7 +10,7 @@ const ProfileButton = () => {
   const status = useSelector(state => state.profileForm.status);
   const formData = useSelector(state => state.profileForm.formData);
   const userId = useSelector(state => state.user.user.id);
-  const errMsg = useSelector(state => state.profileForm.errMsg);
+  const message = useSelector(state => state.profileForm.message);
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -30,9 +30,9 @@ const ProfileButton = () => {
       case 'pending':
         return <div id='spinner-container'><i className="fa-solid fa-spinner"></i></div>
       case 'success':
-        return <div id='status-message' className='success'><p>Your profile was updated successfully</p></div>
+        return <div id='status-message' className='success'><p>{message}</p></div>
       case 'rejected':
-        return <div id='status-message' className='rejected'><p>{errMsg}</p></div>
+        return <div id='status-message' className='rejected'><p>{message}</p></div>
       default:
         return <button onClick={handleClick}>Update Profile</button>
     }

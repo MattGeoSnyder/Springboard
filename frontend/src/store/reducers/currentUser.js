@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { updateUserProfile, getCurrentUserById } from '../thunks';
-import API from '../../api';
-
-const PROFILE_PIC_BASE_URL = `https:randomuser.me/portraits`;
-
-
 
 export const currentUser = createSlice({
   name: 'currentUser',
@@ -32,6 +27,10 @@ export const currentUser = createSlice({
     },
     setLikes: (state, action) => {
       state.likes = action.payload;
+    },
+    setPhoto: (state, action) => {
+      const { name, public_id, image_url, user_id } = action.payload;
+      state.user.photos[name] = { public_id, image_url, user_id};
     }
   },
   extraReducers(builder) {
@@ -50,4 +49,4 @@ export const currentUser = createSlice({
 });
 
 export default currentUser.reducer;
-export const { setStatus, setEditPermissions, setLikes } = currentUser.actions;
+export const { setStatus, setEditPermissions, setLikes, setPhoto } = currentUser.actions;

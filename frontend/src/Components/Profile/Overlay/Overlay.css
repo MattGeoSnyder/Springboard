@@ -16,7 +16,13 @@
   overflow: hidden;
 }
 
-#overlay img {
-  max-height: 70vh;
-  max-width: 90vw;
+#overlay #overlay-image {
+  --height-max: 90%;
+  --height-min: 400px;
+
+  max-height: var(--height-max);
+  max-width: calc(var(--height-max) * 0.8);
+
+  min-height: var(--height-min);
+  min-width:  calc(var(--height-min) * 0.8);
 }

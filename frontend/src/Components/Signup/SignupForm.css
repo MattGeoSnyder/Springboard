@@ -28,11 +28,11 @@
 }
 
 #signup-form .page .input {
-    width: 80%;
+    width: 60%;
 }
 
 #signup-form .page .input input {
-    font-size: 14px;
+    font-size: 16px;
     padding-inline: 10px;
     padding-block: 5px;
     border: 1px solid gray;
@@ -56,7 +56,7 @@
 }
 
 #signup-form section > .subtitle {
-    font-size: 12px;
+    font-size: 16px;
     text-align: center;
     justify-self: start;
     color: gray;
@@ -86,4 +86,20 @@
     color: white;
     font-weight: 600;
     padding-block: 10px;
+}
+
+#signup-form #err-msg {
+    text-align: center;
+    border: 1px solid var(--dark-red);
+    color: var(--dark-red);
+    border-radius: 10px;
+    width: 80%;
+    padding: 20px 0px;
+    margin: 2rem auto;
+}
+
+#signup-form #login-prompt {
+    text-align: center;
+    margin: 1rem 0;
+    color: gray;
 }

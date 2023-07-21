@@ -7,19 +7,16 @@
 }
 
 .user-banner .user-icon {
-  height: 50%;
   aspect-ratio: 1 / 1;
   border-radius: 999%;
   border: 1px solid grey;
 
-  display: inline-block;
-}
-
-.user-banner .user-icon.default {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+
   background-color: gray;
+  box-shadow: 3px 3px 6px black;
 }
 
 .user-icon.default h1 {
@@ -32,11 +29,10 @@
 }
 
 .user-name-age #name {
-  font-size: 36px;
-  letter-spacing: 3px;
+  font-size: 32px;
   margin: 0;
   margin-top: 1rem;
-  font-weight: 500;
+  word-wrap: break-word;
 }
 
 .user-name-age #age {

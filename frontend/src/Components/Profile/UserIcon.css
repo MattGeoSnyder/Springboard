@@ -1,0 +1,36 @@
+.user-icon {
+  aspect-ratio: 1 / 1;
+  border-radius: 999%;
+  border: 1px solid gray;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: gray;
+  box-shadow: 3px 3px 6px black;
+}
+
+.user-icon.banner {
+  height: 75%;
+}
+
+.user-icon.link {
+  height: 90%;
+  display: inline-block;
+}
+
+.user-icon.messages {
+  height: 100px;
+}
+
+.user-icon img {
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+}
+
+.user-icon span {
+  font-size: 30px;
+  font-weight: 500;
+}

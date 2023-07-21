@@ -7,7 +7,7 @@ import UserBanner from './UserBanner';
 import UserHates from './UserHates';
 import './BioSection.css';
 
-const BioSection = ({ user={} }) => {
+const BioSection = ({ user }) => {
 
   const dispatch = useDispatch();
 

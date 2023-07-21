@@ -13,7 +13,7 @@ const SignupCarousel = ({ page }) => {
   const [ lefts, setLefts ] = useState([0, 200, 400]);
 
   useEffect(() => {
-    setLefts([0, 200, 400].map(val => val - (200 * page)));
+    setLefts([10, 210, 410].map(val => val - (200 * page)));
   },[page])
 
   return (

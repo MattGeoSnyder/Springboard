@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, memo } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setStatus, setEditPermissions, setLikes } from '../../store/reducers/currentUser';
 import { getCurrentUserById } from '../../store/thunks';
@@ -30,7 +30,9 @@ const Profile = ({ id }) => {
 
   // Get current user by id on render
   useEffect(() => {
-    dispatch(getCurrentUserById(id));
+    if (id){
+      dispatch(getCurrentUserById(id));
+    }
   }, [id, dispatch]);
 
   // If current user profile equals main user
@@ -124,7 +126,7 @@ const Profile = ({ id }) => {
   return (
       <>
       <div
-        draggable
+        draggable={userId !== id}
         id="profile-page" 
         className={getClassName()}
         onDragStart={handleDragStart} 
@@ -133,7 +135,7 @@ const Profile = ({ id }) => {
         style={id !== userId ? {transform: `rotate(${tilt}) translate(${dragDistance}%, ${-Math.abs(dragDistance)}%)`} : {}}
         >
         {/* {ProfileContent} */}
-        <UserContent currentUser={currentUser} />
+        <UserContent />
 
         <OffScreenContent />
       </div>

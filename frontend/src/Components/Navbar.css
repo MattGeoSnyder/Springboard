@@ -5,7 +5,7 @@
   position: relative;
 }
 
-#navbar div {
+#navbar #message-icon {
   height: 100%;
   aspect-ratio: 1 / 1;
   color: white;

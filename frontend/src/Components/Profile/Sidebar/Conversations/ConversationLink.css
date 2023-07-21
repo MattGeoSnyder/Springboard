@@ -13,16 +13,8 @@
     position: relative;
 }
 
-.conversation-link img {
-    height: 90%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 999%;
-}
-
 .conversation-link .conversation-info {
-    display: inline-block;
+    flex: 1;
 }
 
 .conversation-link p {

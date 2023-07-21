@@ -25,7 +25,16 @@ class CloudinaryAPI {
       formData.append(key,val);
     }); 
 
-    const res = await axios.post(`${CLOUDINARY_BASE_URL}/${CLOUD_NAME}/image/upload`, formData, {validateStatus: (status) => status < 500});
+    const res = await axios.post(`${CLOUDINARY_BASE_URL}/${CLOUD_NAME}/image/upload`, formData);
+    return res.data;
+  }
+
+  static async deletePhoto(params) {
+    const { signature } = (await this.requestSignature(params));
+    const res = await axios.post(`${CLOUDINARY_BASE_URL}/${CLOUD_NAME}/image/destroy`, { ...params, 
+                                                                                        signature, 
+                                                                                        api_key: API_KEY, 
+                                                                                        timestamp: Math.floor(Date.now()/1000) });
     return res.data;
   }
 }

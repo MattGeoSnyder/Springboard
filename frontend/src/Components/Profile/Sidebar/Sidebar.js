@@ -1,7 +1,7 @@
 import Hates from './Hates';
 import Conversations from './Conversations/Conversations';
-import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './Sidebar.css';
 
 const Sidebar = () => {

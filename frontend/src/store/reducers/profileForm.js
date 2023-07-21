@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateUserProfile } from "../thunks";
+import { deletePhoto, updateUserProfile, uploadPhoto } from "../thunks";
 
 export const profileForm = createSlice({
   name: 'profileForm',
@@ -10,11 +10,10 @@ export const profileForm = createSlice({
       hates: [],
       prompts: {}
     },
-    errMsg: ''
+    message: ''
   },
   reducers: {
     setDefault: (state, action) => {
-      console.log(action.payload);
       state.formData = action.payload;
     },
     setStatus: (state, action) => {
@@ -45,11 +44,24 @@ export const profileForm = createSlice({
     });
     builder.addCase(updateUserProfile.fulfilled, (state, action) => {
       state.status = 'success';
+      state.message  = 'Profile update successfully';
     });
     builder.addCase(updateUserProfile.rejected, (state, action) => {
       state.status = 'rejected';
-      state.errMsg = action.payload;
-    })
+      state.message = action.payload;
+    });
+    builder.addCase(uploadPhoto. rejected, (state, action) => {
+      state.status = 'rejected';
+      state.message = action.payload;
+    });
+    builder.addCase(deletePhoto.fulfilled, (state, action) => {
+      state.status = 'success';
+      state.message = action.payload.message;
+    });
+    builder.addCase(deletePhoto.rejected, (state, action) => {
+      state.status = 'rejected';
+      state.message = "Photo successfully deleted";
+    });
   }
 });
 

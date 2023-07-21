@@ -1,18 +1,29 @@
+import { useSelector } from 'react-redux'
+import UserIcon from '../UserIcon'
 import moment from "moment";
 import './UserBanner.css';
 
-const UserBanner = ({ user }) => {
+const UserBanner = () => {
+
+  const user = useSelector(state => state.currentUser.user);
   const { first_name, birthday } = user;
   const age = moment().diff(birthday, 'years');
-  const profile = user.profile;
+  const photo = user.photos.photo1?.image_url;
+
+  const renderPhoto = () => {
+    if (photo) {
+      return (<img src={photo}/>)
+    } else {
+      return (<span><i className="fa-regular fa-user"></i></span>);
+    }
+  }
+  
 
   return (
     <div className='user-banner'>
-    <div className={`user-icon ${profile ? "" : 'default'}`}>
-        {!profile && <h1>{first_name[0]}</h1>}
-      </div>
+      <UserIcon size={'banner'} user={user}/>
       <div className="user-name-age">
-        <p id='name'>{user.first_name}</p>
+        <p id='name'>{first_name}</p>
         <p id='age'>{age}</p>
       </div>
     </div>

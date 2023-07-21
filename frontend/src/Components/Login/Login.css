@@ -1,13 +1,18 @@
 #login-page {
   flex: 1;
-  display: flex;
-  justify-content: center;
-  font-family: 'Montserrat', sans-serif;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 #login {
   margin-top: 2rem;
-  height: 80%;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2rem 0;
+  grid-column: 2 / -1;
+  display: flex;
+  flex-direction: column;
 }
 
 #login h1 {
@@ -17,27 +22,30 @@
 }
 
 #login a {
-  color: gray;
+  color: var(--accent-one);
+  cursor: pointer;
+  pointer-events: fill;
 }
 
-#login p {
+#login > p {
   text-align: center;
   margin: 0;
   color: gray;
-  font-size: 12px;
+  font-size: 16px;
+  margin-top: 0.5rem;
 }
 
 #login form {
-  gap: 20px;
+  flex: 1;
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   align-items: center;
 }
 
 #login .input {
-  width: 100%;
+  width: 60%;
+  flex: 1;
 }
 
 #login input {
@@ -61,9 +69,27 @@
   padding-block: 10px;
 }
 
+#login #err-msg {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+#login #err-msg p {
+  text-align: center;
+  border: 1px solid var(--dark-red);
+  color: var(--dark-red);
+  border-radius: 10px;
+  width: 80%;
+  padding: 20px 0px;
+  margin: 2rem auto;
+}
+
 .left, .right {
   height: 100%;
   flex: 1;
   background-color: blueviolet;
 }
+
+
 

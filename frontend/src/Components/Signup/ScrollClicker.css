@@ -17,12 +17,12 @@
 }
 
 #scroll-clicker div .dot {
-    border: 1px solid lightgray;
+    border: 1px solid var(--accent-one);
     border-radius: 999%;
     width: 5px;
     height: 5px;
 }
 
 #scroll-clicker div .active {
-    background-color: lightgray;
+    background-color: var(--accent-one);
 }

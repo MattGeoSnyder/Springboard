@@ -2,15 +2,22 @@ import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
+class APIError extends Error {
+    constructor(error) {
+        super(error.message);        
+        this.status = error.status;
+    }
+}
+
 class API {
     static async request(endpoint, data={}, method='get') {
         const url = `${BASE_URL}${endpoint}`;
         const params = (method === 'get') ? data : {};
         try {
-            const res = (await axios({url, method, data, params})).data;
+            const res = (await axios({url, method, params, data})).data;
             return res;
         } catch (error) {
-            console.log(error);
+            throw new APIError(error.response.data.error);
         }
     }
 
@@ -69,14 +76,19 @@ class API {
         return matches;
     }
 
-    static async getConversation(matchId, offset=0) {
-        let messages = await this.request(`/messages/match/${matchId}?offset=${offset}`);
+    static async getConversation({ matchId, userId, offset=0 }) {
+        let messages = await this.request(`/messages/match/${matchId}?offset=${offset}`, { userId }, 'patch');
         return messages;
     }
 
     static async addPhoto(imageData) {
         let photo = await this.request('/images/add', imageData, 'post');
         return photo;
+    }
+
+    static async deletePhoto({ userId, public_id }) {
+        let res = await this.request(`/users/${userId}/photo`, { public_id }, 'delete') ;
+        return res;
     }
 
     static async addBio(bioData, userId) {
@@ -102,6 +114,17 @@ class API {
     static async dislike(dislikerId, dislikeeId) {
         let dislike = await this.request(`/dislikes/${dislikerId}/${dislikeeId}`, {}, 'post');
         return dislike;
+    }
+
+    static async getNotifications(userId) {
+        let notifications = await this.request(`/users/${userId}/notifications`);
+        return notifications;
+    }
+
+    static async getChatBotRes(message) {
+        console.log(message);
+        let res = await this.request(`/chat`, { ...message }, 'post');
+        return res.message;
     }
 
 }
