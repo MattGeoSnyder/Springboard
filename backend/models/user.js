@@ -91,7 +91,6 @@ class User {
                                     GROUP BY 
                                         users.id;`, [userId]);
         const data = result.rows[0];
-        console.log(data);
         const { id, username, first_name, birthday, user_sex, sex_preference, bio } = data;
         const prompts = {}
         for (let i = 1; i <=3; i++) {
@@ -104,9 +103,14 @@ class User {
         }
         const hates = [data.hate1, data.hate2, data.hate3, data.hate4, data.hate5].filter((val) => val !== null);
         const { photos_arr } = data;
-        const photos = photos_arr.reduce((acc, photo, i) => {
-            return ({...acc, [`photo${i+1}`]: photo });
-        }, {})
+        const photos = photos_arr.reduce((acc, photo) => {
+            if (photo) {
+                const name = photo.public_id.split('/')[1];
+                return ({...acc, [name]: photo });
+            } else {
+                return null;
+            }
+        }, {});
         return { id, username, first_name, birthday, user_sex, sex_preference, bio, prompts, hates, photos }
     }
 
@@ -128,7 +132,24 @@ class User {
 
                                     SELECT
                                         matchedUsers.id AS match_id,
-                                        users.*,
+                                        users.id,
+                                        users.username,
+                                        users.first_name,
+                                        users.birthday,
+                                        users.bio,
+                                        users.user_sex,
+                                        users.sex_preference,
+                                        users.hate1,
+                                        users.hate2,
+                                        users.hate3,
+                                        users.hate4,
+                                        users.hate5,
+                                        users.prompt1,
+                                        users.prompt2,
+                                        users.prompt3,
+                                        users.prompt1_res,
+                                        users.prompt2_res,
+                                        users.prompt3_res,
                                         json_agg(photos.*) AS photos_arr
                                     FROM 
                                         matchedUsers
@@ -145,11 +166,15 @@ class User {
                                     `,[userId]);
         
         return result.rows.reduce((acc, match) => {
-            const { match_id, ...user } = match;
-            const { photos_arr } = user;
-            const photos = photos_arr.reduce((acc, photo, i) => {
-                return ({...acc, [`photo${i+1}`]: photo});
-            }, {})
+            const { match_id, photos_arr, ...user } = match;
+            const photos = photos_arr.reduce((acc, photo) => {
+                if (photo) {
+                    const name = photo.public_id.split('/')[1];
+                    return ({...acc, [name]: photo });
+                } else {
+                    return null;
+                }
+            }, {});
             acc[match_id] = {...user, photos, messages: []};
             return acc;
         }, {});
@@ -223,6 +248,15 @@ class User {
         return result.rows[0];
     }
 
+    static async deletePhoto(public_id) {
+        const result = await db.query(`DELETE FROM 
+                                            photos
+                                        WHERE 
+                                            public_id = $1
+                                        RETURNING public_id`, [public_id]);
+        return result.rows[0];
+    }
+
     static async addBio(bio, userId) {
         const result = await db.query(`UPDATE users
                                     SET bio = $1 
@@ -259,7 +293,9 @@ class User {
                                             hate5`, [hate1, hate2, hate3, hate4, hate5, userId]);
         
         return Object.values(res.rows[0]);
-      }    
+      }
+      
+      
 }
 
 export default User;

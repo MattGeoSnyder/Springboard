@@ -1,4 +1,5 @@
 import User from '../models/user.js';
+import Message from '../models/message.js';
 import express, { Router } from 'express';
 import ExpressError from '../helpers/expressError.js';
 
@@ -31,6 +32,16 @@ router.get('/:userId/photos', async function(req, res, next) {
     try {
         let photos = await User.getUserPhotos(userId);
         return res.json(photos);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.delete('/:userId/photo', async function(req, res, next) {
+    const { public_id } = req.body;
+    try {
+        const result = await User.deletePhoto(public_id);
+        return res.json({ message: `Deleted photo with public id ${result.public_id}`});
     } catch (error) {
         next(error);
     }
@@ -86,5 +97,15 @@ router.post('/:userId/prompts', async function (req, res, next) {
         next(error);
     }
 });
+
+router.get(`/:userId/notifications`, async function (req, res, next) {
+    try {
+        const { userId } = req.params;
+        const notifications = await Message.matchNotifications(userId);
+        return res.json(notifications);
+    } catch (error) {
+        next(error);
+    }
+}) 
 
 export default router;

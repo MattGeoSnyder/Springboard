@@ -1,6 +1,11 @@
 import User from '../models/user.js';
 import express from 'express';
+import chatBot from '../openaiAPI.js'
+import Match from '../models/match.js';
+import Message from '../models/message.js';
 import createToken from '../helpers/token.js';
+
+const BASE_URL = 'ws://localhost:3001'
 
 const router = new express.Router();
 
@@ -9,6 +14,11 @@ router.post('/register', async function (req, res, next) {
     //add validation with jsonschema here.
     const newUser = await User.register(req.body);
     const token = createToken(newUser);
+
+    const match = await Match.addMatch(1, newUser.id);
+
+    const message = await Message.saveMessage(chatBot.introduce(match.id, newUser.id));
+
     return res.status(201).json({ ...newUser, token })
   } catch (error) {
     return next(error);

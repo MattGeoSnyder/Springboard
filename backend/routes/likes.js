@@ -30,7 +30,7 @@ router.post('/:likerId/:likeeId', async function (req, res, next) {
 
     if (check) {
       //put user ids in order
-      const sorted = [ likerId, likeeId ].sort();
+      const sorted = [ Number(likerId), Number(likeeId) ].sort();
       //add match
       const matchId = await Match.addMatch(sorted[0], sorted[1]);
       const user = await User.getUserById(likeeId);

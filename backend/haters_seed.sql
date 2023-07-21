@@ -42,33 +42,35 @@ CREATE TABLE users(
 
 CREATE TABLE photos(
     public_id varchar PRIMARY KEY,
-    user_id int REFERENCES users,
+    user_id int REFERENCES users ON DELETE CASCADE,
     image_url varchar
 );
 
 CREATE TABLE matches(
     id serial PRIMARY KEY,
-    user1_id int REFERENCES users,
-    user2_id int REFERENCES users
+    user1_id int REFERENCES users ON DELETE CASCADE,
+    user2_id int REFERENCES users ON DELETE CASCADE,
+    last_interaction timestamp with time zone DEFAULT NULL
 );
 
 CREATE TABLE messages(
     id serial PRIMARY KEY,
     match_id int REFERENCES matches,
-    from_user int REFERENCES users,
-    to_user int REFERENCES users,
+    from_user int REFERENCES users ON DELETE CASCADE,
+    to_user int REFERENCES users ON DELETE CASCADE,
     content varchar NOT NULL,
-    sent_at timestamp with time zone NOT NULL DEFAULT NOW()
+    sent_at timestamp with time zone NOT NULL DEFAULT NOW(),
+    seen_at timestamp with time zone DEFAULT NULL
 );
 
 CREATE TABLE likes(
-    liker_id int REFERENCES users,
-    likee_id int REFERENCES users
+    liker_id int REFERENCES users ON DELETE CASCADE,
+    likee_id int REFERENCES users ON DELETE CASCADE
 );
 
 CREATE TABLE dislikes(
-    disliker_id INT REFERENCES users,
-    dislikee_id INT REFERENCES users
+    disliker_id INT REFERENCES users ON DELETE CASCADE,
+    dislikee_id INT REFERENCES users ON DELETE CASCADE
 );
 
 INSERT INTO prompts

@@ -1,6 +1,5 @@
 import db from '../db.js';
 
-
 class Prompt {
   static async queryAllPrompts() {
     const prompts = await db.query(`SELECT * FROM prompts;`);
