@@ -1,8 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { setActive } from '../../../store/reducers/hatesSidebar';
-import Hate from '../Hate';
-import API from '../../../api';
+import { setActive } from '../../store/reducers/hatesSidebar';
+import Hate from '../../Components/Profile/Hate';
 import { v4 as uuid } from 'uuid';
 import './Hates.css';
 

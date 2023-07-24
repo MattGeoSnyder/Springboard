@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { updateUserProfile, getCurrentUserById } from '../thunks';
+import { updateUserProfile, getCurrentUserById, uploadPhoto } from '../thunks';
+import { USER_PIC_BASE_URL } from '../../cloudinaryAPI'
 
 export const currentUser = createSlice({
   name: 'currentUser',
@@ -31,7 +32,7 @@ export const currentUser = createSlice({
     setPhoto: (state, action) => {
       const { name, public_id, image_url, user_id } = action.payload;
       state.user.photos[name] = { public_id, image_url, user_id};
-    }
+    }  
   },
   extraReducers(builder) {
     builder.addCase(getCurrentUserById.pending, (state, action) => {
@@ -40,10 +41,6 @@ export const currentUser = createSlice({
     builder.addCase(getCurrentUserById.fulfilled, (state, action) => {
       state.status = 'success';
       state.user = action.payload;
-    })
-    builder.addCase(updateUserProfile.fulfilled, (state, action) => {
-      const { hates, bio, prompts } = action.payload;
-      state.user = {...state.user, hates, bio, prompts};
     });
   }
 });

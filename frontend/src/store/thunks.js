@@ -1,42 +1,74 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import CloudinaryAPI from '../cloudinaryAPI';
 import API from "../api";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
-const PROFILE_PIC_BASE_URL = `https:randomuser.me/portraits`;
+const BOT_PIC_BASE_URL = `https:randomuser.me/portraits`;
+const USER_PIC_BASE_URL = 'https://res.cloudinary.com/dubjhgxii/image/upload';
 
-const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId, {rejectWithValue}) => {
+const register = createAsyncThunk('/user/registerUser', async (userData, { rejectWithValue }) => {
+  const [ get, set, remove ] = useLocalStorage();
+  try {
+      const { userId, token } = await API.signup(userData);
+      const newUser = await API.getUserById(userId)
+      set({ ...newUser, token });
+      return { ...newUser, token };
+  } catch (error) {
+      return rejectWithValue(error);
+  }
+});
+
+const login = createAsyncThunk('/login', async (userData, { rejectWithValue }) => {
+  const [ get, set, remove ] = useLocalStorage();
+  console.log(userData);
+  try {
+      const { id , token } = await API.login(userData);
+      console.log(id, token);
+      const user = await API.getUserById(id);
+      set({ ...user, token });
+      return ({ ...user, token });
+  } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+  }
+});
+
+
+
+const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId, { getState, rejectWithValue }) => {
+  const [ get, set, remove ] = useLocalStorage();
   try {
     const currentUser = await API.getUserById(userId);
 
     if (userId <= 100) {
       const sex = currentUser.user_sex === 'male' ? 'men' : 'women';
-      const image_url = `${PROFILE_PIC_BASE_URL}/${sex}/${userId}.jpg`
+      const image_url = `${BOT_PIC_BASE_URL}/${sex}/${userId}.jpg`
       const public_id = `${currentUser.username}/photo1`;
-      const photos = { photo1: { public_id, image_url, user_id: userId }};
+      const photo1 = { public_id, image_url, user_id: userId }
 
-      return ({...currentUser, photos: {...currentUser.photos, ...photos}});
+      return ({...currentUser, photos: {...currentUser.photos, photo1 }})
     }
 
-    return currentUser;
+    return currentUser
 
   } catch (error) {
-    return rejectWithValue("Can't load user data.")
+    console.log(error);
+    return rejectWithValue("Can't load user data.");
   }
 });
 
-const loadUserOnLogin = createAsyncThunk('/loadUserOnLogin', async (userId, { rejectWithValue }) => {
+const loadUserAssets = createAsyncThunk('/loadUserOnLogin', async (userId, { rejectWithValue, getState }) => {
+  const token = getState(state => state.user.user.token);
+  console.log(token);
   try {
-    const user = await API.getUserById(userId);
-    const matches = await API.getMatches(userId);
-    const notifications = await API.getNotifications(userId);
-    let bot_user;
 
-    console.log(user);
+    const matches = await API.getMatches(userId, token);
+    const notifications = await API.getNotifications(userId);
 
     for (let key in matches.matches) {
       if (matches.matches[key].id <= 100) {
         const sex = matches.matches[key].user_sex === 'male' ? 'men' : 'women';
-        const image_url = `${PROFILE_PIC_BASE_URL}/${sex}/${matches.matches[key].id}.jpg`
+        const image_url = `${BOT_PIC_BASE_URL}/${sex}/${matches.matches[key].id}.jpg`
         const public_id = `${matches.matches[key].username}/photo1`;
         const photos = { photo1: { public_id, image_url, user_id: matches.matches[key].id }};
 
@@ -44,17 +76,8 @@ const loadUserOnLogin = createAsyncThunk('/loadUserOnLogin', async (userId, { re
       }
     }
 
-    if (userId <= 100) {
-      const sex = user.user_sex === 'male' ? 'men' : 'women';
-      const image_url = `${PROFILE_PIC_BASE_URL}/${sex}/${userId}.jpg`
-      const public_id = `${user.username}/photo1`;
-      const photos = { photo1: { public_id, image_url, user_id: userId }};
 
-      bot_user = {...user, photos: {...user.photos, ...photos}};
-      return ({ user: bot_user, matches: matches.matches, notifications });
-    }
-
-    return { user: user, matches: matches.matches, notifications};
+    return { matches: matches.matches, notifications};
   } catch(error) {
     return rejectWithValue("Can't load user data");
   }
@@ -71,8 +94,6 @@ const updateUserProfile = createAsyncThunk('/userProfileUpdate', async (payload,
       API.addBio(bio, userId),
       API.addPrompts(prompts, userId)
     ]);
-
-    console.log(res);
 
     return { hates: res[0], bio, prompts: res[2] }
   } catch (error) {
@@ -94,41 +115,47 @@ const uploadPhoto = createAsyncThunk('/uploadPhoto', async (payload, { rejectWit
 });
 
 const deletePhoto = createAsyncThunk('/deletePhoto', async (payload, { rejectWithValue }) => {
-  const { userId, public_id } = payload;
+  const { name, public_id } = payload;
   try {
     const res = await CloudinaryAPI.deletePhoto({ public_id });
     const message = await API.deletePhoto(payload);
-    return message;
+    return { name, ...message };
   } catch (error) {
     console.log(error);
     return rejectWithValue('Cannot delete image')
   }
-})
+});
 
 const getConversation = createAsyncThunk('/getConversation', async (payload, { rejectWithValue }) => {
   try {
     const conversation = await API.getConversation(payload)
-    console.log(conversation);
     return (conversation)
   } catch (error) {
     return rejectWithValue("Can't load messages");
   } 
 });
 
-const chatBot = createAsyncThunk('/getChatBot', async (payload, { rejectWithValue }) => {
+const addNewMessage = createAsyncThunk('/addNewMessage', async (payload, { rejectWithValue }) => {
+
+  const { userId, message, message: {id, from_user} } = payload;
+
+  if ( userId === from_user) return message;
+
   try {
-    const res = (await API.getChatBotRes(payload)).data;
-    return res;
+    const message = await API.markMessageSeen(id);
+    return message;
   } catch (error) {
-    console.log(error);
+    return rejectWithValue("We can't send your message right now.")
   }
 });
 
 
-export { updateUserProfile, 
+export {register,
+        login,
+        updateUserProfile, 
         uploadPhoto,
         deletePhoto, 
         getCurrentUserById, 
-        loadUserOnLogin,
+        loadUserAssets,
         getConversation,
-        chatBot };
+        addNewMessage };

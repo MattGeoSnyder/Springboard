@@ -56,12 +56,10 @@ const Prompt = ({ prompts, name, order="" }) => {
   useEffect(() => {  
     const optionsOff = (e) => {
       e.stopPropagation();
-      console.log(e.target);
       if (e.target.id !== name){
         setOptionsActive(false);
       }
       if (!promptRes) {
-        console.log(promptRes);
         setPrompt(defaultPrompt);
       }  
     }

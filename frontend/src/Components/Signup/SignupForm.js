@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { register } from '../../store/thunks';
+import { setStatus, setErrMsg } from '../../store/reducers/user';
 import { Link, useNavigate } from 'react-router-dom';
-import { registerUser, setStatus, setErrMsg } from '../../store/reducers/user';
 import Input from '../Forms/Input';
 import ScrollClicker from './ScrollClicker';
 import moment from 'moment';
@@ -24,22 +25,25 @@ const SignupForm = ({ page, setPage }) => {
   }, [page]);
 
   useEffect(() => {
-    if (status === 'rejected' || status === 'success') {
+    if (status === 'rejected') {
+      dispatch(setStatus('idle'));
       setTimeout(() => {
-        dispatch(setStatus('idle'));
         dispatch(setErrMsg(''));
       }, 5000);
-    } 
+    }  else if (status === 'success') { 
+        dispatch(setStatus('idle'));
+        navigate(`/disclaimer`);
+    }
   }, [status])
 
   const initialData = {
-    username: 'rachwake23',
-    pw: 'Imgay23',
-    pw_ver: 'Imgay23',
-    first_name: 'Rachel',
-    birthday: '1999-03-23',
-    user_sex: 'female',
-    sex_preference: 'male'
+    username: 'MattGeoSnyder',
+    pw: 'Fakepw1234',
+    pw_ver: 'Fakepw1234',
+    first_name: 'Matt',
+    birthday: '1996-08-11',
+    user_sex: 'male',
+    sex_preference: 'female'
   }
 
   const [formData, setFormData] = useState(initialData);
@@ -61,11 +65,7 @@ const SignupForm = ({ page, setPage }) => {
     e.preventDefault();
     console.log(valid);
     if (Object.values(valid).every(val => val)){
-      dispatch(registerUser(formData));
-      if (status === 'success'){
-        dispatch(setStatus('idle'));
-        navigate(`/disclaimer`);
-      }
+      dispatch(register(formData));
     }
   }
 
@@ -73,6 +73,16 @@ const SignupForm = ({ page, setPage }) => {
     if (e.key === "Enter" || e.key === "Tab") {
       e.preventDefault();
     }
+  }
+
+  const renderButton = () => {
+      switch (status) {
+        case 'pending':
+          return (<i className="fa-solid fa-spinner .loader"></i>);
+      
+        default:
+          return (<button id='signup-button'>Sign up</button>);
+      }
   }
 
   return (
@@ -181,11 +191,11 @@ const SignupForm = ({ page, setPage }) => {
               value={formData.sex_preference}
               onChange={handleChange}
             >
-            <option value='male'>Man</option>
             <option value='female'>Woman</option>
+            <option value='male'>Man</option>
           </select>
           </div>
-          <button>Sign up</button>
+          <div id='button-bar'>{renderButton()}</div>
         </div>
       </form>
       <div id='login-prompt'>Already have an account? Login <Link to={'/login'}>here</Link></div>

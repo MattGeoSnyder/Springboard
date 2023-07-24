@@ -17,15 +17,29 @@
     flex: 1;
 }
 
+.conversation-info .detail {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.conversation-info .detail p {
+    position: absolute;
+    justify-self: flex-start;
+    left: 0px;
+    color: gray;
+    margin-left: 5px;
+    font-size: 14px;
+}
+
 .conversation-link p {
-    display: inline-block;
+    display: block;
     margin: 0;
+    font-size: 20px;
 }
 
 .conversation-link i {
-    position: absolute;
-    right: 20px;
-    align-self: center;
     color: gray;
 }
 

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { parse, stringify } from 'qs';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
@@ -10,14 +11,15 @@ class APIError extends Error {
 }
 
 class API {
-    static async request(endpoint, data={}, method='get') {
+    static async request(endpoint, token='', data={} , method='get') {
         const url = `${BASE_URL}${endpoint}`;
         const params = (method === 'get') ? data : {};
         try {
-            const res = (await axios({url, method, params, data})).data;
+            const res = (await axios({ url, method, params, data, auth: { token } })).data;
             return res;
         } catch (error) {
-            throw new APIError(error.response.data.error);
+            console.log(error);
+            throw new APIError(error);
         }
     }
 
@@ -71,14 +73,19 @@ class API {
         return photos;
     }
 
-    static async getMatches(userId) {
-        let matches = await this.request(`/users/${userId}/matches`);
+    static async getMatches(userId, token) {
+        let matches = await this.request(`/users/${userId}/matches`, token);
         return matches;
     }
 
     static async getConversation({ matchId, userId, offset=0 }) {
         let messages = await this.request(`/messages/match/${matchId}?offset=${offset}`, { userId }, 'patch');
         return messages;
+    }
+
+    static async markMessageSeen(messageId) {
+        let message = await this.request(`/messages/${messageId}`, {}, 'patch');
+        return message;
     }
 
     static async addPhoto(imageData) {

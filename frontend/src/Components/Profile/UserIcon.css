@@ -12,7 +12,14 @@
 }
 
 .user-icon.banner {
-  height: 75%;
+  height: 100px;
+}
+
+.user-icon.nav {
+  height: 40px;
+  display: inline-block;
+  box-shadow: none;
+  border: none;
 }
 
 .user-icon.link {
@@ -26,11 +33,17 @@
 
 .user-icon img {
   height: 100%;
-  width: 100%;
   border-radius: inherit;
+  object-fit: contain;
+  object-position: center;
 }
 
 .user-icon span {
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 500;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

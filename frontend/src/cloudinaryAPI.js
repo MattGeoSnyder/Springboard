@@ -3,6 +3,7 @@ import { CLOUD_NAME, API_KEY } from './cloudinarySecret';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 const CLOUDINARY_BASE_URL = 'https://api.cloudinary.com/v1_1';
+const USER_PIC_BASE_URL = 'https://res.cloudinary.com/dubjhgxii/image/upload';
 
 class CloudinaryAPI {
 
@@ -25,18 +26,27 @@ class CloudinaryAPI {
       formData.append(key,val);
     }); 
 
-    const res = await axios.post(`${CLOUDINARY_BASE_URL}/${CLOUD_NAME}/image/upload`, formData);
-    return res.data;
+    try {
+      const res = await axios.post(`${CLOUDINARY_BASE_URL}/${CLOUD_NAME}/image/upload`, formData);
+      return res.data;
+    } catch (error) {
+      throw error;
+    } 
   }
 
   static async deletePhoto(params) {
     const { signature } = (await this.requestSignature(params));
-    const res = await axios.post(`${CLOUDINARY_BASE_URL}/${CLOUD_NAME}/image/destroy`, { ...params, 
-                                                                                        signature, 
-                                                                                        api_key: API_KEY, 
-                                                                                        timestamp: Math.floor(Date.now()/1000) });
-    return res.data;
+    try {
+      const res = await axios.post(`${CLOUDINARY_BASE_URL}/${CLOUD_NAME}/image/destroy`, { ...params, 
+                                                                                          signature, 
+                                                                                          api_key: API_KEY, 
+                                                                                          timestamp: Math.floor(Date.now()/1000) });
+        return res.data;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
 export default CloudinaryAPI;
+export { USER_PIC_BASE_URL }

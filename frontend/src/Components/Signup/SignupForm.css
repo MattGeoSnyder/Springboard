@@ -76,8 +76,19 @@
     padding-block: 5px;
 }
 
-#signup-form button {
-    width: 50%;
+#signup-form #button-bar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#button-bar i.loader {
+    font-size: 25px;
+    animation: 2s linear infinite spin;
+}
+
+#signup-form #signup-button {
+    width: fit-content;
     font-size: 18px;
     font-family: 'Monserrat', sans-serif;
     background-color: blueviolet;
@@ -85,7 +96,7 @@
     border-radius: 50px;
     color: white;
     font-weight: 600;
-    padding-block: 10px;
+    padding: 15px 20px;
 }
 
 #signup-form #err-msg {
@@ -102,4 +113,12 @@
     text-align: center;
     margin: 1rem 0;
     color: gray;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
 }

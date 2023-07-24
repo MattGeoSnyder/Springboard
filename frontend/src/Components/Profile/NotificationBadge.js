@@ -1,6 +1,6 @@
 import './NotificationBadge.css';
 
-const NotificationBadge = ({ notifications, mode }) => {
+const NotificationBadge = ({ notifications, mode='' }) => {
 
   return (
     <>

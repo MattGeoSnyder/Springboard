@@ -52,7 +52,7 @@ export const profileForm = createSlice({
     });
     builder.addCase(uploadPhoto. rejected, (state, action) => {
       state.status = 'rejected';
-      state.message = action.payload;
+      state.message = action.payload.message;
     });
     builder.addCase(deletePhoto.fulfilled, (state, action) => {
       state.status = 'success';
@@ -60,7 +60,7 @@ export const profileForm = createSlice({
     });
     builder.addCase(deletePhoto.rejected, (state, action) => {
       state.status = 'rejected';
-      state.message = "Photo successfully deleted";
+      state.message = action.payload;
     });
   }
 });

@@ -1,18 +1,16 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getConversation } from "../../../../store/thunks";
-import { addNewMessage } from "../../../../store/reducers/messages";
-// import { fetchConversation, addNewMessage } from '../../../../store/reducers/matches';
-import API from "../../../../api";
+import { getConversation } from "../../../store/thunks";
+import { addNewMessage } from "../../../store/thunks";
 import { v4 as uuid } from 'uuid';
 import MessageForm from "./MessageForm";
 import MessageLoader from "./MessageLoader";
 import Message from './Message';
 import './Messages.css';
-import UserIcon from "../../UserIcon";
-import { setContent } from "../../../../store/reducers/hatesSidebar";
+import UserIcon from "../../Profile/UserIcon";
+import { setContent } from "../../../store/reducers/hatesSidebar";
 
 const Messages = () => {
 
@@ -23,52 +21,49 @@ const Messages = () => {
     const matchedUser = useSelector(state => state.matches.matches[matchId]);
     const messages = useSelector(state => state.messages.messages[matchId].messages);
     const errMsg = useSelector(state => state.messages.errMsg);
-
-    const ws = useMemo(() => {
-      return new WebSocket(`ws://localhost:3001/chat/${matchId}`);    
-    }, [matchId]);
+    const [ ws, setWs ] = useState(null);
 
     useEffect(() => {
       dispatch(getConversation({ userId, matchId }));
     }, [matchId]);
     
-
     useEffect(() => {
-      const chatBot = async (message) => {
-        try {
-          const res = await API.getChatBotRes(message);
-          console.log(res);
-          const chatBotRes = JSON.stringify(res);
-          ws.send(chatBotRes);
-        } catch (error) {
-          const chatBotRes = JSON.stringify({ matchId, fromUser: 1, toUser: userId, content: "I don't have a good response right now. Try again later. "})
-          ws.send(chatBotRes)
+      const ws = new WebSocket(`ws://localhost:3001/users/${userId}/matches/${matchId}`);   
+
+      ws.onmessage = function (evt) {
+        console.log(evt.data);
+        console.log(typeof evt.data);
+        let message = JSON.parse(evt.data);
+        console.log(typeof message);
+        dispatch(addNewMessage({ userId, message }));
+
+        if (message.to_user === 1) {
+          message = {...message, seen_at: new Date() };
+          ws.send(JSON.stringify({ type: 'chatBot', payload: message }));
         }
       }
 
-
-      ws.onmessage = function (evt) {
-        let message = JSON.parse(evt.data);
-        dispatch(addNewMessage({ matchId, message }));
-
-        console.log(message);
-       
-        if (message.to_user == 1) {
-          chatBot({ matchId: message.match_id, 
-                          toUser: message.to_user, 
-                          fromUser: message.from_user, 
-                          content: message.content });
-        } 
-
-      }
-
-
       ws.onopen = function(evt) {
-        console.log('connecting to ws with matchId', matchId);
+        console.log('connecting to ws with match id', matchId);
+        const action = JSON.stringify({ type: 'join' });
+        ws.send(action);
       }
 
-      return () => { ws.onmessage = () => {} };
-    }, [ws, matchId, dispatch]);
+      ws.onerror = function(evt) {
+        console.log('Websocket error', evt);
+      }
+
+      ws.onclose = function(evt) {
+        console.log(`disconnecting from ws with match id`, matchId);
+      }
+
+      setWs(ws);
+
+      return () => { 
+        ws.close();
+        setWs(null);
+      };
+  }, [matchId, userId, dispatch]);
 
     const goBack = (e) => {
       navigate(`/users/${userId}`);

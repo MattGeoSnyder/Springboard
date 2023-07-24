@@ -1,14 +1,16 @@
 import { useState, useEffect, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setStatus, setEditPermissions, setLikes } from '../../store/reducers/currentUser';
-import { getCurrentUserById } from '../../store/thunks';
+import { getCurrentUserById, loadUserAssets } from '../../store/thunks';
 import { addLike, addDislike } from '../../store/reducers/matches';
 import { setDefault } from '../../store/reducers/profileForm';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import UserContent from './UserContent';
-import Sidebar from './Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 import Overlay from "./Overlay/Overlay";
 import './Profile.css'
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import BioSection from './BioSection/BioSection';
 
 
 const OffScreenContent = memo(function OffScreenContent() {
@@ -23,10 +25,13 @@ const OffScreenContent = memo(function OffScreenContent() {
 // Takes prop id to render user profile 
 const Profile = ({ id }) => {
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.user.user.id);
+  const [ get, set, remove ] = useLocalStorage();
+
+  const user = useSelector(state => state.user.user);
   const currentUser = useSelector(state => state.currentUser.user);
   const loadStatus = useSelector(state => state.currentUser.status);
   const updateStatus = useSelector(state => state.profileForm.status);
+  const userId = user.id;
 
   // Get current user by id on render
   useEffect(() => {
@@ -39,7 +44,10 @@ const Profile = ({ id }) => {
   // set editPermission to true
   useEffect(() => {
     if (userId === id) {
+      console.log('setting edit true');
       dispatch(setEditPermissions(true));
+    } else {
+      dispatch(setEditPermissions(false));
     }
   }, [userId, id, dispatch]);
 
@@ -137,8 +145,8 @@ const Profile = ({ id }) => {
         {/* {ProfileContent} */}
         <UserContent />
 
-        <OffScreenContent />
       </div>
+      <OffScreenContent />
       </>
   )
 }

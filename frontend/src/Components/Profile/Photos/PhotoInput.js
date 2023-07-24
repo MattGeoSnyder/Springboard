@@ -58,7 +58,7 @@ const PhotoInput = ({ name, photoLabel }) => {
 
     setPhoto("");
     setHasPhoto(false);
-    dispatch(deletePhoto({ public_id: `${username}/${name}`, userId }));
+    dispatch(deletePhoto({ public_id: `${username}/${name}`, name }));
   }
 
   const selectPhoto = (e) => {

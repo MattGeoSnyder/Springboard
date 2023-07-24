@@ -1,14 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { queryMoreMessages } from '../../../../store/reducers/matches';
+import { queryMoreMessages } from '../../../store/reducers/matches';
 import './MessageLoader.css';
 
-const MessageLoader = ({ offset }) => {
+const MessageLoader = () => {
 
     const { matchId } = useParams();
     const loaderRef = useRef(null);
     const dispatch = useDispatch();
+    const [ offset, setOffset ] = useState();
 
     const options = {
         root: null,
@@ -20,6 +21,7 @@ const MessageLoader = ({ offset }) => {
         const [ entry ] = entries;
         if (offset > 0 && entry.isIntersecting) {
             dispatch(queryMoreMessages({ matchId, offset }));
+            setOffset(offset => offset + 10);
         }
     }
 

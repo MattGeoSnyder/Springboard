@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { authUser, setErrMsg, setStatus } from '../../store/reducers/user';
+import { login } from '../../store/thunks';
+import { setErrMsg, setStatus } from '../../store/reducers/user';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from "../Forms/Input"
 import './Login.css';
@@ -25,8 +26,8 @@ const Login = () => {
   }, [status, userId, navigate]);
 
   const initialData = {
-    username: 'rachwake23',
-    pw: 'Imgay232023'
+    username: 'MattGeoSnyder',
+    pw: 'Fakepw1234'
   }
 
   const [ formData, setFormData ] = useState(initialData);
@@ -34,7 +35,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(e);
     if (Object.values(formData).every(val => val)){
-      dispatch(authUser(formData));
+      dispatch(login(formData));
     }
   }
 

@@ -1,0 +1,52 @@
+#icon-tray {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  padding: 0 50px;
+}
+
+#icon-tray .icon {
+  width: fit-content;
+  height: 100%;
+}
+
+#icon-tray p {
+  display: inline-block;
+  color: black;
+  font-size: 20px;
+}
+
+#icon-tray .message {
+  color: var(--accent-one);
+  display: flex;
+  align-items: center;
+}
+
+#icon-tray .icon.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  cursor: pointer;
+  pointer-events: fill;
+}
+
+.icon p {
+  display: inline-block;
+}
+
+.icon i {
+  display: inline-block;
+  font-size: 30px;
+}
+
+.logout.icon i {
+  margin-left: 10px;
+  position: relative;
+  top: 5px;
+}
+
+

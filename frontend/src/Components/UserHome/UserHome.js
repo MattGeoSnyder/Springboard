@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { loadUserOnLogin } from '../../store/thunks';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { loadUserAssets } from '../../store/thunks';
 import { setLikes } from '../../store/reducers/currentUser'
 import { loadFeed, getNextUser } from '../../store/reducers/feed';
 import { useParams } from 'react-router-dom';
@@ -8,16 +9,19 @@ import Profile from "../Profile/Profile"
 import './UserHome.css'
 
 const UserHome = () => {
-    const { userId } = useParams();
     const dispatch = useDispatch();
 
     const [offset, setOffset] = useState(0);
+    const [ get, set, remove ] = useLocalStorage();
+
+    const userId = useSelector(state => state.user.user.id);
+
     const likes = useSelector(state => state.currentUser.likes);
     const userIds = useSelector(state => state.feed.userIds);
 
+    //load users matches and notifications upon going to the home page.
     useEffect(() => {
-        console.log(userId);
-       dispatch(loadUserOnLogin(userId));
+        dispatch(loadUserAssets(userId));
     },[userId, dispatch]);
 
     useEffect(() => {
@@ -34,7 +38,7 @@ const UserHome = () => {
                 dispatch(setLikes(null));
             }, 250);
         }
-    }, [likes, dispatch])
+    }, [likes, dispatch]);
 
     return (
         <Profile id={userIds[0]} />

@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setErrMsg } from '../../../../store/reducers/messages';
+import { setErrMsg } from '../../../store/reducers/messages';
 import './MessageForm.css';
 
 const MessageForm = ({ ws }) => {
@@ -15,7 +15,7 @@ const MessageForm = ({ ws }) => {
     const form = useRef(null);
 
     //info we need to send message
-    const { matchId } = useParams();
+    const { matchId, userId } = useParams();
     const fromUser = useSelector(state => state.user.user.id);
     const toUser = useSelector(state => state.matches.matches[matchId].id);
 
@@ -48,14 +48,28 @@ const MessageForm = ({ ws }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (formData.content.length <= 200) {
-            const message = JSON.stringify(formData);
-            ws.send(message);
+            const action = JSON.stringify({ type: 'chat', payload: formData });
+            ws.send(action);
             divInput.current.innerText = "";
             setFormData(data => ({...data, content: ""}));
         } else {
             dispatch(setErrMsg("Your message must be less than 200 characters."))
         }
     }
+
+    // const handleSubmit = useCallback((e) => {
+    //   e.preventDefault();
+    //   if (formData.content.length <= 200) {
+    //       const message = JSON.stringify(formData);
+    //       ws.send(message);
+    //       divInput.current.innerText = "";
+    //       setFormData(data => ({...data, content: ""}));
+    //   } else {
+    //       dispatch(setErrMsg("Your message must be less than 200 characters."))
+    //   }
+
+    // }, [formData, ws, divInput, setFormData, dispatch])
+  
 
     return (
         <div id='message-form'>

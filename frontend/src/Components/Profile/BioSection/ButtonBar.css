@@ -12,7 +12,7 @@
   aspect-ratio: 1 / 1;
 }
 
-#like i, #dislike i {
+#button-bar #like i, #button-bar #dislike i {
   font-size: 40px;
 }
 

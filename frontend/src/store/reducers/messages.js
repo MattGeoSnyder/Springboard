@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loadUserOnLogin, getConversation } from '../thunks';
+import { loadUserAssets, getConversation, addNewMessage } from '../thunks';
 import API from '../../api.js';
 
 export const messages = createSlice({
@@ -11,16 +11,10 @@ export const messages = createSlice({
     messages: {}
   },
   reducers: {
-    addNewMessage: (state, action) => {
-      const { matchId, message } = action.payload;
-      state.messages[matchId].messages.unshift(message);
-    },
     addNotification: (state, action) => {
-      state.notifications++;
-    },
-    addConversationNotification: (state, action) => {
       const { matchId } = action.payload;
       state.messages[matchId].notifications++;
+      state.notifications++;
     },
     setErrMsg: (state, action) => {
       state.errMsg = action.payload;
@@ -39,7 +33,7 @@ export const messages = createSlice({
       state.notifications -= +messageCount;
       state.messages[matchId].notifications = 0;
     });
-    builder.addCase(loadUserOnLogin.fulfilled, (state, action) => {
+    builder.addCase(loadUserAssets.fulfilled, (state, action) => {
       const { matches, notifications } = action.payload;
       let total = 0;
       for (let matchId in matches) {
@@ -58,8 +52,12 @@ export const messages = createSlice({
       }
       state.notifications = total;
     });
+    builder.addCase(addNewMessage.fulfilled, (state, action) => {
+      const { match_id } = action.payload;
+      state.messages[match_id].messages.unshift(action.payload);
+    })
   }
 });
 
 export default messages.reducer;
-export const { addNewMessage, addNotification, addConversationNotification, setErrMsg } = messages.actions;
+export const { addNotification, addConversationNotification, setErrMsg } = messages.actions;
