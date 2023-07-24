@@ -6,4 +6,11 @@ class ExpressError extends Error {
     }
 }
 
+class UnauthorizedError extends ExpressError {
+    constructor(message = 'Unauthorized') {
+      super(message, 401);
+    }
+  }  
+
 export default ExpressError;
+export { UnauthorizedError };

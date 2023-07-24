@@ -18,4 +18,14 @@ router.patch('/match/:matchId', async function (req, res, next) {
     }
 });
 
+router.patch('/:messageId', async function (req, res, next) {
+    try {
+        const { messageId } = req.params;
+        const message = await Message.markMessageSeen(messageId);
+        return res.json(message);
+    } catch (error) {
+        next(error);
+    }
+})
+
 export default router;

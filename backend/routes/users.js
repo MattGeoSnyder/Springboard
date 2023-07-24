@@ -2,6 +2,7 @@ import User from '../models/user.js';
 import Message from '../models/message.js';
 import express, { Router } from 'express';
 import ExpressError from '../helpers/expressError.js';
+import { authenticateJWT, ensureLoggedIn, isUser, isAdmin } from '../middleware/auth.js';
 
 const router = new Router();
 
@@ -15,29 +16,29 @@ router.get('/:userId', async function (req, res, next) {
     }
 });
 
-router.get('/:userId/users', async function(req, res, next) {
-    const { userId } = req.params;
-    const { offset } = req.body;
-    try {
-        let userIds = await User.queryUserIds({ userId, offset });
-        return res.json(userIds);
-    } catch (error) {
-        next(error);
-    }
-});
+// router.get('/:userId/users', ensureLoggedIn, async function(req, res, next) {
+//     const { userId } = req.params;
+//     const { offset } = req.body;
+//     try {
+//         let userIds = await User.queryUserIds({ userId, offset });
+//         return res.json(userIds);
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
 
-router.get('/:userId/photos', async function(req, res, next) {
-    const { userId } = req.params;
-    try {
-        let photos = await User.getUserPhotos(userId);
-        return res.json(photos);
-    } catch (error) {
-        next(error);
-    }
-});
+// router.get('/:userId/photos', isUser, async function(req, res, next) {
+//     const { userId } = req.params;
+//     try {
+//         let photos = await User.getUserPhotos(userId);
+//         return res.json(photos);
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
-router.delete('/:userId/photo', async function(req, res, next) {
+router.delete('/:userId/photo', [authenticateJWT, ensureLoggedIn, isUser], async function(req, res, next) {
     const { public_id } = req.body;
     try {
         const result = await User.deletePhoto(public_id);
@@ -47,7 +48,7 @@ router.delete('/:userId/photo', async function(req, res, next) {
     }
 })
 
-router.get('/:userId/matches', async function(req, res, next) {
+router.get('/:userId/matches', [ authenticateJWT, ensureLoggedIn, isUser], async function(req, res, next) {
     try {
         const { userId } = req.params;
         let matches = await User.queryMatches(userId);
@@ -57,7 +58,7 @@ router.get('/:userId/matches', async function(req, res, next) {
     }
 });
 
-router.post('/:userId/bio', async function (req, res, next) {
+router.post('/:userId/bio', [ authenticateJWT, ensureLoggedIn, isUser, isAdmin], async function (req, res, next) {
     try {
         const { bioData } = req.body;
         const { userId } = req.params;

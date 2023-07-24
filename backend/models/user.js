@@ -22,7 +22,7 @@ class User {
                                             (username, pw, first_name, birthday, user_sex, sex_preference)
                                         VALUES 
                                             ($1, $2, $3, $4, $5, $6)
-                                        RETURNING id, username, first_name, birthday, user_sex, sex_preference`, 
+                                        RETURNING id, is_admin;`, 
                                         [username, 
                                         hashedPassword,
                                         first_name,
@@ -36,12 +36,8 @@ class User {
     static async login({ username, pw }){
         const checkUser = await db.query(`SELECT 
                                             id,
-                                            username,
-                                            pw,
-                                            first_name,
-                                            birthday,
-                                            user_sex,
-                                            sex_preference
+                                            is_admin,
+                                            pw
                                         FROM users WHERE username=$1`, [username]);
 
         const user = checkUser.rows[0];
@@ -74,11 +70,7 @@ class User {
                                         prompt1_res,
                                         prompt2_res,
                                         prompt3_res,
-                                        hate1,
-                                        hate2,
-                                        hate3,
-                                        hate4,
-                                        hate5,
+                                        ARRAY[hate1, hate2, hate3, hate4, hate5] AS hates,
                                         json_agg(photos.*) AS photos_arr
                                     FROM 
                                         users
@@ -90,8 +82,10 @@ class User {
                                         id = $1
                                     GROUP BY 
                                         users.id;`, [userId]);
+
         const data = result.rows[0];
-        const { id, username, first_name, birthday, user_sex, sex_preference, bio } = data;
+        const { id , username, first_name, birthday, user_sex, sex_preference, bio } = data;
+
         const prompts = {}
         for (let i = 1; i <=3; i++) {
             const key = `prompt${i}`;
@@ -101,16 +95,19 @@ class User {
                 promptRes: data[`${key}_res`]
             }
         }
-        const hates = [data.hate1, data.hate2, data.hate3, data.hate4, data.hate5].filter((val) => val !== null);
+
+        const hates = data.hates.filter((val) => val !== null);
+
         const { photos_arr } = data;
         const photos = photos_arr.reduce((acc, photo) => {
             if (photo) {
                 const name = photo.public_id.split('/')[1];
                 return ({...acc, [name]: photo });
             } else {
-                return null;
+                return acc;
             }
         }, {});
+
         return { id, username, first_name, birthday, user_sex, sex_preference, bio, prompts, hates, photos }
     }
 
@@ -286,13 +283,13 @@ class User {
                                         WHERE 
                                             id = $6
                                         RETURNING
-                                            hate1,
+                                            ARRAY[hate1,
                                             hate2,
                                             hate3,
                                             hate4,
-                                            hate5`, [hate1, hate2, hate3, hate4, hate5, userId]);
+                                            hate5] as hates`, [hate1, hate2, hate3, hate4, hate5, userId]);
         
-        return Object.values(res.rows[0]);
+        return res.rows[0].hates.filter(val => val !== null);
       }
       
       

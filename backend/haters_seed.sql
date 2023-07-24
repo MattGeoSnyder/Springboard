@@ -25,7 +25,7 @@ CREATE TABLE users(
     birthday DATE NOT NULL,
     user_sex sex NOT NULL,
     sex_preference sex NOT NULL,
-    bio varchar(200) DEFAULT '',
+    bio varchar(200) NOT NULL DEFAULT '',
     is_admin boolean NOT NULL DEFAULT 'false',
     prompt1 int REFERENCES prompts,
     prompt2 int REFERENCES prompts,

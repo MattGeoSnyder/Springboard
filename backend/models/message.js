@@ -8,6 +8,7 @@ import db from '../db.js';
 class Message {
     
     static async saveMessage({ matchId, fromUser, toUser, content }) {
+
         const result = await db.query(`INSERT INTO messages 
                                         (match_id, from_user, to_user, content)
                                     VALUES
@@ -17,13 +18,10 @@ class Message {
                                                     toUser,
                                                     content]);
 
-        const messageStr = JSON.stringify(result.rows[0]);
-        return messageStr;
+        return result.rows[0];
     }
 
     static async queryConversation(matchId, userId, offset=0) {
-        console.log(matchId, userId);
-
         const result = await db.query(`SELECT
                                         *
                                     FROM messages 
@@ -45,6 +43,18 @@ class Message {
                             to_user = $2
                         AND
                             seen_at IS NULL`, [matchId, userId]);
+    }
+
+    static async markMessageSeen(messageId) {
+        const res = await db.query(`UPDATE
+                                messages
+                            SET
+                                seen_at = NOW()
+                            WHERE
+                                id = $1
+                            RETURNING *`, [+messageId]);
+
+        return res.rows[0];
     }
 
     static async matchNotifications(userId) {

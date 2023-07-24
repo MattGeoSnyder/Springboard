@@ -4,7 +4,7 @@ import { SECRET_KEY } from '../config.js';
 function createToken(user) {
   let payload = {
     id: user.id,
-    isAdmin: user.isAdmin || false
+    is_admin: user.is_admin || false
   };
 
   return jwt.sign(payload, SECRET_KEY);

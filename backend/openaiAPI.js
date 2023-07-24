@@ -1,4 +1,6 @@
 import { Configuration, OpenAIApi } from 'openai';
+import Message from './models/message.js';
+import db from './db.js';
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_SECRET
@@ -10,28 +12,53 @@ class ChatBot {
   constructor(openai) {
     this.chat = openai
     this.model = 'gpt-3.5-turbo'
-    this.messages = [{ role: 'system', content: "You are a friendly companion for conversation"}]  
-}
+    this.messages = []  
+  }
 
-  respond = async function(message) {
+  async respond(message) {
     const res = {
-      matchId: message.matchId,
-      fromUser: message.toUser,
-      toUser: message.fromUser,
+      match_id: message.match_id,
+      from_user: message.to_user,
+      to_user: message.from_user,
       content: ""
     }
 
-    this.messages.push({ role: 'user', content: message.content });
+    try {
+      const messages = await this.getPastChats(res.match_id);
+      this.messages = messages;
+  
+      const chatRes = await this.chat.createChatCompletion({
+        model: this.model,
+        messages: this.messages
+      });
+  
+      res.content = chatRes.data.choices[0].message.content;
+      const response = await Message.saveMessage({ matchId: res.match_id, fromUser: res.from_user, toUser: res.to_user, content: res.content })
+      return response;
+    } catch (error) {
+      return ({ ...response, content: "Sorry, I don't have a good response to that right now. Try again later" });  
+    }
 
-    const chatRes = await this.chat.createChatCompletion({
-      model: this.model,
-      messages: this.messages
+  }
+  
+  async getPastChats(matchId) {
+    const messages = await db.query(`SELECT * FROM 
+                                      messages
+                                    WHERE
+                                      match_id = $1
+                                    AND
+                                      sent_at >= CURRENT_DATE`, [matchId]);
+
+    const pastMessages = messages.rows.map((message) => {
+      if (message.from_user === 1) {
+        return ({ role: 'assistant', content: message.content });
+      } else {
+        return ({ role: 'user', content: message.content });
+      }
     });
 
-    res.content = chatRes.data.choices[0].message.content;
-    this.messages.push(chatRes.data.choices[0].message);
-    return res;
-  } 
+    return [{ role: 'system', content: "You are a friendly companion for conversation"}, ...pastMessages];
+  }
 
   introduce(matchId, toUser) {
     const res = {
@@ -41,7 +68,7 @@ class ChatBot {
       content: "Hi, I'm your friendly companion! We can talk about anything, because I'm powered by Open AI's chat GPT 3.5"
     }
 
-    this.messages.push({ role: 'assisstant', content: res.content });
+    this.messages.push({ role: 'assistant', content: res.content });
 
     return res;
   }
