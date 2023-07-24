@@ -11,11 +11,12 @@ class APIError extends Error {
 }
 
 class API {
-    static async request(endpoint, token='', data={} , method='get') {
+    static async request(endpoint, data={} , method='get', token='') {
         const url = `${BASE_URL}${endpoint}`;
         const params = (method === 'get') ? data : {};
+        const headers = { 'Authorization': `Bearer ${token}`}
         try {
-            const res = (await axios({ url, method, params, data, auth: { token } })).data;
+            const res = (await axios({ url, method, params, data, headers })).data;
             return res;
         } catch (error) {
             console.log(error);
@@ -74,7 +75,7 @@ class API {
     }
 
     static async getMatches(userId, token) {
-        let matches = await this.request(`/users/${userId}/matches`, token);
+        let matches = await this.request(`/users/${userId}/matches`, {}, 'get', token);
         return matches;
     }
 

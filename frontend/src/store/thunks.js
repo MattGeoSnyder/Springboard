@@ -58,7 +58,7 @@ const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId
 });
 
 const loadUserAssets = createAsyncThunk('/loadUserOnLogin', async (userId, { rejectWithValue, getState }) => {
-  const token = getState(state => state.user.user.token);
+  const token = getState().user.user.token;
   console.log(token);
   try {
 
