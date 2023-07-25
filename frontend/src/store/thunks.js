@@ -23,22 +23,22 @@ const login = createAsyncThunk('/login', async (userData, { rejectWithValue }) =
   console.log(userData);
   try {
       const { id , token } = await API.login(userData);
-      console.log(id, token);
-      const user = await API.getUserById(id);
+      const user = await API.getUserById(id, token);
       set({ ...user, token });
       return ({ ...user, token });
   } catch (error) {
-      console.log(error);
       return rejectWithValue(error);
   }
 });
 
 
 
-const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId, { getState, rejectWithValue }) => {
+const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId, { rejectWithValue, getState }) => {
   const [ get, set, remove ] = useLocalStorage();
+  const token = getState().user.user.token;
+  console.log(userId);
   try {
-    const currentUser = await API.getUserById(userId);
+    const currentUser = await API.getUserById(userId, token);
 
     if (userId <= 100) {
       const sex = currentUser.user_sex === 'male' ? 'men' : 'women';
@@ -52,7 +52,6 @@ const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId
     return currentUser
 
   } catch (error) {
-    console.log(error);
     return rejectWithValue("Can't load user data.");
   }
 });
@@ -63,7 +62,7 @@ const loadUserAssets = createAsyncThunk('/loadUserOnLogin', async (userId, { rej
   try {
 
     const matches = await API.getMatches(userId, token);
-    const notifications = await API.getNotifications(userId);
+    const notifications = await API.getNotifications(userId, token);
 
     for (let key in matches.matches) {
       if (matches.matches[key].id <= 100) {
@@ -83,16 +82,17 @@ const loadUserAssets = createAsyncThunk('/loadUserOnLogin', async (userId, { rej
   }
 });
 
-const updateUserProfile = createAsyncThunk('/userProfileUpdate', async (payload, { rejectWithValue }) => {
+const updateUserProfile = createAsyncThunk('/userProfileUpdate', async (payload, { rejectWithValue, getState }) => {
   const { formData, userId } = payload;
   const { bio, hates, prompts } = formData;
+  const token = getState().user.user.token;
 
   try {
 
     const res = await Promise.all([
-      API.addHates(hates, userId),
-      API.addBio(bio, userId),
-      API.addPrompts(prompts, userId)
+      API.addHates(hates, userId, token),
+      API.addBio(bio, userId, token),
+      API.addPrompts(prompts, userId, token)
     ]);
 
     return { hates: res[0], bio, prompts: res[2] }
@@ -102,19 +102,21 @@ const updateUserProfile = createAsyncThunk('/userProfileUpdate', async (payload,
 
 });
 
-const uploadPhoto = createAsyncThunk('/uploadPhoto', async (payload, { rejectWithValue }) => {
+const uploadPhoto = createAsyncThunk('/uploadPhoto', async (payload, { rejectWithValue, getState }) => {
+  const token = getState().user.user.token;
   const { image, options, name, userId } = payload;
   console.log(name);
   try {
     const res = await CloudinaryAPI.uploadImage(image, options);
-    const query = await API.addPhoto({ userId, publicId: res.public_id, imageUrl: res.secure_url });
+    const query = await API.addPhoto({ userId, publicId: res.public_id, imageUrl: res.secure_url }, token);
     return { name, ...query};
   } catch(error) {
     return rejectWithValue("We can't upload your photo right now");
   }
 });
 
-const deletePhoto = createAsyncThunk('/deletePhoto', async (payload, { rejectWithValue }) => {
+const deletePhoto = createAsyncThunk('/deletePhoto', async (payload, { rejectWithValue, getState }) => {
+  const token = getState().user.user.token;
   const { name, public_id } = payload;
   try {
     const res = await CloudinaryAPI.deletePhoto({ public_id });
@@ -126,28 +128,30 @@ const deletePhoto = createAsyncThunk('/deletePhoto', async (payload, { rejectWit
   }
 });
 
-const getConversation = createAsyncThunk('/getConversation', async (payload, { rejectWithValue }) => {
+const getConversation = createAsyncThunk('/getConversation', async (payload, { rejectWithValue, getState }) => {
+  const token = getState().user.user.token;
   try {
-    const conversation = await API.getConversation(payload)
+    const conversation = await API.getConversation(payload, token)
     return (conversation)
   } catch (error) {
     return rejectWithValue("Can't load messages");
   } 
 });
 
-const addNewMessage = createAsyncThunk('/addNewMessage', async (payload, { rejectWithValue }) => {
+const addNewMessage = createAsyncThunk('/addNewMessage', async (payload, { rejectWithValue, getState }) => {
 
+  const token = getState().user.user.token;
   const { userId, message, message: {id, from_user} } = payload;
 
   if ( userId === from_user) return message;
 
   try {
-    const message = await API.markMessageSeen(id);
+    const message = await API.markMessageSeen(id, token);
     return message;
   } catch (error) {
     return rejectWithValue("We can't send your message right now.")
   }
-});
+}); 
 
 
 export {register,

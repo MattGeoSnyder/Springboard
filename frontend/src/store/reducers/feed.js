@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import API from '../../api';
 
-const loadFeed = createAsyncThunk('/feed/loadFeed', async (payload) => {
-  const userIds = await API.getUserIds(payload);
+const loadFeed = createAsyncThunk('/feed/loadFeed', async (payload, { getState }) => {
+  const token = getState().user.user.token;
+  const userIds = await API.getUserIds(payload, token);
   return userIds;
 })
 

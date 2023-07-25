@@ -6,13 +6,15 @@ const fetchHates = createAsyncThunk('/hates/getAllHates', async () => {
   return hates;
 });
 
-const fetchMatches = createAsyncThunk('/matches/fetchMatches', async (userId) => {
+//Not used right now. Will keep for later maybe
+const fetchMatches = createAsyncThunk('/matches/fetchMatches', async (userId, getState ) => {
   const matches = await API.getMatches(userId);
   return matches;
 });
 
-const queryMoreMessages = createAsyncThunk('/matches/queryMoreMessages', async ({ matchId, offset }) => {
-  const messages = await API.getConversation(matchId, offset);
+const queryMoreMessages = createAsyncThunk('/matches/queryMoreMessages', async ({ matchId, offset }, { getState }) => {
+  const token = getState().user.user.token;
+  const messages = await API.getConversation(matchId, offset, token);
   return messages;
 });
 
