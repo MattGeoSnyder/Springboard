@@ -75,7 +75,7 @@ async function isInMatch(req, res, next) {
 function isLiker(req, res, next) {
   const likerId = req.params.likerId;
   try {
-    if (res.locals.user.id !== likerId) throw new UnauthorizedError('You cannot view this like.');
+    if (res.locals.user.id !== +likerId) throw new UnauthorizedError("You can't post this like.");
     return next();
   } catch (error) {
     return next(error);
@@ -84,8 +84,9 @@ function isLiker(req, res, next) {
 
 function isDisliker(req, res, next) {
   const dislikerId = req.params.dislikerId;
+  
   try {
-    if (res.locals.user.id !== dislikerId) throw new UnauthorizedError('You cannot view this like.');
+    if (res.locals.user.id !== +dislikerId) throw new UnauthorizedError('You cannot post this like.');
     return next();
   } catch (error) {
     return next(error);
