@@ -81,9 +81,9 @@ const Profile = ({ id }) => {
     setDragDistance(val);
   }
 
-  useEffect(() => {
-    setDragDistance(0);
-  }, [setDragDistance])
+  // useEffect(() => {
+  //   setDragDistance(0);
+  // }, [id, setDragDistance])
 
   useEffect(() => {
     const calculateTilt = () => {
@@ -109,13 +109,23 @@ const Profile = ({ id }) => {
       //dispatch dislike
       dispatch(setLikes(false));
       dispatch(addDislike({ userId, currentUserId: id }));
-      console.log('dislike');
+
+      setTimeout(() => {
+        setDragDistance(0);
+      }, 1000);
+
     } else if (dragDistance > 20) {
       //dispatch like
       dispatch(setLikes(true));
       dispatch(addLike({ userId, currentUserId: id}));
-      console.log('like');
-    } 
+
+      setTimeout(() => {
+        setDragDistance(0);
+      }, 1000);
+
+    }
+    setInitialMouseX(0);
+    setCurrentMouseX(0);
     setDragDistance(0);
   }
 

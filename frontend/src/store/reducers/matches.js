@@ -12,15 +12,17 @@ const queryMoreMessages = createAsyncThunk('/matches/queryMoreMessages', async (
     return messages;
 });
 
-const addLike = createAsyncThunk('/matches/addLike', async (payload) => {
+const addLike = createAsyncThunk('/matches/addLike', async (payload, { getState }) => {
+    const token = getState().user.user.token;
     const { userId, currentUserId } = payload;
-    const res = await API.like(userId, currentUserId);
+    const res = await API.like(userId, currentUserId, token);
     return res;
 });
   
-const addDislike = createAsyncThunk('matches/addDislike', async (payload) => {
+const addDislike = createAsyncThunk('matches/addDislike', async (payload, { getState }) => {
+    const token = getState().user.user.token;
     const { userId, currentUserId } = payload;
-    const dislike = await API.dislike(userId, currentUserId);
+    const dislike = await API.dislike(userId, currentUserId, token);
     return dislike;
 });
 

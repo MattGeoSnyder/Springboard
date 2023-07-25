@@ -138,12 +138,12 @@ class API {
     }
 
     static async like(likerId, likeeId, token) {
-        let result = await this.authPost(`/likes/${likerId}/${likeeId}`, token);
+        let result = await this.authPost(`/likes/${likerId}/${likeeId}`, {}, token);
         return result;
     }
 
     static async dislike(dislikerId, dislikeeId, token) {
-        let dislike = await this.request(`/dislikes/${dislikerId}/${dislikeeId}`, token);
+        let dislike = await this.authPost(`/dislikes/${dislikerId}/${dislikeeId}`, {}, token);
         return dislike;
     }
 

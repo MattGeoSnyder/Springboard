@@ -10,7 +10,7 @@
   width: 100%;
   height: 100%;
 
-  transition: transform 0.2s ease;
+  transition: transform 0.1s ease;
 }
 
 #profile-page[draggable='true'] {
@@ -18,22 +18,22 @@
 }
 
 #profile-page.dislikes {
-  animation: 0.5s ease dislike
+  animation: 1s ease dislike
 }
 
 #profile-page.likes {
-  animation: 0.5s ease like
+  animation: 1s ease like
 }
 
 @keyframes dislike {
   to {
-    transform: translate(-100%, -100%);
+    transform: translate(-300%, -300%) rotate(-45deg);
   }
 }
 
 @keyframes like {
   to {
-    transform: translate(100%, -100%);
+    transform: translate(300%, -300%) rotate(45deg);
   }
 }
 
