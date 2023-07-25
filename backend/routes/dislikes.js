@@ -1,9 +1,10 @@
+import { ensureLoggedIn, isDisliker } from '../middleware/auth.js';
 import Dislike from '../models/dislike.js';
 import { Router } from 'express';
 
 const router = new Router();
 
-router.post('/:dislikerId/:dislikeeId', async function (req, res, next) {
+router.post('/:dislikerId/:dislikeeId', [ensureLoggedIn, isDisliker],async function (req, res, next) {
   const { dislikerId, dislikeeId } = req.params;
   try {
     const dislike = await Dislike.addDislike(dislikerId, dislikeeId);

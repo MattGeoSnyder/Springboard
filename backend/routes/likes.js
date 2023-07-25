@@ -1,3 +1,4 @@
+import { ensureLoggedIn, isLiker } from '../middleware/auth.js';
 import Like from '../models/like.js';
 import Match from '../models/match.js';
 import User from '../models/user.js';
@@ -5,7 +6,7 @@ import { Router } from "express";
 
 const router = new Router();
 
-router.get('/:likerId/:likeeId', async function (req, res, next) {
+router.get('/:likerId/:likeeId', [ensureLoggedIn, isLiker], async function (req, res, next) {
   const { likerId, likeeId } = req.params;
   try {
     let like = await Like.getLike(likerId, likeeId);
@@ -15,7 +16,7 @@ router.get('/:likerId/:likeeId', async function (req, res, next) {
   }
 });
 
-router.post('/:likerId/:likeeId', async function (req, res, next) {
+router.post('/:likerId/:likeeId', [ensureLoggedIn, isLiker], async function (req, res, next) {
   const { likerId, likeeId } = req.params;
   try {
     //seed users will automatically match

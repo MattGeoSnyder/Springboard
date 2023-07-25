@@ -1,10 +1,11 @@
 import Message from '../models/message.js';
 import express, { Router } from 'express';
 import ExpressError from '../helpers/expressError.js';
+import { isInMatch } from '../middleware/auth.js';
 
 const router = new Router();
 
-router.patch('/match/:matchId', async function (req, res, next) {
+router.patch('/match/:matchId', isInMatch, async function (req, res, next) {
     try {
         const { matchId } = req.params;
         const { userId } = req.body;

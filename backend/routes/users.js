@@ -6,7 +6,7 @@ import { authenticateJWT, ensureLoggedIn, isUser, isAdmin } from '../middleware/
 
 const router = new Router();
 
-router.get('/:userId', async function (req, res, next) {
+router.get('/:userId', ensureLoggedIn, async function (req, res, next) {
     const { userId } = req.params;
     try {
         let user = await User.getUserById(userId);
@@ -16,16 +16,16 @@ router.get('/:userId', async function (req, res, next) {
     }
 });
 
-// router.get('/:userId/users', ensureLoggedIn, async function(req, res, next) {
-//     const { userId } = req.params;
-//     const { offset } = req.body;
-//     try {
-//         let userIds = await User.queryUserIds({ userId, offset });
-//         return res.json(userIds);
-//     } catch (error) {
-//         next(error);
-//     }
-// });
+router.get('/:userId/users', ensureLoggedIn, async function(req, res, next) {
+    const { userId } = req.params;
+    const { offset } = req.body;
+    try {
+        let userIds = await User.queryUserIds({ userId, offset });
+        return res.json(userIds);
+    } catch (error) {
+        next(error);
+    }
+});
 
 
 // router.get('/:userId/photos', isUser, async function(req, res, next) {
@@ -38,6 +38,21 @@ router.get('/:userId', async function (req, res, next) {
 //     }
 // });
 
+router.post('/:userId/photos/', async (req, res, next) => {
+    const { userId, publicId, imageUrl } = req.body;
+  
+    const duplicateCheck = await User.getPhotoById(publicId);
+  
+    if (duplicateCheck) {
+      const query = await User.updatePhoto({ publicId, imageUrl });
+      return res.json(query);
+    } else {
+      const query = await User.addPhoto({ userId, publicId, imageUrl });
+      return res.json(query);
+    }
+  
+});  
+
 router.delete('/:userId/photo', [authenticateJWT, ensureLoggedIn, isUser], async function(req, res, next) {
     const { public_id } = req.body;
     try {
@@ -46,7 +61,9 @@ router.delete('/:userId/photo', [authenticateJWT, ensureLoggedIn, isUser], async
     } catch (error) {
         next(error);
     }
-})
+});
+
+
 
 router.get('/:userId/matches', [ authenticateJWT, ensureLoggedIn, isUser], async function(req, res, next) {
     try {
@@ -70,7 +87,7 @@ router.post('/:userId/bio', [ authenticateJWT, ensureLoggedIn, isUser, isAdmin],
     }
 });
 
-router.post('/:userId/hates', async function(req, res, next) {
+router.post('/:userId/hates', [ensureLoggedIn, isUser], async function(req, res, next) {
     try {
         const { userId } = req.params;
         const hates = JSON.parse(req.body.hates);
@@ -81,7 +98,7 @@ router.post('/:userId/hates', async function(req, res, next) {
     }
 });  
 
-router.post('/:userId/prompts', async function (req, res, next) {
+router.post('/:userId/prompts', [ensureLoggedIn, isUser], async function (req, res, next) {
     try {
         const { prompts } = req.body;
         const { userId } = req.params;
@@ -99,7 +116,7 @@ router.post('/:userId/prompts', async function (req, res, next) {
     }
 });
 
-router.get(`/:userId/notifications`, async function (req, res, next) {
+router.get(`/:userId/notifications`, [ensureLoggedIn, isUser], async function (req, res, next) {
     try {
         const { userId } = req.params;
         const notifications = await Message.matchNotifications(userId);

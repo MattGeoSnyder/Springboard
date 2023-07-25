@@ -22,6 +22,7 @@ const directory = new Directory();
 
 app.use(express.json());
 app.use(cors({ optionsSuccessStatus: 200 }));
+app.use(authenticateJWT);
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);

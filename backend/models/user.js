@@ -178,26 +178,35 @@ class User {
     }
 
     static async queryUserIds({ userId, offset=0 }) {
-        const result = await db.query(`SELECT u2.id, u1.sex_preference, u2.user_sex FROM 
-                                        users u1
-                                    JOIN 
-                                        users u2 
-                                    ON 
-                                        u1.user_sex = u2.sex_preference
-                                    AND
-                                        u1.sex_preference = u2.user_sex
-                                    WHERE 
-                                        ($1, u2.id) NOT IN (SELECT * FROM likes)
-                                    AND 
-                                        ($1, u2.id) NOT IN (SELECT * FROM dislikes)
-                                    AND 
-                                        ($1, u2.id) NOT IN (SELECT user1_id, user2_id FROM matches)
-                                    AND 
-                                        u1.id = $1
-                                    AND 
-                                        u2.id <> $1
-                                    LIMIT 10 OFFSET $2`, [userId, offset]);
-        return result.rows.map(user => user.id);
+        const result = await db.query(`WITH excluded 
+                                        AS
+                                        (
+                                            (SELECT likee_id AS id FROM likes WHERE liker_id = $1)
+                                            UNION
+                                            (SELECT dislikee_id AS id FROM dislikes WHERE disliker_id = $1)
+                                            UNION
+                                            (SELECT user2_id AS id FROM matches WHERE user1_id = $1)
+                                            UNION
+                                            (SELECT user1_id AS id FROM matches WHERE user2_id = $1)
+                                            UNION
+                                            (SELECT $1 AS id)
+                                        )
+
+                                        SELECT 
+                                            ARRAY_AGG(u2.id) AS ids
+                                        FROM 
+                                            users u1
+                                        JOIN
+                                            users u2
+                                        ON
+                                            u1.sex_preference = u2.user_sex
+                                        WHERE
+                                            u1.id = $1
+                                        AND
+                                            u2.id NOT IN (SELECT id FROM excluded)
+                                        LIMIT 100;
+                                        `, [userId]);
+        return result.rows[0].ids;
     }
 
     static async getPhotoById(publicId) {
