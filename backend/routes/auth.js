@@ -19,7 +19,7 @@ router.post('/register', async function (req, res, next) {
 
     const message = await Message.saveMessage(chatBot.introduce(match.id, user.id));
 
-    return res.status(201).json({ ...user, token });
+    return res.status(201).json({ userId: user.id, is_admin: user.is_admin, token });
   } catch (error) {
     return next(error);
   }

@@ -18,6 +18,13 @@ class Message {
                                                     toUser,
                                                     content]);
 
+        const updateMatch = await db.query(`UPDATE 
+                                                matches
+                                            SET
+                                                last_interaction = NOW()
+                                            WHERE 
+                                                id = $1`, [result.rows[0].match_id]);                                                  
+
         return result.rows[0];
     }
 
