@@ -20,7 +20,7 @@ class API {
             return res;
         } catch (error) {
             console.log(error);
-            throw new APIError(error.response.data.error);
+            throw new APIError(error);
         }
     }
 
@@ -38,7 +38,7 @@ class API {
         return await this.request(endpoint, data, 'patch', token);
     }
 
-    static async authPut(endpoint, data, token) {
+    static async authDelete(endpoint, data, token) {
         return await this.request(endpoint, data, 'delete', token);
     }
 

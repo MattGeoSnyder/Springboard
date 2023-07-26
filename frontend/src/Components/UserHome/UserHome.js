@@ -4,8 +4,8 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { loadUserAssets } from '../../store/thunks';
 import { setLikes } from '../../store/reducers/currentUser'
 import { loadFeed, getNextUser } from '../../store/reducers/feed';
-import { useParams } from 'react-router-dom';
-import Profile from "../Profile/Profile"
+import Profile from "../Profile/Profile";
+import ProfileLoading from './ProfileLoading';
 import './UserHome.css'
 
 const UserHome = () => {
@@ -25,7 +25,7 @@ const UserHome = () => {
     },[userId, dispatch]);
 
     useEffect(() => {
-        if (userIds.length === 0) {
+        if (userIds?.length === 0) {
             dispatch(loadFeed({ userId, offset }));
             setOffset(state => state + 10);
         }
@@ -40,8 +40,18 @@ const UserHome = () => {
         }
     }, [likes, dispatch]);
 
+    const render = () => {
+        if (userIds) {
+            return <Profile id={userIds[0]}/>
+        } else {
+            return <ProfileLoading />
+        }
+    }
+
     return (
-        <Profile id={userIds[0]} />
+        <>
+            {render()}
+        </>
     )
 }
 

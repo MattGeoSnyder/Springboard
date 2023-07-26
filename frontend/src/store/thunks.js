@@ -39,18 +39,7 @@ const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId
   console.log(userId);
   try {
     const currentUser = await API.getUserById(userId, token);
-
-    if (userId <= 100) {
-      const sex = currentUser.user_sex === 'male' ? 'men' : 'women';
-      const image_url = `${BOT_PIC_BASE_URL}/${sex}/${userId}.jpg`
-      const public_id = `${currentUser.username}/photo1`;
-      const photo1 = { public_id, image_url, user_id: userId }
-
-      return ({...currentUser, photos: {...currentUser.photos, photo1 }})
-    }
-
     return currentUser
-
   } catch (error) {
     return rejectWithValue("Can't load user data.");
   }
@@ -107,7 +96,7 @@ const uploadPhoto = createAsyncThunk('/uploadPhoto', async (payload, { rejectWit
   const { image, options, name, userId } = payload;
   console.log(name);
   try {
-    const res = await CloudinaryAPI.uploadImage(image, options);
+    const res = await CloudinaryAPI.uploadImage(image, options, token);
     const query = await API.addPhoto({ userId, publicId: res.public_id, imageUrl: res.secure_url }, token);
     return { name, ...query};
   } catch(error) {
@@ -119,8 +108,8 @@ const deletePhoto = createAsyncThunk('/deletePhoto', async (payload, { rejectWit
   const token = getState().user.user.token;
   const { name, public_id } = payload;
   try {
-    const res = await CloudinaryAPI.deletePhoto({ public_id });
-    const message = await API.deletePhoto(payload);
+    const res = await CloudinaryAPI.deletePhoto({ public_id }, token);
+    const message = await API.deletePhoto(payload, token);
     return { name, ...message };
   } catch (error) {
     console.log(error);

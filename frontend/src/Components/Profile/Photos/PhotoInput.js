@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { uploadPhoto, deletePhoto } from '../../../store/thunks';
 import { setPhoto } from '../../../store/reducers/currentUser';
@@ -17,6 +17,9 @@ const PhotoInput = ({ name, photoLabel }) => {
   const [ hasPhoto, setHasPhoto ] = useState(false);
   const input = useRef(null);
 
+  const originalURL = useMemo(() => {
+    return photo;
+  }, []);
 
   useEffect(() => {
     if (photo) {
@@ -45,10 +48,17 @@ const PhotoInput = ({ name, photoLabel }) => {
   }, [hasPhoto, status, input, userId, name, username, dispatch]);
 
   const handleChange = (e) => {
-    dispatch(setPhoto({ name, user_id: userId, 
-                      public_id: `${username}/${name}`, 
-                      image_url: URL.createObjectURL(e.target.files[0])}));
-    setHasPhoto(true);
+    try {
+      const photo = { name, 
+                      user_id: userId,
+                      public_id: `${username}/${name}`}
+      const image_url = URL.createObjectURL(e.target.files[0]);
+      photo.image_url = image_url;
+      dispatch(setPhoto(photo));
+      setHasPhoto(true);
+    } catch (error) {
+      
+    }
   }
 
   const removePhoto = (e) => {
@@ -56,9 +66,13 @@ const PhotoInput = ({ name, photoLabel }) => {
 
     if (!editable) return;
 
-    setPhoto("");
+    console.log(typeof photo);
+    console.log(originalURL);
     setHasPhoto(false);
-    dispatch(deletePhoto({ public_id: `${username}/${name}`, name }));
+    if (photo.includes(name)) {
+      dispatch(deletePhoto({ public_id: `${username}/${name}`, name }));
+    }
+    setPhoto("");
   }
 
   const selectPhoto = (e) => {
@@ -87,6 +101,7 @@ const PhotoInput = ({ name, photoLabel }) => {
         className={hasPhoto ? 'hasImage' : ''}
         accept="image/png, image/jpeg"
         onChange={handleChange}
+        onError={(e) => {e.target.onError = null;}}
         ref={input}
         />
     </div>
