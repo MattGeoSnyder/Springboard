@@ -8,6 +8,8 @@ import db from '../db.js';
 import ExpressError from '../helpers/expressError.js';
 import { BCRYPT_WORK_FACTOR } from "../config.js";
 
+const BOT_PIC_BASE_URL = `https:randomuser.me/portraits`;
+
 class User {
     static async register({ username, pw, first_name, birthday, user_sex, sex_preference }) {
         const duplicateCheck = await db.query(`SELECT username FROM users WHERE username=$1`, [username]);
@@ -99,8 +101,16 @@ class User {
         const hates = data.hates.filter((val) => val !== null);
 
         const { photos_arr } = data;
-        const photos = photos_arr.reduce((acc, photo) => {
-            if (photo) {
+        const photos = photos_arr.reduce((acc, photo, i) => {
+            // If user id <= 100 load seeded url
+            if (id <= 100 && i === 0) {
+                const sex = user_sex = 'male' ? 'men' : 'women'
+                const photo = { publicId: `${username}/photo1`, 
+                                user_id: id, 
+                                image_url: `${BOT_PIC_BASE_URL}/${sex}/${id}.jpg` }
+                return ({ ...acc, photo });
+            }
+            else if (photo) {
                 const name = photo.public_id.split('/')[1];
                 return ({...acc, [name]: photo });
             } else {
