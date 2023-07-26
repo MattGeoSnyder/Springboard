@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loadUserAssets, getConversation, addNewMessage } from '../thunks';
 import { addLike } from './matches';
-import API from '../../api.js';
 
 export const messages = createSlice({
   name: 'messages',

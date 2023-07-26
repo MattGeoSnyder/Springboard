@@ -20,7 +20,7 @@ class API {
             return res;
         } catch (error) {
             console.log(error);
-            throw new APIError(error);
+            throw new APIError(error.response.data.error);
         }
     }
 
@@ -108,7 +108,7 @@ class API {
     }
 
     static async markMessageSeen(messageId, token) {
-        let message = await this.request(`/messages/${messageId}`, {}, token);
+        let message = await this.authPatch(`/messages/${messageId}`, {}, token);
         return message;
     }
 

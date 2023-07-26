@@ -10,7 +10,7 @@ const register = createAsyncThunk('/user/registerUser', async (userData, { rejec
   const [ get, set, remove ] = useLocalStorage();
   try {
       const { userId, token } = await API.signup(userData);
-      const newUser = await API.getUserById(userId)
+      const newUser = await API.getUserById(userId, token);
       set({ ...newUser, token });
       return { ...newUser, token };
   } catch (error) {

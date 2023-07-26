@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import API from '../../api.js';
-import { loadUserAssets } from '../thunks.js';
+import { loadUserAssets, addNewMessage } from '../thunks.js';
+
 
 const fetchConversation = createAsyncThunk('/matches/fetchConversation', async (matchId) => {
     const conversation = await API.getConversation(matchId);
@@ -55,9 +56,13 @@ export const matches = createSlice({
         builder.addCase(loadUserAssets.fulfilled, (state, action) => {
             state.matches = action.payload.matches;
         });
+        builder.addCase(addNewMessage.fulfilled, (state, action) => {
+            const { match_id } = action.payload;
+            state.matches[match_id].last_interaction = JSON.stringify(new Date());
+        });
     }
 });
 
 export { fetchConversation, queryMoreMessages, addLike, addDislike }
-export const { addNewMessage, setActive } = matches.actions;
+export const { setActive } = matches.actions;
 export default matches.reducer;
