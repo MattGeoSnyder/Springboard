@@ -75,7 +75,7 @@ router.get('/:userId/matches', [ ensureLoggedIn, isUser], async function(req, re
     }
 });
 
-router.post('/:userId/bio', [ ensureLoggedIn, isUser, isAdmin], async function (req, res, next) {
+router.post('/:userId/bio', [ ensureLoggedIn, isUser ], async function (req, res, next) {
     try {
         const { bioData } = req.body;
         const { userId } = req.params;
