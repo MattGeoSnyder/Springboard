@@ -7,11 +7,9 @@ const BOT_PIC_BASE_URL = `https:randomuser.me/portraits`;
 const USER_PIC_BASE_URL = 'https://res.cloudinary.com/dubjhgxii/image/upload';
 
 const register = createAsyncThunk('/user/registerUser', async (userData, { rejectWithValue }) => {
-  const [ get, set, remove ] = useLocalStorage();
   try {
       const { userId, token } = await API.signup(userData);
       const newUser = await API.getUserById(userId, token);
-      set({ ...newUser, token });
       return { ...newUser, token };
   } catch (error) {
       return rejectWithValue(error);
@@ -19,12 +17,10 @@ const register = createAsyncThunk('/user/registerUser', async (userData, { rejec
 });
 
 const login = createAsyncThunk('/login', async (userData, { rejectWithValue }) => {
-  const [ get, set, remove ] = useLocalStorage();
   console.log(userData);
   try {
       const { id , token } = await API.login(userData);
       const user = await API.getUserById(id, token);
-      set({ ...user, token });
       return ({ ...user, token });
   } catch (error) {
       return rejectWithValue(error);
@@ -34,7 +30,6 @@ const login = createAsyncThunk('/login', async (userData, { rejectWithValue }) =
 
 
 const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId, { rejectWithValue, getState }) => {
-  const [ get, set, remove ] = useLocalStorage();
   const token = getState().user.user.token;
   console.log(userId);
   try {
@@ -45,7 +40,7 @@ const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId
   }
 });
 
-const loadUserAssets = createAsyncThunk('/loadUserOnLogin', async (userId, { rejectWithValue, getState }) => {
+const loadUserAssets = createAsyncThunk('/loadUserAssets', async (userId, { rejectWithValue, getState }) => {
   const token = getState().user.user.token;
   console.log(token);
   try {

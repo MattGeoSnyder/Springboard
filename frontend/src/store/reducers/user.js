@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { register, login, updateUserProfile, uploadPhoto, deletePhoto } from '../thunks';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export const user = createSlice({
     name: 'user',
@@ -17,14 +16,17 @@ export const user = createSlice({
         setUser: (state, action) => {
             state.user = {...state.user, ...action.payload };
         },
-        logoutUser: (state, action) => {
-            state.user = {};
-        },
         setStatus: (state, action) => {
             state.status = action.payload;
         },
         setErrMsg: (state, action) => {
             state.errMsg = action.payload;
+        },
+        logoutUser: (state, action) => {
+            state.user = {};
+        },
+        loadTokenUser: (state, action) => {
+            state.user = action.payload;
         }
     },
     extraReducers(builder) {
@@ -67,5 +69,5 @@ export const user = createSlice({
     }
 });
 
-export const { setStatus, setErrMsg, setUser, setPhoto, logoutUser } = user.actions;
+export const { setStatus, setErrMsg, setUser, logoutUser, loadTokenUser } = user.actions;
 export default user.reducer;

@@ -1,6 +1,6 @@
 import './App.css';
-import { useEffect, useMemo } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import UserHome from './Components/UserHome/UserHome.js';
 import Messages from './Components/Sidebar/Messages/Messages';
@@ -10,13 +10,35 @@ import Profile from './Components/Profile/Profile';
 import Disclaimer from './Components/Disclaimer/Disclaimer';
 import ProtectedRoute from './ProtectedRoute';
 import { addNotification } from './store/reducers/messages';
+import { useLocalStorage } from './hooks/useLocalStorage';
+import { loadTokenUser } from './store/reducers/user';
+import { loadUserAssets } from './store/thunks';
 // import Hates from './Components/Profile/Hates/Hates';
 
 function App() {
-  const userId = useSelector(state => state.user.user.id);
-  const dispatch = useDispatch();
+  const user = useSelector(state => state.user.user);
+  const userId = user.id;
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   console.log()
+
+  const [ get, set, remove ] = useLocalStorage();
+
+
+  useEffect(() => {
+    const lsUser = get();
+
+    if (lsUser.id) {
+      dispatch(loadTokenUser(lsUser));
+      dispatch(loadUserAssets(lsUser.id));
+      navigate(`/users/${lsUser.id}`)
+    }
+  }, []);
+
+  useEffect(() => {
+    set(user);
+  }, [user]);
 
   useEffect(() => {
 
