@@ -4,12 +4,14 @@
   color: white;
   box-sizing: border-box;
   padding: 5px 40px 30px; 
-  width: 80%;
+  width: 60%;
   height: fit-content;
   position: relative;
   box-shadow: 0 0 5px black;
   justify-self: center;
-  align-self: center;
+  margin-top: 2rem;
+
+  scroll-snap-align: center;
 }
 
 .prompt p {

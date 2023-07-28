@@ -1,0 +1,23 @@
+#user-content {
+  display: grid;
+  grid-column: 2 / -1;
+  grid-row: 1 / -1;
+
+  padding-top: 50px;
+  padding-bottom: 10px;
+
+  grid-auto-columns: 880px;
+  /* column-gap: 15%; */
+  /* grid-template-columns: repeat(3, 1fr); */
+  grid-template-rows: 2fr 1fr;
+  grid-auto-flow: column;
+
+  overflow-x: scroll;
+
+  scroll-snap-type: inline mandatory;
+  overscroll-behavior-inline: contain;
+}
+
+#user-content::-webkit-scrollbar {
+  height: 10px;
+}

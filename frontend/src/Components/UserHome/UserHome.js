@@ -12,7 +12,6 @@ const UserHome = () => {
     const dispatch = useDispatch();
 
     const [offset, setOffset] = useState(0);
-    const [ get, set, remove ] = useLocalStorage();
 
     const userId = useSelector(state => state.user.user.id);
 
