@@ -12,7 +12,7 @@ const MatchOverlay = () => {
   const matchId = useSelector(state => state.overlay.matchId);
   const matchedUser = useSelector(state => state.matches.matches[matchId]);
   const user = useSelector(state => state.user.user);
-  const matchedUserPhoto = matchedUser.photos.photo1;
+  const matchedUserPhoto = matchedUser.photos.photo1.image_url;
 
   //Just disables the overlay.
   const clickContinueSwiping = (e) => {

@@ -27,7 +27,7 @@ function App() {
 
 
   useEffect(() => {
-    const lsUser = get();
+    const lsUser = get() || {};
 
     if (lsUser.id) {
       dispatch(loadTokenUser(lsUser));
