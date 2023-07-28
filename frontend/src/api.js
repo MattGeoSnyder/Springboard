@@ -38,7 +38,7 @@ class API {
         return await this.request(endpoint, data, 'patch', token);
     }
 
-    static async authPut(endpoint, data, token) {
+    static async authDelete(endpoint, data, token) {
         return await this.request(endpoint, data, 'delete', token);
     }
 
@@ -108,7 +108,7 @@ class API {
     }
 
     static async markMessageSeen(messageId, token) {
-        let message = await this.request(`/messages/${messageId}`, {}, token);
+        let message = await this.authPatch(`/messages/${messageId}`, {}, token);
         return message;
     }
 
@@ -138,12 +138,12 @@ class API {
     }
 
     static async like(likerId, likeeId, token) {
-        let result = await this.authPost(`/likes/${likerId}/${likeeId}`, token);
+        let result = await this.authPost(`/likes/${likerId}/${likeeId}`, {}, token);
         return result;
     }
 
     static async dislike(dislikerId, dislikeeId, token) {
-        let dislike = await this.request(`/dislikes/${dislikerId}/${dislikeeId}`, token);
+        let dislike = await this.authPost(`/dislikes/${dislikerId}/${dislikeeId}`, {}, token);
         return dislike;
     }
 

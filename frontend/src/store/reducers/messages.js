@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loadUserAssets, getConversation, addNewMessage } from '../thunks';
-import API from '../../api.js';
+import { addLike } from './matches';
 
 export const messages = createSlice({
   name: 'messages',
@@ -55,6 +55,14 @@ export const messages = createSlice({
     builder.addCase(addNewMessage.fulfilled, (state, action) => {
       const { match_id } = action.payload;
       state.messages[match_id].messages.unshift(action.payload);
+    });
+    builder.addCase(addLike.fulfilled, (state, action) => {
+      const { match } = action.payload;
+      
+      if (!match) return;
+
+      const { id, user } = match;
+      state.messages[id] = { notifications: 0, messages: [] }
     })
   }
 });

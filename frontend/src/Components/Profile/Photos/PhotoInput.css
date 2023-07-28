@@ -1,15 +1,13 @@
 .photo-input {
-  --input-height: 90%;
   flex: 1;
   position: relative;
-  height: var(--input-height);
-  width: calc(var(--input-height) * 0.8);
+  width: 38%;
+  aspect-ratio: 2 / 3;
   box-sizing: border-box;
 
   align-self: center;
   justify-self: center;
 
-  scroll-snap-align: center;
 
   border-radius: 10px;
   box-shadow: 0px 0px 10px black;
@@ -17,23 +15,28 @@
   outline: none;
 
   transition: height 0.5s ease, width 0.5s ease, outline 0.25s ease, box-shadow 0.5s ease;
+
+  background-color: white;
 }
 
 .photo-input:hover {
-  --input-height: 92%;
+  width: 39%;
   outline: 2px solid var(--accent-one);
   box-shadow: 0px 0px 30px black;
 }
 
 
 .photo-input img {
-  height: 100%;
   width: 100%;
+  aspect-ratio: 2 / 3;
+
   object-fit: cover;
-  object-position: top left;
+  object-position: center;
   border-radius: 10px;
 
   background-color: white;
+
+  position: absolute;
 
   z-index: 5;
 }
@@ -59,6 +62,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  z-index: 10;
 }
 
 .photo-input .delete-btn i {
@@ -98,6 +103,8 @@
   border-radius: 10px;
   border: none;
   color: white;
+  
+  scroll-snap-align: center;
 }
 
 .photo-input input[type='file'].hasImage {

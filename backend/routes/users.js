@@ -53,7 +53,7 @@ router.post('/:userId/photos/', async (req, res, next) => {
   
 });  
 
-router.delete('/:userId/photo', [authenticateJWT, ensureLoggedIn, isUser], async function(req, res, next) {
+router.delete('/:userId/photo', [ ensureLoggedIn, isUser ], async function(req, res, next) {
     const { public_id } = req.body;
     try {
         const result = await User.deletePhoto(public_id);
@@ -65,7 +65,7 @@ router.delete('/:userId/photo', [authenticateJWT, ensureLoggedIn, isUser], async
 
 
 
-router.get('/:userId/matches', [ authenticateJWT, ensureLoggedIn, isUser], async function(req, res, next) {
+router.get('/:userId/matches', [ ensureLoggedIn, isUser], async function(req, res, next) {
     try {
         const { userId } = req.params;
         let matches = await User.queryMatches(userId);
@@ -75,7 +75,7 @@ router.get('/:userId/matches', [ authenticateJWT, ensureLoggedIn, isUser], async
     }
 });
 
-router.post('/:userId/bio', [ authenticateJWT, ensureLoggedIn, isUser, isAdmin], async function (req, res, next) {
+router.post('/:userId/bio', [ ensureLoggedIn, isUser ], async function (req, res, next) {
     try {
         const { bioData } = req.body;
         const { userId } = req.params;

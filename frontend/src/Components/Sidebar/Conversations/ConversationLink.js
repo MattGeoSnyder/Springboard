@@ -10,7 +10,7 @@ const ConversationLink = ({ matchId }) => {
 
     const { userId } = useParams();
     const matchedUser = useSelector(state => state.matches.matches[matchId]);
-    const notifications = useSelector(state => state.messages.messages[matchId].notifications);
+    const notifications = useSelector(state => state.messages.messages[matchId]?.notifications);
     const lastMessage = useSelector(state => state.messages.messages[matchId].messages[0]);
 
     

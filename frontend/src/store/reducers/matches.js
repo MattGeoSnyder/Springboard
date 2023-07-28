@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import API from '../../api.js';
-import { loadUserAssets } from '../thunks.js';
+import { loadUserAssets, addNewMessage } from '../thunks.js';
+
 
 const fetchConversation = createAsyncThunk('/matches/fetchConversation', async (matchId) => {
     const conversation = await API.getConversation(matchId);
@@ -12,15 +13,17 @@ const queryMoreMessages = createAsyncThunk('/matches/queryMoreMessages', async (
     return messages;
 });
 
-const addLike = createAsyncThunk('/matches/addLike', async (payload) => {
+const addLike = createAsyncThunk('/matches/addLike', async (payload, { getState }) => {
+    const token = getState().user.user.token;
     const { userId, currentUserId } = payload;
-    const res = await API.like(userId, currentUserId);
+    const res = await API.like(userId, currentUserId, token);
     return res;
 });
   
-const addDislike = createAsyncThunk('matches/addDislike', async (payload) => {
+const addDislike = createAsyncThunk('matches/addDislike', async (payload, { getState }) => {
+    const token = getState().user.user.token;
     const { userId, currentUserId } = payload;
-    const dislike = await API.dislike(userId, currentUserId);
+    const dislike = await API.dislike(userId, currentUserId, token);
     return dislike;
 });
 
@@ -53,9 +56,13 @@ export const matches = createSlice({
         builder.addCase(loadUserAssets.fulfilled, (state, action) => {
             state.matches = action.payload.matches;
         });
+        builder.addCase(addNewMessage.fulfilled, (state, action) => {
+            const { match_id } = action.payload;
+            state.matches[match_id].last_interaction = JSON.stringify(new Date());
+        });
     }
 });
 
 export { fetchConversation, queryMoreMessages, addLike, addDislike }
-export const { addNewMessage, setActive } = matches.actions;
+export const { setActive } = matches.actions;
 export default matches.reducer;

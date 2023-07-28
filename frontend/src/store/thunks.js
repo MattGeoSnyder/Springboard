@@ -7,11 +7,9 @@ const BOT_PIC_BASE_URL = `https:randomuser.me/portraits`;
 const USER_PIC_BASE_URL = 'https://res.cloudinary.com/dubjhgxii/image/upload';
 
 const register = createAsyncThunk('/user/registerUser', async (userData, { rejectWithValue }) => {
-  const [ get, set, remove ] = useLocalStorage();
   try {
       const { userId, token } = await API.signup(userData);
-      const newUser = await API.getUserById(userId)
-      set({ ...newUser, token });
+      const newUser = await API.getUserById(userId, token);
       return { ...newUser, token };
   } catch (error) {
       return rejectWithValue(error);
@@ -19,12 +17,10 @@ const register = createAsyncThunk('/user/registerUser', async (userData, { rejec
 });
 
 const login = createAsyncThunk('/login', async (userData, { rejectWithValue }) => {
-  const [ get, set, remove ] = useLocalStorage();
   console.log(userData);
   try {
       const { id , token } = await API.login(userData);
       const user = await API.getUserById(id, token);
-      set({ ...user, token });
       return ({ ...user, token });
   } catch (error) {
       return rejectWithValue(error);
@@ -34,29 +30,17 @@ const login = createAsyncThunk('/login', async (userData, { rejectWithValue }) =
 
 
 const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId, { rejectWithValue, getState }) => {
-  const [ get, set, remove ] = useLocalStorage();
   const token = getState().user.user.token;
   console.log(userId);
   try {
     const currentUser = await API.getUserById(userId, token);
-
-    if (userId <= 100) {
-      const sex = currentUser.user_sex === 'male' ? 'men' : 'women';
-      const image_url = `${BOT_PIC_BASE_URL}/${sex}/${userId}.jpg`
-      const public_id = `${currentUser.username}/photo1`;
-      const photo1 = { public_id, image_url, user_id: userId }
-
-      return ({...currentUser, photos: {...currentUser.photos, photo1 }})
-    }
-
     return currentUser
-
   } catch (error) {
     return rejectWithValue("Can't load user data.");
   }
 });
 
-const loadUserAssets = createAsyncThunk('/loadUserOnLogin', async (userId, { rejectWithValue, getState }) => {
+const loadUserAssets = createAsyncThunk('/loadUserAssets', async (userId, { rejectWithValue, getState }) => {
   const token = getState().user.user.token;
   console.log(token);
   try {
@@ -107,7 +91,7 @@ const uploadPhoto = createAsyncThunk('/uploadPhoto', async (payload, { rejectWit
   const { image, options, name, userId } = payload;
   console.log(name);
   try {
-    const res = await CloudinaryAPI.uploadImage(image, options);
+    const res = await CloudinaryAPI.uploadImage(image, options, token);
     const query = await API.addPhoto({ userId, publicId: res.public_id, imageUrl: res.secure_url }, token);
     return { name, ...query};
   } catch(error) {
@@ -119,8 +103,8 @@ const deletePhoto = createAsyncThunk('/deletePhoto', async (payload, { rejectWit
   const token = getState().user.user.token;
   const { name, public_id } = payload;
   try {
-    const res = await CloudinaryAPI.deletePhoto({ public_id });
-    const message = await API.deletePhoto(payload);
+    const res = await CloudinaryAPI.deletePhoto({ public_id }, token);
+    const message = await API.deletePhoto(payload, token);
     return { name, ...message };
   } catch (error) {
     console.log(error);
