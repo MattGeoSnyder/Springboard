@@ -11,6 +11,7 @@ const UserHates = () => {
   const hatesIds = useSelector(state => state.profileForm.formData.hates);
   const editable = useSelector(state => state.currentUser.editable);
 
+  // toggle edit on click. Block if user != currentUser
   const showHates = (e) => {
     e.stopPropagation();
     if (editable) {

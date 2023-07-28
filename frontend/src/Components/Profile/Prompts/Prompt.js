@@ -8,7 +8,7 @@ import './Prompt.css';
 
 //There are a lot of onclick event listeners in this component. 
 //There is a crucial snippet of CSS to make this work.
-//See Prompt.css:16
+//See Prompt.css:20
 
 const Prompt = ({ prompts, name, order="" }) => {
   const defaultPrompt = useMemo(() => ({id: 0, prompt: `Choose your ${order} prompt`}), [order]);
@@ -16,17 +16,24 @@ const Prompt = ({ prompts, name, order="" }) => {
   const dispatch = useDispatch();
   
   const [ optionsActive, setOptionsActive ] = useState(false);
+
+  //prom
   const [ prompt, setPrompt ] = useState(defaultPrompt);
   const [ promptChosen, setPromptChosen ] = useState(prompt.id !== 0);
-  // const [ textareaActive, setTextareaActive ] = useState(false);
 
-
+  //Prompt id that the user selects
   const promptId = useSelector(state => state.profileForm.formData?.prompts[name]?.id);
+
+  //Users response to the prompt
   const promptRes = useSelector(state => (
     state.profileForm.formData.prompts[name]?.promptRes));
 
+  //Can edit if CurrentUser = User
   const editable = useSelector(state => state.currentUser.editable);
 
+  //We actually shouldn't need to make an API call for this.
+  //Should be able to sort through prompts prop and match ids
+  //TODO: Improve this
   useEffect(() => {
     if(promptId) {
       const getPromptById = async () => {
@@ -39,14 +46,13 @@ const Prompt = ({ prompts, name, order="" }) => {
   }, [promptId, setPrompt]);
   
 
+  //See if default prompt is chosen
   useEffect(() => {
     setPromptChosen(prompt.id !== 0);
   }, [prompt, setPromptChosen]);
 
-  // useEffect(() => {
-  //   setTextareaActive(promptChosen || promptRes);
-  // }, [promptChosen, promptRes, setTextareaActive]);
 
+  //Was trying to fix a rerender issue. This was fixed not by this but by wrapping Profiles children in memo
   const textareaActive = useMemo(() => promptChosen || promptRes, [promptChosen, promptRes]);
 
   //Event listener for the document. 
@@ -75,11 +81,13 @@ const Prompt = ({ prompts, name, order="" }) => {
     if (e.target.id === name) setOptionsActive(!optionsActive);
   }
 
+  //Changes prompt value
   const handleChange = (e) => {
     const promptRes = e.target.value;
     dispatch(changePrompt({ name, id: prompt.id, promptRes }));
   }
 
+  //Render based on editing priveliges
   const renderText = () => {
     const textarea = <textarea
       className={`prompt-input ${textareaActive ? 'active' : ''}`}

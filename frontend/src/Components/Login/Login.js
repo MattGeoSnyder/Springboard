@@ -10,10 +10,12 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const status = useSelector(state => state.user.status);
   const userId = useSelector(state => state.user.user.id);
   const errMsg = useSelector(state => state.user.errMsg);
 
+  //React to submission status. 
   useEffect(() => {
     if (status === 'success') {
       navigate(`/users/${userId}`);
@@ -25,10 +27,12 @@ const Login = () => {
     }
   }, [status, userId, navigate]);
 
+  //Initial form data for login
   const initialData = {
     username: 'MattGeoSnyder',
     pw: 'Fakepw1234'
   }
+
 
   const [ formData, setFormData ] = useState(initialData);
 
@@ -39,6 +43,7 @@ const Login = () => {
     }
   }
 
+  
   return (
     <div id="login-page">
       <div id="login">

@@ -12,6 +12,8 @@ const UserIcon = ({ mode, user }) => {
     }
   }
 
+  // User icon is either profile image or first letter of their name
+  // passed different mode class for styling.
   return (
     <div className={`user-icon ${mode}`}>
       {render()}

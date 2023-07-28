@@ -3,6 +3,7 @@ import './Photos.css';
 
 const Photos = () => {
 
+  //TODO: Move this out of here.
 
   return (
     <div id='photos'

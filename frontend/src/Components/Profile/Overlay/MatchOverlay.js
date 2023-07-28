@@ -4,35 +4,25 @@ import { setOverlayActive } from '../../../store/reducers/overlay';
 import { setActive, setContent } from '../../../store/reducers/hatesSidebar';
 import './MatchOverlay.css';
 
+
+
+//Displays on top of overlay when two users match.
 const MatchOverlay = () => {
   const dispatch = useDispatch();
   const matchId = useSelector(state => state.overlay.matchId);
   const matchedUser = useSelector(state => state.matches.matches[matchId]);
   const user = useSelector(state => state.user.user);
-  const [ matchedUserPhoto, setMatchedUserPhoto ] = useState('');
-  
-  const getUserPhoto = (user) => {
-    if (!user) return '';
-    if (user.id > 101) return;
-    
-    const sex = user.user_sex === 'male' ? 'men' : 'women';
-    const source = `https:randomuser.me/portraits/${sex}/${user.id}.jpg`;
-    setMatchedUserPhoto(source);
-  }
-  
+  const matchedUserPhoto = matchedUser.photos.photo1;
 
-  useEffect(() => {
-    getUserPhoto(matchedUser);
-  }, [matchedUser]);
-
+  //Just disables the overlay.
   const clickContinueSwiping = (e) => {
     e.stopPropagation();
     dispatch(setOverlayActive(false));
   }
 
+  //opens up messaging on click
   const clickMessage = (e) => {
     e.stopPropagation();
-    console.log('messaging');
     dispatch(setContent('conversations'));
     dispatch(setOverlayActive(false));
     dispatch(setActive(true));

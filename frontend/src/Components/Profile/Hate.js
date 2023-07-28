@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { addHate, removeHate } from '../../store/reducers/profileForm';
 import './Hate.css';
 
+//One hate icon bubble.
 const Hate = ({ hateId, edit }) => {
   const dispatch = useDispatch();
   
@@ -10,9 +11,9 @@ const Hate = ({ hateId, edit }) => {
   const hate = useSelector(state => state.hatesSidebar.hates[hateId]);
   const active = useSelector(state => state.hatesSidebar.active);
 
+  //handle adding removing hate based on edit privelege
   const handleClick = (e) => {
     e.stopPropagation();
-    console.log('clicked');
     if (edit) {
       if (active){
         dispatch(removeHate(hateId));

@@ -18,6 +18,7 @@ const PhotoInput = ({ name, photoLabel }) => {
   const input = useRef(null);
 
 
+  //I decided to keep another piece of state for clarity
   useEffect(() => {
     if (photo) {
       setHasPhoto(true);
@@ -44,6 +45,7 @@ const PhotoInput = ({ name, photoLabel }) => {
     }
   }, [hasPhoto, status, input, userId, name, username, dispatch]);
 
+  //Put photo thumbnail on change
   const handleChange = (e) => {
     dispatch(setPhoto({ name, user_id: userId, 
                       public_id: `${username}/${name}`, 
@@ -51,6 +53,7 @@ const PhotoInput = ({ name, photoLabel }) => {
     setHasPhoto(true);
   }
 
+  //remove photo on change. TODO: Don't trigger delete on new change
   const removePhoto = (e) => {
     e.stopPropagation();
 
@@ -61,6 +64,7 @@ const PhotoInput = ({ name, photoLabel }) => {
     dispatch(deletePhoto({ public_id: `${username}/${name}`, name }));
   }
 
+  //set photo to overlay on click
   const selectPhoto = (e) => {
     e.stopPropagation();
     dispatch(setOverlayActive(true));

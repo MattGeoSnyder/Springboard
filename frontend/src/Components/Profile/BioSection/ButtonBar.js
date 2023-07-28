@@ -9,11 +9,13 @@ const ButtonBar = () => {
   const userId = useSelector(state => state.user.user.id);
   const currentUserId = useSelector(state => state.currentUser.user.id);
 
+  //Trigger dislike event
   const clickDislike = () => {
     dispatch(setLikes(false));
     dispatch(addDislike({ userId, currentUserId}));
   }
 
+  //Trigger like event 
   const clickLike = () => {
     dispatch(setLikes(true));
     dispatch(addLike({ userId, currentUserId}));

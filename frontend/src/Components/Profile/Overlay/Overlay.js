@@ -11,11 +11,13 @@ const Overlay = () => {
   const image = useSelector(state => state.overlay.image);
   const mode = useSelector(state => state.overlay.mode);
 
+  //disable overlay on click
   const disableOverlay = (e) => {
     console.log(e.target);
     dispatch(setOverlayActive(false));
   } 
 
+  //actually not sure if this does anything. I believe I fixed this with css.
   const disableMouseWheel = (e) => {
     return;
   }

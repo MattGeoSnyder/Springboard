@@ -18,6 +18,8 @@ const Prompts = () => {
   //   } 
   // }, [status, userPrompts])
 
+  //Load prompts on mount.
+  //Deciding not to make this into a dispatch since the state is centralized
   useEffect(() => {
     const loadPrompts = async () => {
       const res = await API.getPrompts();

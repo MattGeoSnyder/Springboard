@@ -33,6 +33,7 @@ const BioSection = ({ user }) => {
     return editable ? textarea : div;
   }
 
+  //Render button depending if on User Profile or other user profile
   const renderButtons = ()  => {
     if (editable) {
       return <ProfileButton />
@@ -50,7 +51,6 @@ const BioSection = ({ user }) => {
           <p>Bio</p>
           {renderBioContent()}
         </div>
-        {/* <ProfileButton /> */}
         {renderButtons()}
       </div>
     </div>

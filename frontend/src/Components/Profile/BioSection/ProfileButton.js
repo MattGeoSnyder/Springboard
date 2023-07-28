@@ -17,6 +17,7 @@ const ProfileButton = () => {
     dispatch(updateUserProfile({ formData, userId }));
   }
 
+  //Reset status on submit
   useEffect(() => {
     if (status === 'success' || status === 'rejected') {
       setTimeout(() => {
@@ -25,6 +26,7 @@ const ProfileButton = () => {
     }
   }, [status, dispatch])
 
+  //Render depending on status
   const render = () => {
     switch (status) {
       case 'pending':
