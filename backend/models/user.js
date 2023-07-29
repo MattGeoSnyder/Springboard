@@ -100,8 +100,9 @@ class User {
 
         const hates = data.hates.filter((val) => val !== null);
 
+
         const { photos_arr } = data;
-        console.log(photos_arr);
+        console.log(data);
         const photos = photos_arr.reduce((acc, photo, i) => {
             // If user id <= 100 load seeded url
             if (id > 1 && id <= 100 && i === 0) {
