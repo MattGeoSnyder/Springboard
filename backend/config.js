@@ -13,7 +13,9 @@ const CLOUDINARY_SECRET = process.env.CLOUDINARY_SECRET;
 
 const DB_URI = process.env.NODE_ENV === 'test' ? 'postgresql:///haters_test' : 'postgresql:///haters';
 
-export { SECRET_KEY, PORT, BCRYPT_WORK_FACTOR, DB_URI, CLOUDINARY_SECRET };
+const DATABASE_URL = process.env.DATABASE_URL;
+
+export { SECRET_KEY, PORT, BCRYPT_WORK_FACTOR, DB_URI, CLOUDINARY_SECRET, DATABASE_URL };
 
 // module.exports = {
 //     SECRET_KEY,

@@ -1,8 +1,7 @@
 import User from '../models/user.js';
 import Message from '../models/message.js';
-import express, { Router } from 'express';
-import ExpressError from '../helpers/expressError.js';
-import { authenticateJWT, ensureLoggedIn, isUser, isAdmin } from '../middleware/auth.js';
+import { Router } from 'express';
+import { ensureLoggedIn, isUser } from '../middleware/auth.js';
 
 const router = new Router();
 
