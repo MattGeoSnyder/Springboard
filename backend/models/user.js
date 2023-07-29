@@ -81,7 +81,7 @@ class User {
                                     ON
                                         users.id = photos.user_id
                                     WHERE 
-                                        id = $1
+                                        users.id = $1
                                     GROUP BY 
                                         users.id;`, [userId]);
 
@@ -101,9 +101,10 @@ class User {
         const hates = data.hates.filter((val) => val !== null);
 
         const { photos_arr } = data;
+        console.log(photos_arr);
         const photos = photos_arr.reduce((acc, photo, i) => {
             // If user id <= 100 load seeded url
-            if (id <= 100 && i === 0) {
+            if (id > 1 && id <= 100 && i === 0) {
                 const sex = user_sex === 'male' ? 'men' : 'women'
                 const photo1 = { publicId: `${username}/photo1`, 
                                 user_id: id, 
@@ -174,10 +175,11 @@ class User {
                                         matchedUsers.id, matchedUsers.last_interaction, users.id;
                                     `,[userId]);
         
+
         return result.rows.reduce((acc, match) => {
             const { match_id, last_interaction, photos_arr, ...user } = match;
             const photos = photos_arr.reduce((acc, photo, i) => {
-                if ( user.user_id <= 100 && i === 0) {
+                if ( user.user_id > 1 && user.user_id <= 100 && i === 0) {
                     const sex = user.user_sex === 'male' ? 'men' : 'women';
                     const image_url = `${BOT_PIC_BASE_URL}/${sex}/${user.user_id}.jpg`;
                     const photo1 = { user_id: user.user_id, 

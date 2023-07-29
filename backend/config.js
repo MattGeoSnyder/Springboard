@@ -13,7 +13,7 @@ const CLOUDINARY_SECRET = process.env.CLOUDINARY_SECRET;
 
 const DB_URI = process.env.NODE_ENV === 'test' ? 'postgresql:///haters_test' : 'postgresql:///haters';
 
-const DATABASE_URL = process.env.DATABASE_URL;
+const DATABASE_URL = process.env.DATABASE_URL || DB_URI;
 
 export { SECRET_KEY, PORT, BCRYPT_WORK_FACTOR, DB_URI, CLOUDINARY_SECRET, DATABASE_URL };
 
