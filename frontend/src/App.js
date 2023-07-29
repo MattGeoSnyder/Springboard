@@ -32,7 +32,7 @@ function App() {
     if (lsUser.id) {
       dispatch(loadTokenUser(lsUser));
       dispatch(loadUserAssets(lsUser.id));
-      navigate(`/users/${lsUser.id}`)
+      navigate(`/users/${lsUser.id}`);
     }
   }, []);
 
