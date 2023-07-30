@@ -16,6 +16,8 @@ import { loadTokenUser } from './store/reducers/user';
 import { loadUserAssets } from './store/thunks';
 // import Hates from './Components/Profile/Hates/Hates';
 
+const WS_BASE_URL = process.env.REACT_APP_WS_URL || 'ws://localhost:3001';
+
 function App() {
   const user = useSelector(state => state.user.user);
   const userId = user.id;
@@ -43,7 +45,7 @@ function App() {
 
   useEffect(() => {
 
-    const ws = new WebSocket(`ws://localhost:3001/users/${userId}`);
+    const ws = new WebSocket(`${WS_BASE_URL}/users/${userId}`);
 
     ws.onmessage = function (evt) {
       const data = JSON.parse(evt.data);
