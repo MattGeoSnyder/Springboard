@@ -57,4 +57,3 @@ class CloudinaryAPI {
 }
 
 export default CloudinaryAPI;
-export { USER_PIC_BASE_URL }

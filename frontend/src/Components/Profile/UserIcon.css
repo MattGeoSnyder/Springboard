@@ -15,6 +15,10 @@
   height: 100px;
 }
 
+.user-icon.banner span {
+  font-size: 40px;
+}
+
 .user-icon.nav {
   height: 40px;
   display: inline-block;
@@ -22,9 +26,17 @@
   border: none;
 }
 
+.user-icon.nav span {
+  font-size: 20px;
+}
+
 .user-icon.link {
   height: 90%;
   display: inline-block;
+}
+
+.user-icon.link {
+  font-size: 30px;
 }
 
 .user-icon.messages {
@@ -40,7 +52,6 @@
 }
 
 .user-icon span {
-  font-size: 40px;
   font-weight: 500;
   height: 100%;
   width: 100%;

@@ -14,6 +14,9 @@
 
   outline: none;
 
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+
   transition: height 0.5s ease, width 0.5s ease, outline 0.25s ease, box-shadow 0.5s ease;
 
   background-color: white;

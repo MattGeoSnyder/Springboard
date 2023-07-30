@@ -37,7 +37,7 @@ const MatchOverlay = () => {
       <div id="options-wrapper">
         <div id="options">
           <p onClick={clickContinueSwiping}><i className="fa-solid fa-arrow-left"></i> Continue Swiping</p>
-          <p onClick={clickMessage}>Message {matchedUser?.first_name} <i className="fa-solid fa-arrow-right"></i></p>
+          <p  className='message' onClick={clickMessage}>Message {matchedUser?.first_name} <i className="fa-solid fa-arrow-right"></i></p>
         </div>
       </div>
     </div>

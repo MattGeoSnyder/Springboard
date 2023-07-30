@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import PhotoInput from "./Photos/PhotoInput";
 import BioSection from "./BioSection/BioSection";
 import Prompt from './Prompts/Prompt';
@@ -8,6 +8,8 @@ import './UserContent.css'
 
 const UserContent = memo(() => {
   const [prompts, setPrompts] = useState([]);
+
+  const container = useRef()
 
   useEffect(() => {
     const loadPrompts = async () => {
@@ -23,7 +25,7 @@ const UserContent = memo(() => {
       <BioSection />
       {/* <Photos />
       <Prompts /> */}
-      <div id='user-content'>
+      <div id='user-content' ref={container}>
         <PhotoInput name='photo1' photoLabel="Profile Photo" />
         <Prompt key={uuid()} prompts={prompts} name="prompt1" order='first' idx={0} />
         <PhotoInput name='photo2' photoLabel="Photo 2" />

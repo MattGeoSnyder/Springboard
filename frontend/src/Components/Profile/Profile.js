@@ -76,6 +76,13 @@ const Profile = ({ id }) => {
   const [ dragDistance, setDragDistance ] = useState(0);
   const [ tilt, setTilt ] = useState('0deg');
 
+  const resetState = () => {
+    setInitialMouseX(0);
+    setCurrentMouseX(0);
+    setDragDistance(0);
+    setTilt('0deg');
+  }
+
   const calculateDragDistance = () => {
     const val = Math.round((currentMouseX - initialMouseX) * 100 / width );
     setDragDistance(val);
@@ -120,13 +127,11 @@ const Profile = ({ id }) => {
       dispatch(addLike({ userId, currentUserId: id}));
 
       setTimeout(() => {
-        setDragDistance(0);
+        resetState();
       }, 1000);
 
     }
-    setInitialMouseX(0);
-    setCurrentMouseX(0);
-    setDragDistance(0);
+    resetState();
   }
 
   const likes = useSelector(state => state.currentUser.likes);
