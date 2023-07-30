@@ -4,6 +4,7 @@ import { login } from '../../store/thunks';
 import { setErrMsg, setStatus } from '../../store/reducers/user';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from "../Forms/Input"
+import couple from '../../assets/images/valentines-day.svg';
 import './Login.css';
 
 const Login = () => {
@@ -33,7 +34,6 @@ const Login = () => {
     pw: 'Fakepw1234'
   }
 
-
   const [ formData, setFormData ] = useState(initialData);
 
   const handleSubmit = async (e) => {
@@ -46,6 +46,12 @@ const Login = () => {
   
   return (
     <div id="login-page">
+      <div id='welcome'>
+        <h1>Welcome Back</h1>
+        <div>
+          <img src={couple}/>
+        </div>
+      </div>
       <div id="login">
         <h1>Login</h1>
         <p>Don't have an account? Sign up <Link to={'/signup'}>here.</Link></p>

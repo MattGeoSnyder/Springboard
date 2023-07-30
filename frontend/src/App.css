@@ -11,6 +11,11 @@ body {
     height: 100%;
     /* display: flex;
     flex-direction: column; */
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 70px 1fr;
+
     overflow-y: hidden;
     overflow-x: hidden;
     background-color: var(--main-bg-color);
@@ -44,5 +49,7 @@ body {
     --dark-red: #d80f24;
     --main-bg-color: rgba(138, 43, 226, 0.05);
     --main-bg-color-solid: #f9f4fe;
-    --accent-one: blueviolet;
+    --accent-one: #f25787;
+    --accent-two: #f2195c;
+    /* blueviolet; */
 }

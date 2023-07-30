@@ -5,6 +5,10 @@
   flex: 1;
 }
 
+.user-hates-container > p {
+  font-size: 22px;
+}
+
 .user-hates {
   flex: 1;
   display: flex;

@@ -2,28 +2,31 @@
     flex: 1;
     display: flex;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
     height: 80%;
     margin: auto 0;
     position: relative;
     transform-style: flat;
+    margin-left: 100px;
 }
 
 .carousel-item {
     display: flex;
     justify-content: center;
     align-items: center;
+
     position: absolute;
-    align-self: center;
-    overflow: hidden;
+
+    height: 100%;
+    width: 100%;
+
     transition: left ease 1s;
 }
 
 .carousel-item img {
     height: 100%;
-    width: 100%;
     object-fit: cover;
     border-radius: 15px;
-    
 }
 

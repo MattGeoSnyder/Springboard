@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import './SignupCarousel.css';
-import couple from '../../assets/images/couple_1.jpg';
-import heart from '../../assets/images/heart.jpg';
-import date from '../../assets/images/online_date.jpg';
+import promise from '../../assets/images/promise-day.svg';
+import kiss from '../../assets/images/forehead-kiss.svg';
+import hug from '../../assets/images/hug-day.svg';
 
 
 // background image link
@@ -10,22 +10,22 @@ import date from '../../assets/images/online_date.jpg';
 
 const SignupCarousel = ({ page }) => {
 
-  const [ lefts, setLefts ] = useState([0, 200, 400]);
+  const [ lefts, setLefts ] = useState([0, 100, 200]);
 
   useEffect(() => {
-    setLefts([10, 210, 410].map(val => val - (200 * page)));
+    setLefts([0, 100, 200].map(val => val - (100 * page)));
   },[page])
 
   return (
     <div id='signup-carousel'>
         <div className='carousel-item' style={{left: `${lefts[0]}%`}}>
-          <img src={date}/>
+          <img src={promise}/>
         </div>
         <div className='carousel-item' style={{left: `${lefts[1]}%`}}>
-          <img src={heart}/>
+          <img src={kiss}/>
         </div>
         <div className='carousel-item' style={{left: `${lefts[2]}%`}}>
-          <img src={couple}/>
+          <img src={hug}/>
         </div>
     </div>
   )

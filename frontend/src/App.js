@@ -2,6 +2,7 @@ import './App.css';
 import { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import Home from './Components/Home/Home';
 import UserHome from './Components/UserHome/UserHome.js';
 import Messages from './Components/Sidebar/Messages/Messages';
 import Signup from './Components/Signup/Signup';
@@ -71,7 +72,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path='/'/>
+      <Route path='/' element={<Home />} />
       <Route path='/signup' element={<Signup/>}/>
       <Route path='/login' element={ <Login /> }/>
       <Route path='disclaimer' 

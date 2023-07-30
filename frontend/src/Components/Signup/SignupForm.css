@@ -91,7 +91,7 @@
     width: fit-content;
     font-size: 18px;
     font-family: 'Monserrat', sans-serif;
-    background-color: blueviolet;
+    background-color: var(--accent-one);
     border: none;
     border-radius: 50px;
     color: white;
@@ -113,6 +113,10 @@
     text-align: center;
     margin: 1rem 0;
     color: gray;
+}
+
+#login-prompt a {
+    color: var(--accent-two)
 }
 
 @keyframes spin {
