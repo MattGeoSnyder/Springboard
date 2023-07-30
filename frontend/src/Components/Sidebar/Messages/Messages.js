@@ -30,6 +30,9 @@ const Messages = () => {
     }, [matchId]);
     
     useEffect(() => {
+
+      if (!matchId || !userId) return;
+
       const ws = new WebSocket(`${WS_BASE_URL}/users/${userId}/matches/${matchId}`);   
 
       ws.onmessage = function (evt) {

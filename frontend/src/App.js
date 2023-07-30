@@ -45,6 +45,8 @@ function App() {
 
   useEffect(() => {
 
+    if (!userId) return;
+
     const ws = new WebSocket(`${WS_BASE_URL}/users/${userId}`);
 
     ws.onmessage = function (evt) {
