@@ -1,0 +1,109 @@
+#home {
+  grid-column: 1 / -1;
+  overflow-y: scroll;
+}
+
+#home section {
+  height: 100%;
+}
+
+#hero {
+  background-size: cover;
+  background-repeat: none;
+  background-position: -50% 80%;
+
+  position: relative;
+}
+
+#hero img {
+  height: 100%;
+}
+
+#hero div {
+  position: absolute;
+
+  right: 50px;
+  top: 200px;
+}
+
+#hero h1 {
+  font-size: 60px;
+  text-align: end;
+  color: var(--dark-red);
+}
+
+#hero p {
+  font-size: 25px;
+  word-wrap: normal;
+  color: #f25787;
+}
+
+#profile {
+  display: flex;
+
+  position: relative;
+}
+
+#profile div {
+  margin-left: 50px;
+}
+
+#profile h1 {
+  font-size: 60px;
+}
+
+#profile p {
+  font-size: 30px;
+  color: gray;
+}
+
+#profile img {
+  width: 75%;
+  margin: auto auto;
+}
+
+#chat {
+  display: flex;
+  justify-content: space-between;
+}
+
+#chat div {
+  margin-right: 50px;
+}
+
+#chat p {
+  color: gray;
+  font-size: 30px;
+}
+
+#chat h1 {
+  font-size: 60px;
+  text-align: end;
+}
+
+#chat a {
+  text-decoration: none;
+}
+
+#chat button {
+  display: block;
+  margin: 0 auto;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  color: white;
+  background-color: var(--accent-one);
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0px 0px 10px gray;
+
+  transition: box-shadow 0.5s ease;
+}
+
+#chat button:hover {
+  box-shadow: 0px 0px 20px black;
+}
+
+#chat img {
+  height: 100%;
+}

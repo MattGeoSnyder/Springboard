@@ -1,7 +1,30 @@
 #login-page {
-  flex: 1;
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+#login-page #welcome {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#welcome h1 {
+  text-align: center;
+  font-size: 48px;
+  background-clip: content-box;
+}
+
+#welcome img {
+  object-fit: cover;
+  height: 70%;
+  display: block;
+  margin: 0 auto;
+}
+
+#welcome div {
+  flex: 1;
 }
 
 #login {
@@ -63,7 +86,7 @@
   font-family: 'Montserrat', sans-serif;
   color: white;
   border: none;
-  background-color: blueviolet;
+  background-color: var(--accent-one);
   border-radius: 50px;
   width: 50%;
   padding-block: 10px;

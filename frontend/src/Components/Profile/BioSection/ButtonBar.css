@@ -6,7 +6,6 @@
 #like, #dislike {
   height: 100%;
   border-radius: 999%;
-  border: 1px solid black;
   box-sizing: border-box;
   padding: 1rem;
   aspect-ratio: 1 / 1;
@@ -16,6 +15,16 @@
   font-size: 40px;
 }
 
+#dislike {
+  border: 1px solid var(--dark-red);
+  color: var(--dark-red)
+}
+
 #dislike i {
   transform: rotateY(180deg);
+}
+
+#like {
+  border: 1px solid #296c29;
+  color: #296c29;
 }

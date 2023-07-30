@@ -17,12 +17,14 @@
 }
 
 .message-content.sent {
-    background-color: gray;
+    background-color: var(--main-bg-color-solid);
+    border: 1px solid gray;
 }
 
 .message-content.received {
-    background-color: var(--accent-one);
+    background-color: var(--accent-two);
     color: white;
+    border: 1px solid gray;
 }
 
 .time {

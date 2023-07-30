@@ -1,6 +1,7 @@
 .bio-wrapper {
-  height: 90vh;
+  height: 100%;
   padding: 50px;
+  padding-right: 0px;
   box-sizing: border-box;
 
   grid-column: 1 / 2;
@@ -9,15 +10,16 @@
 
 .bio-container {
   height: 100%;
-  width: 350px;
+  width: 400px;
   min-width: 350px;
+  max-width: 400px;
 
   padding: 25px;
 
   box-sizing: border-box;
 
   background-color: white;
-  box-shadow: 0px 0px 5px gray;
+  box-shadow: 0px 0px 10px gray;
 
   border-radius: 20px;
 
@@ -45,6 +47,7 @@
 
 #bio {
   font-family: 'Montserrat', 'sans-serif';
+  font-size: 16px;
 }
 
 #bio:focus {
@@ -67,4 +70,8 @@
 
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
+}
+
+.bio-container p {
+  font-size: 22px;
 }

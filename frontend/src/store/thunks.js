@@ -49,7 +49,7 @@ const loadUserAssets = createAsyncThunk('/loadUserAssets', async (userId, { reje
     const notifications = await API.getNotifications(userId, token);
 
     for (let key in matches.matches) {
-      if (matches.matches[key].id <= 100) {
+      if (matches.matches[key].id > 1 && matches.matches[key].id <= 100) {
         const sex = matches.matches[key].user_sex === 'male' ? 'men' : 'women';
         const image_url = `${BOT_PIC_BASE_URL}/${sex}/${matches.matches[key].id}.jpg`
         const public_id = `${matches.matches[key].username}/photo1`;
@@ -58,7 +58,6 @@ const loadUserAssets = createAsyncThunk('/loadUserAssets', async (userId, { reje
         matches.matches[key] = {...matches.matches[key], photos};
       }
     }
-
 
     return { matches: matches.matches, notifications};
   } catch(error) {
@@ -101,10 +100,11 @@ const uploadPhoto = createAsyncThunk('/uploadPhoto', async (payload, { rejectWit
 
 const deletePhoto = createAsyncThunk('/deletePhoto', async (payload, { rejectWithValue, getState }) => {
   const token = getState().user.user.token;
+  const userId = getState().user.user.id;
   const { name, public_id } = payload;
   try {
     const res = await CloudinaryAPI.deletePhoto({ public_id }, token);
-    const message = await API.deletePhoto(payload, token);
+    const message = await API.deletePhoto({ userId, public_id }, token);
     return { name, ...message };
   } catch (error) {
     console.log(error);

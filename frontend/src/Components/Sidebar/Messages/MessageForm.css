@@ -33,7 +33,7 @@
     background-color: white;
     border-radius: 10px;
     padding: 10px;
-    box-shadow: 0 0 2px black;
+    box-shadow: 0 0 2px gray;
 }
 
 #message-form #content:focus {

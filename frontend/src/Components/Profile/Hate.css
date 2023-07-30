@@ -10,7 +10,7 @@
   position: relative;
 
   color: white;
-  background-color: var(--accent-one);
+  background-color: var(--accent-two);
   z-index: 11;
 }
 

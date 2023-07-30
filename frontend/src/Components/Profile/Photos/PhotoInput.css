@@ -10,7 +10,7 @@
 
 
   border-radius: 10px;
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 0px 0px 10px gray;
 
   outline: none;
 
@@ -22,7 +22,7 @@
 .photo-input:hover {
   height: 100%;
   outline: 2px solid var(--accent-one);
-  box-shadow: 0px 0px 30px black;
+  box-shadow: 0px 0px 20px black;
 }
 
 

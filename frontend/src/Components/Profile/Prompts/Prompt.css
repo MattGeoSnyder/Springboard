@@ -1,13 +1,13 @@
 .prompt {
   border-radius: 20px;
-  background-color: var(--accent-one);
+  background-color: var(--accent-two);
   color: white;
   box-sizing: border-box;
   padding: 5px 40px 30px; 
   width: 60%;
   height: fit-content;
   position: relative;
-  box-shadow: 0 0 5px black;
+  /* box-shadow: 0 0 10px black; */
   justify-self: center;
   margin-top: 2rem;
 
