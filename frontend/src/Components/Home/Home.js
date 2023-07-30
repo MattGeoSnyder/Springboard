@@ -28,9 +28,11 @@ const Home = () => {
           <h1>Chat Anytime</h1>
           <p>Get real time messages and notifications</p>
           <p>Backed by Chat GPT 3.5 so you always have someone to talk to</p>
-          <Link to={'/signup'}>
-            <button>Join today</button>
-          </Link>
+          <button>
+            <Link to={'/signup'}>
+              Join today
+            </Link>
+          </button>
         </div>
       </section>
     </div>

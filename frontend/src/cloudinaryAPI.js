@@ -1,12 +1,10 @@
 import axios from 'axios';
 import API from './api';
-import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY } from './cloudinarySecret';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 const CLOUDINARY_BASE_URL = 'https://api.cloudinary.com/v1_1';
-const CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME || CLOUDINARY_CLOUD_NAME;
-const API_KEY = process.env.REACT_APP_API_KEY || CLOUDINARY_API_KEY;
-const USER_PIC_BASE_URL = 'https://res.cloudinary.com/dubjhgxii/image/upload';
+const CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 class CloudinaryAPI {
 
@@ -58,4 +56,3 @@ class CloudinaryAPI {
 }
 
 export default CloudinaryAPI;
-export { USER_PIC_BASE_URL }

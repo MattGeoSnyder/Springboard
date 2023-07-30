@@ -12,6 +12,7 @@
   margin-top: 2rem;
 
   scroll-snap-align: center;
+  scroll-snap-stop: always;
 }
 
 .prompt p {
@@ -42,6 +43,7 @@
 
   overflow: scroll;
   scroll-margin: 5px;
+  scroll-behavior: contain;
 
   box-shadow: 0 5px 10px black;
 
@@ -69,7 +71,7 @@
 }
 
 .prompt .options .option:hover {
-  background-color: blueviolet;
+  background-color: var(--accent-two);
   color: white;
 }
 
