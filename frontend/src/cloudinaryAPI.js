@@ -1,6 +1,6 @@
 import axios from 'axios';
 import API from './api';
-import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY } from './cloudinarySecret';
+import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY } from './cloudinaryConfig';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 const CLOUDINARY_BASE_URL = 'https://api.cloudinary.com/v1_1';
