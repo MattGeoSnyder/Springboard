@@ -79,7 +79,6 @@ router.post('/:userId/bio', [ ensureLoggedIn, isUser ], async function (req, res
         const { bioData } = req.body;
         const { userId } = req.params;
         const bio = await User.addBio(bioData, userId);
-        console.log(bio);
         return res.status(201).json({ bio });
     } catch (error) {
         next(error);
@@ -106,7 +105,6 @@ router.post('/:userId/prompts', [ensureLoggedIn, isUser], async function (req, r
         )));
         
         const res_obj = result.reduce((acc, prompt, i) => {
-            console.log(prompt);
             return ({...acc, [`prompt${i+1}`]: { name: `prompt${i+1}`, id: prompt.id, promptRes: prompt.promptres}});
         }, {});
         return res.status(201).json(res_obj);

@@ -55,7 +55,6 @@ app.ws('/users/:userId', function(ws, req, next) {
             }
         });
     } catch(error) {
-        console.error;
         next(error);
     }
 
@@ -94,7 +93,6 @@ app.ws('/users/:userId/matches/:matchId', function(ws, req, next) {
         }
         
     } catch (error) {
-        console.log(error);
         next(error);
     }
   
@@ -105,8 +103,6 @@ app.ws('/users/:userId/matches/:matchId', function(ws, req, next) {
 app.use(function (err, req, res, next) {
     const status = err.status || 500;
     const message = err.message;
-
-    console.log(err);
 
     return res.status(status).json({
         error: { message, status }

@@ -19,7 +19,6 @@ class User {
         }
 
         const hashedPassword = await bcrypt.hash(pw, BCRYPT_WORK_FACTOR);
-        console.log(typeof birthday)
         const result = await db.query(`INSERT INTO users
                                             (username, pw, first_name, birthday, user_sex, sex_preference)
                                         VALUES 
@@ -43,7 +42,6 @@ class User {
                                         FROM users WHERE username=$1`, [username]);
 
         const user = checkUser.rows[0];
-        console.log(user);
 
         if (!user) {
             throw new ExpressError(`User with username ${username} does not exist`, 403);
@@ -102,7 +100,6 @@ class User {
 
 
         const { photos_arr } = data;
-        console.log(data);
         const photos = photos_arr.reduce((acc, photo, i) => {
             // If user id <= 100 load seeded url
             if (id > 1 && id <= 100 && i === 0) {
