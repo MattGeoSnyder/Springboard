@@ -13,9 +13,6 @@ const ConversationLink = ({ matchId }) => {
     const notifications = useSelector(state => state.messages.messages[matchId]?.notifications);
     const lastMessage = useSelector(state => state.messages.messages[matchId].messages[0]);
     const location = useLocation();
-
-    console.log(location);
-    
     const navigate = useNavigate();
 
     const goToConversation = () => {
