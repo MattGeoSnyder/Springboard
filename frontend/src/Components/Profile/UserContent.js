@@ -26,12 +26,14 @@ const UserContent = memo(() => {
       {/* <Photos />
       <Prompts /> */}
       <div id='user-content' ref={container}>
-        <PhotoInput name='photo1' photoLabel="Profile Photo" />
-        <Prompt key={uuid()} prompts={prompts} name="prompt1" order='first' idx={0} />
-        <PhotoInput name='photo2' photoLabel="Photo 2" />
-        <Prompt key={uuid()} prompts={prompts} name="prompt2" order='second' idx={1}/>
-        <PhotoInput name='photo3' photoLabel="Photo 3" />
-        <Prompt key={uuid()} prompts={prompts} name="prompt3" order='last' idx={2}/>
+        <div id='photos'>
+          <PhotoInput name='photo1' photoLabel="Profile Photo" />
+          <PhotoInput name='photo2' photoLabel="Photo 2" />
+          <PhotoInput name='photo3' photoLabel="Photo 3" />
+        </div>
+          <Prompt key={uuid()} prompts={prompts} name="prompt1" order='first' idx={0} />
+          <Prompt key={uuid()} prompts={prompts} name="prompt2" order='second' idx={1}/>
+          <Prompt key={uuid()} prompts={prompts} name="prompt3" order='last' idx={2}/>
       </div>
     </>
   )
