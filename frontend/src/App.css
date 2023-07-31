@@ -53,3 +53,13 @@ body {
     --accent-two: #f2195c;
     /* blueviolet; */
 }
+
+@media (max-width: 650px) {
+    /* #root {
+        display: flex;
+        flex-direction: column;
+    } */
+    #root {
+        grid-template-rows: 1fr 70px;
+    }
+}

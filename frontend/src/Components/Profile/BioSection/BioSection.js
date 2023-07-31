@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import { changeBio } from '../../../store/reducers/profileForm';
 import ProfileButton from './ProfileButton';
 import LikeDislike from './ButtonBar';
@@ -10,6 +11,7 @@ import './BioSection.css';
 const BioSection = ({ user }) => {
 
   const dispatch = useDispatch();
+  const { width } = useWindowDimensions();
 
   const bio = useSelector(state => state.profileForm.formData.bio);
   const editable = useSelector(state => state.currentUser.editable);
@@ -42,18 +44,43 @@ const BioSection = ({ user }) => {
     }
   }
 
-  return (
-    <div className="bio-wrapper">
-      <div className="bio-container"> 
-        <UserBanner user={user}/>
-        <UserHates user={user}/>
-        <div className='bio-content'>
-          <p>Bio</p>
-          {renderBioContent()}
-        </div>
-        {renderButtons()}
+  const render = () => {
+
+    const content = <>
+      <UserBanner user={user}/>
+      <UserHates user={user}/>
+      <div className='bio-content'>
+        <p>Bio</p>
+        {renderBioContent()}
       </div>
-    </div>
+      {renderButtons()}
+    </>
+
+
+    if (width <= 1120) {
+      return (<>
+        {content}
+      </>)
+    } else {
+      return(<div className='bio-container'>
+        {content}
+      </div>)
+    }
+  }
+
+  return (
+    // <div className="bio-container"> 
+    //   <UserBanner user={user}/>
+    //   <UserHates user={user}/>
+    //   <div className='bio-content'>
+    //     <p>Bio</p>
+    //     {renderBioContent()}
+    //   </div>
+    //   {renderButtons()}
+    // </div>
+    <>
+      {render()}
+    </>
   )
 };
 

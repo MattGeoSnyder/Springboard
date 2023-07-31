@@ -47,4 +47,10 @@
   size: fit-content;
 }
 
+@media (max-width: 650px) {
+  #hates .hates-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 

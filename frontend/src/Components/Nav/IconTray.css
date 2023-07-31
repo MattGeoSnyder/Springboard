@@ -9,6 +9,11 @@
 #icon-tray .icon {
   width: fit-content;
   height: 100%;
+
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  pointer-events: fill;
 }
 
 #icon-tray p {
@@ -19,20 +24,12 @@
 
 #icon-tray .message {
   color: var(--accent-one);
-  display: flex;
-  align-items: center;
 }
 
 #icon-tray .icon.profile {
-  display: flex;
-  align-items: center;
   gap: 10px;
 }
 
-.icon {
-  cursor: pointer;
-  pointer-events: fill;
-}
 
 .icon p {
   display: inline-block;
@@ -49,4 +46,15 @@
   top: 5px;
 }
 
+.icon.home {
+  color: var(--accent-two);
+}
+
+@media (max-width: 650px) {
+  .logout.icon i {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+}
 
