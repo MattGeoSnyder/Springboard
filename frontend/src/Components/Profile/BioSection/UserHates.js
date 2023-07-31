@@ -14,7 +14,6 @@ const UserHates = () => {
   // toggle edit on click. Block if user != currentUser
   const showHates = (e) => {
     e.stopPropagation();
-    console.log('is editable', editable);
     if (editable) {
       dispatch(setContent('hates'));
       dispatch(setActive(true));

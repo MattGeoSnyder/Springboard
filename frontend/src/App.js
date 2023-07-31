@@ -24,7 +24,6 @@ function App() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log()
 
   const [ get, set, remove ] = useLocalStorage();
 
@@ -51,7 +50,6 @@ function App() {
 
     ws.onmessage = function (evt) {
       const data = JSON.parse(evt.data);
-      console.log('notification received', data);
       dispatch(addNotification(data));
     }
 
@@ -68,7 +66,6 @@ function App() {
 
     ws.onerror = function (evt) {
       console.log(evt);
-      console.log(evt.data);
     }
 
     // return () => { ws.close() }

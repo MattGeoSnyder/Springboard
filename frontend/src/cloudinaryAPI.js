@@ -15,14 +15,12 @@ class CloudinaryAPI {
       const res = await API.authPost(`/images/auth`, paramsToSign, token);
       return res;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
 
   static async uploadImage(file, options={}, token) {
     const { signature } = (await this.requestSignature(options, token));
-    console.log(signature);
     const formData = new FormData();
     formData.append('timestamp', Math.floor(Date.now()/1000));
     formData.append('signature', signature);

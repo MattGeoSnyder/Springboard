@@ -25,7 +25,6 @@ export const messages = createSlice({
       state.status = 'pending';
     });
     builder.addCase(getConversation.fulfilled, (state, action) => {
-      console.log(action.payload);
       const { matchId, messages } = action.payload;
       state.messages[matchId].messages = messages;
 

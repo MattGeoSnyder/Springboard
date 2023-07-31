@@ -108,7 +108,6 @@ const Profile = ({ id }) => {
 
   const handleDrag = (e) => {
     setCurrentMouseX(e.screenX);
-    console.log(initialMouseX, currentMouseX, dragDistance);
     calculateDragDistance();
   }
 

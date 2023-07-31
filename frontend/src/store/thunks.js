@@ -17,7 +17,6 @@ const register = createAsyncThunk('/user/registerUser', async (userData, { rejec
 });
 
 const login = createAsyncThunk('/login', async (userData, { rejectWithValue }) => {
-  console.log(userData);
   try {
       const { id , token } = await API.login(userData);
       const user = await API.getUserById(id, token);
@@ -31,7 +30,6 @@ const login = createAsyncThunk('/login', async (userData, { rejectWithValue }) =
 
 const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId, { rejectWithValue, getState }) => {
   const token = getState().user.user.token;
-  console.log(userId);
   try {
     const currentUser = await API.getUserById(userId, token);
     return currentUser
@@ -42,7 +40,6 @@ const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId
 
 const loadUserAssets = createAsyncThunk('/loadUserAssets', async (userId, { rejectWithValue, getState }) => {
   const token = getState().user.user.token;
-  console.log(token);
   try {
 
     const matches = await API.getMatches(userId, token);
@@ -88,7 +85,6 @@ const updateUserProfile = createAsyncThunk('/userProfileUpdate', async (payload,
 const uploadPhoto = createAsyncThunk('/uploadPhoto', async (payload, { rejectWithValue, getState }) => {
   const token = getState().user.user.token;
   const { image, options, name, userId } = payload;
-  console.log(name);
   try {
     const res = await CloudinaryAPI.uploadImage(image, options, token);
     const query = await API.addPhoto({ userId, publicId: res.public_id, imageUrl: res.secure_url }, token);
@@ -107,7 +103,6 @@ const deletePhoto = createAsyncThunk('/deletePhoto', async (payload, { rejectWit
     const message = await API.deletePhoto({ userId, public_id }, token);
     return { name, ...message };
   } catch (error) {
-    console.log(error);
     return rejectWithValue('Cannot delete image')
   }
 });

@@ -63,7 +63,6 @@ const SignupForm = ({ page, setPage }) => {
 
   const handleSubmit =  async (e) => {
     e.preventDefault();
-    console.log(valid);
     if (Object.values(valid).every(val => val)){
       dispatch(register(formData));
     }

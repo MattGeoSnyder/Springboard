@@ -13,7 +13,6 @@ const Overlay = () => {
 
   //disable overlay on click
   const disableOverlay = (e) => {
-    console.log(e.target);
     dispatch(setOverlayActive(false));
   } 
 
