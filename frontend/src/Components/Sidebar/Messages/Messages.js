@@ -71,7 +71,7 @@ const Messages = () => {
   }, [matchId, userId, dispatch]);
 
     const goBack = (e) => {
-      navigate(`/users/${userId}`);
+      navigate(-1);
       dispatch(setContent('conversations'));
     }
 

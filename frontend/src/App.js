@@ -90,7 +90,8 @@ function App() {
         <Route path='matches/:matchId' 
               element={<ProtectedRoute>
                           <Messages />
-                        </ProtectedRoute>}/>
+                        </ProtectedRoute>}
+        />
       </Route>
       <Route path='/users/:userId/profile' 
             element={<ProtectedRoute>

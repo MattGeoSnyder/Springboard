@@ -19,7 +19,9 @@ const UserContent = memo(() => {
     }
 
     loadPrompts();
-    container.current.scrollLeft = 0;
+    if (container.current) {
+      container.current.scrollLeft = 0;
+    }
   }, []);
 
   const render = () => {
