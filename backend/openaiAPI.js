@@ -33,7 +33,7 @@ class ChatBot {
       });
   
       res.content = chatRes.data.choices[0].message.content;
-      const response = await Message.saveMessage({ matchId: res.match_id, fromUser: res.from_user, toUser: res.to_user, content: res.content })
+      const response = await Message.saveMessage({ matchId: res.match_id, fromUser: res.from_user, toUser: res.to_user, content: res.content });
       return response;
     } catch (error) {
       return ({ ...response, content: "Sorry, I don't have a good response to that right now. Try again later" });  
