@@ -38,7 +38,9 @@ router.get('/:userId/users', ensureLoggedIn, async function(req, res, next) {
 // });
 
 router.post('/:userId/photos/', async (req, res, next) => {
-    const { userId, publicId, imageUrl } = req.body;
+    const { userId } = req.params;
+
+    const { publicId, imageUrl } = req.body;
   
     const duplicateCheck = await User.getPhotoById(publicId);
   
