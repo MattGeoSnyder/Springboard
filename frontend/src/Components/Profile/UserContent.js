@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, memo } from 'react';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 import PhotoInput from "./Photos/PhotoInput";
 import BioSection from "./BioSection/BioSection";
 import Prompt from './Prompts/Prompt';
@@ -8,6 +9,7 @@ import './UserContent.css'
 
 const UserContent = memo(() => {
   const [prompts, setPrompts] = useState([]);
+  const { height, width } = useWindowDimensions();
 
   const container = useRef()
 
@@ -20,21 +22,43 @@ const UserContent = memo(() => {
     loadPrompts();
   }, []);
 
-  return (
-    <>
-      <BioSection />
-      {/* <Photos />
-      <Prompts /> */}
-      <div id='user-content' ref={container}>
-        <div id='photos'>
+  const render = () => {
+    if (width < 1120) {
+      return (
+        <>
+          <BioSection />
           <PhotoInput name='photo1' photoLabel="Profile Photo" />
           <PhotoInput name='photo2' photoLabel="Photo 2" />
           <PhotoInput name='photo3' photoLabel="Photo 3" />
-        </div>
           <Prompt key={uuid()} prompts={prompts} name="prompt1" order='first' idx={0} />
           <Prompt key={uuid()} prompts={prompts} name="prompt2" order='second' idx={1}/>
           <Prompt key={uuid()} prompts={prompts} name="prompt3" order='last' idx={2}/>
-      </div>
+        </>
+      ) 
+    } else {
+      return (
+        <>
+          <BioSection />
+          {/* <Photos />
+          <Prompts /> */}
+          <div id='user-content' ref={container}>
+            <div id='photos'>
+              <PhotoInput name='photo1' photoLabel="Profile Photo" />
+              <PhotoInput name='photo2' photoLabel="Photo 2" />
+              <PhotoInput name='photo3' photoLabel="Photo 3" />
+            </div>
+              <Prompt key={uuid()} prompts={prompts} name="prompt1" order='first' idx={0} />
+              <Prompt key={uuid()} prompts={prompts} name="prompt2" order='second' idx={1}/>
+              <Prompt key={uuid()} prompts={prompts} name="prompt3" order='last' idx={2}/>
+          </div>
+        </>
+      )
+    }
+  }
+
+  return (
+    <>
+      {render()}
     </>
   )
 });
