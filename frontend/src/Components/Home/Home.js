@@ -1,11 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import hero from '../../assets/images/hero-section.jpg';
 import couple from '../../assets/images/couple.svg';
 import hatersProfile from '../../assets/images/haters-profile.png';
 import hatersChat from '../../assets/images/haters-chat.png';
 import './Home.css';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const Home = () => {
+  const userId = useSelector(state => state.user.user.id);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userId) {
+      navigate(`/users/${userId}`);
+    }
+  }, [userId]);
+
   return (
     <div id="home">
       <section id='hero'>

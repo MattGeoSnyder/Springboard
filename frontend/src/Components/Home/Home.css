@@ -7,16 +7,12 @@
   height: 100%;
 }
 
-#hero {
-  background-size: cover;
-  background-repeat: none;
-  background-position: -50% 80%;
-
-  position: relative;
+#home section img {
+  object-fit: contain;
 }
 
-#hero img {
-  height: 100%;
+#hero {
+  position: relative;
 }
 
 #hero div {
@@ -36,6 +32,10 @@
   font-size: 25px;
   word-wrap: normal;
   color: #f25787;
+}
+
+#hero img {
+  height: 100%;
 }
 
 #profile {
@@ -58,6 +58,7 @@
 }
 
 #profile img {
+  height: 75%;
   width: 75%;
   margin: auto auto;
 }
@@ -89,10 +90,11 @@
 #chat button {
   display: block;
   margin: auto auto;
+  margin-bottom: 1rem;
   font-family: 'Montserrat', sans-serif;
   font-size: 20px;
   color: white;
-  background-color: var(--accent-one);
+  background-color: var(--accent-two);
   padding: 15px;
   border-radius: 10px;
   border: none;
@@ -106,5 +108,38 @@
 }
 
 #chat img {
-  height: 100%;
+  width: 75%;
+  aspect-ratio: 4 / 3;
+}
+
+@media (max-width: 1120px) {
+  #home {
+    overflow-x: hidden;
+    padding: 0 10px;
+    padding-bottom: 100px;
+  }
+  #hero div {
+    position: static;
+  }
+  #home section{
+    display: flex;
+    flex-direction: column;
+  } 
+  section:not(section#hero) img {
+    order: 2;
+    height: 50%;
+    width: auto;
+  }
+  section:not(section#hero) {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 650px) {
+  #home section div h1 {
+    font-size: 30px;
+  }
+  #home section div p {
+    font-size: 15px;
+  }
 }

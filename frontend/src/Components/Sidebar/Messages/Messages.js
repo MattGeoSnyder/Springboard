@@ -12,6 +12,8 @@ import './Messages.css';
 import UserIcon from "../../Profile/UserIcon";
 import { setContent } from "../../../store/reducers/hatesSidebar";
 
+const WS_BASE_URL = process.env.REACT_APP_WS_URL || 'ws://localhost:3001';
+
 const Messages = () => {
 
     const dispatch = useDispatch();
@@ -28,13 +30,13 @@ const Messages = () => {
     }, [matchId]);
     
     useEffect(() => {
-      const ws = new WebSocket(`ws://localhost:3001/users/${userId}/matches/${matchId}`);   
+
+      if (!matchId || !userId) return;
+
+      const ws = new WebSocket(`${WS_BASE_URL}/users/${userId}/matches/${matchId}`);   
 
       ws.onmessage = function (evt) {
-        console.log(evt.data);
-        console.log(typeof evt.data);
         let message = JSON.parse(evt.data);
-        console.log(typeof message);
         dispatch(addNewMessage({ userId, message }));
 
         if (message.to_user === 1) {
@@ -66,7 +68,7 @@ const Messages = () => {
   }, [matchId, userId, dispatch]);
 
     const goBack = (e) => {
-      navigate(`/users/${userId}`);
+      navigate(-1);
       dispatch(setContent('conversations'));
     }
 

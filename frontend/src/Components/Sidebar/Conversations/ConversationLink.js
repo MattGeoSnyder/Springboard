@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { setContent } from '../../../store/reducers/hatesSidebar';
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import UserIcon from "../../Profile/UserIcon";
 import NotificationBadge from '../../Profile/NotificationBadge';
 import './ConversationLink.css';
@@ -12,13 +12,12 @@ const ConversationLink = ({ matchId }) => {
     const matchedUser = useSelector(state => state.matches.matches[matchId]);
     const notifications = useSelector(state => state.messages.messages[matchId]?.notifications);
     const lastMessage = useSelector(state => state.messages.messages[matchId].messages[0]);
-
-    
+    const location = useLocation();
     const navigate = useNavigate();
 
     const goToConversation = () => {
         dispatch(setContent('messages'));
-        navigate(`/users/${userId}/matches/${matchId}`);
+        navigate(`${location.pathname}/matches/${matchId}`);
     }
 
     const transformMessage = () => {

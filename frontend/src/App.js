@@ -16,13 +16,14 @@ import { loadTokenUser } from './store/reducers/user';
 import { loadUserAssets } from './store/thunks';
 // import Hates from './Components/Profile/Hates/Hates';
 
+const WS_BASE_URL = process.env.REACT_APP_WS_URL || 'ws://localhost:3001';
+
 function App() {
   const user = useSelector(state => state.user.user);
   const userId = user.id;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log()
 
   const [ get, set, remove ] = useLocalStorage();
 
@@ -43,11 +44,12 @@ function App() {
 
   useEffect(() => {
 
-    const ws = new WebSocket(`ws://localhost:3001/users/${userId}`);
+    if (!userId) return;
+
+    const ws = new WebSocket(`${WS_BASE_URL}/users/${userId}`);
 
     ws.onmessage = function (evt) {
       const data = JSON.parse(evt.data);
-      console.log('notification received', data);
       dispatch(addNotification(data));
     }
 
@@ -64,7 +66,6 @@ function App() {
 
     ws.onerror = function (evt) {
       console.log(evt);
-      console.log(evt.data);
     }
 
     // return () => { ws.close() }
@@ -86,7 +87,8 @@ function App() {
         <Route path='matches/:matchId' 
               element={<ProtectedRoute>
                           <Messages />
-                        </ProtectedRoute>}/>
+                        </ProtectedRoute>}
+        />
       </Route>
       <Route path='/users/:userId/profile' 
             element={<ProtectedRoute>

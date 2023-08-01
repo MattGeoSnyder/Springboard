@@ -23,8 +23,8 @@ const ButtonBar = () => {
 
   return (
     <div id="button-bar">
-      <div id="dislike" onClick={clickDislike}><i className="fa-regular fa-thumbs-down"></i></div>
-      <div id="like" onClick={clickLike}><i className="fa-regular fa-thumbs-up"></i></div>
+      <div id="dislike" onClick={clickDislike}><span>Hate </span><i className="fa-solid fa-fire"></i></div>
+      <div id="like" onClick={clickLike}><span>Love </span><i className="fa-solid fa-heart"></i></div>
     </div>
   )
 }

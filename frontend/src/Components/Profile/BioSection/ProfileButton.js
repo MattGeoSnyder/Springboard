@@ -36,7 +36,7 @@ const ProfileButton = () => {
       case 'rejected':
         return <div id='status-message' className='rejected'><p>{message}</p></div>
       default:
-        return <button onClick={handleClick}>Update Profile</button>
+        return <button id='update-profile-btn' onClick={handleClick}>Update Profile</button>
     }
   }
 

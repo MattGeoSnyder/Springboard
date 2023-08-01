@@ -5,7 +5,8 @@
 }
 
 #disclaimer-page #main-body {
-  width: 33%;
+  width: 95%;
+  max-width: 650px;
   height: 90%;
   background-color: white;
 
@@ -42,4 +43,17 @@
 #link-bar a {
   font-size: 18px;
   color: var(--accent-one);
+}
+
+@media (max-width: 650px) {
+  #disclaimer-page #main-body {
+    padding: 1rem 2rem;
+  }
+  #main-body p {
+    font-size: 14px;
+  }
+  #main-body h1 {
+    font-size: 24px;
+    margin-bottom: 0.5rem;
+  }
 }

@@ -3,7 +3,6 @@ const getLocalStorge = () => {
 }
 
 const setLocalStorage = (user) => {
-  console.log('Setting local storage to', user);
   window.localStorage.setItem('user', JSON.stringify(user));
 }
 

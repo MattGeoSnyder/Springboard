@@ -1,18 +1,15 @@
 #signup-carousel {
-    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     height: 80%;
-    margin: auto 0;
+    width: 100%;
     position: relative;
     transform-style: flat;
-    margin-left: 100px;
 }
 
 .carousel-item {
-    display: flex;
     justify-content: center;
     align-items: center;
 
@@ -26,7 +23,14 @@
 
 .carousel-item img {
     height: 100%;
-    object-fit: cover;
+    width: 100%;
+    object-fit: contain;
     border-radius: 15px;
+}
+
+@media (max-width: 750px) {
+    #signup-carousel {
+        display: none;
+    }
 }
 

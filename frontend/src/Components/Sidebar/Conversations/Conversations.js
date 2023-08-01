@@ -11,8 +11,6 @@ const Conversations = () => {
 
     const matches = useSelector(state => state.matches.matches);
 
-   
-
     const mostRecent = (a, b) => {
         if (!a.last_interaction) return -1;
 

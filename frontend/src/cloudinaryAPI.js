@@ -5,6 +5,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 const CLOUDINARY_BASE_URL = 'https://api.cloudinary.com/v1_1';
 const CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
 const API_KEY = process.env.REACT_APP_API_KEY;
+const USER_PIC_BASE_URL = 'https://res.cloudinary.com/dubjhgxii/image/upload';
 
 class CloudinaryAPI {
 
@@ -14,14 +15,12 @@ class CloudinaryAPI {
       const res = await API.authPost(`/images/auth`, paramsToSign, token);
       return res;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
 
   static async uploadImage(file, options={}, token) {
     const { signature } = (await this.requestSignature(options, token));
-    console.log(signature);
     const formData = new FormData();
     formData.append('timestamp', Math.floor(Date.now()/1000));
     formData.append('signature', signature);

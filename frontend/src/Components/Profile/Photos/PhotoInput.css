@@ -117,3 +117,11 @@
   left: -5px;
   font-size: 18px;
 }
+
+@media (max-width:1120px) {
+  .photo-input {
+    aspect-ratio: 4 / 5;
+    min-height: 400px;
+  }
+  
+}

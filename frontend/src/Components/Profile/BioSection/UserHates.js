@@ -21,10 +21,10 @@ const UserHates = () => {
   }
 
   return (
-    <div className="user-hates-container">
+    <div className="user-hates-container" onClick={showHates}>
       <p>Hates</p>
       {hatesIds.length === 0 && <p style={{fontSize: '16px', color: 'gray'}}>Click here to add what irks you</p>}
-        <div className="user-hates" onClick={showHates}>
+        <div className="user-hates"> 
           {hatesIds.map((id) => (
             <Hate key={uuid()} hateId={id} edit={editable}/>
             ))}

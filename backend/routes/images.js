@@ -21,13 +21,8 @@ router.get('/:username/:name', async function(req, res, next) {
 
 router.post('/auth', ensureLoggedIn, async function (req, res, next) {
   const params_to_sign = req.body;
-  console.log( typeof params_to_sign);
-  console.log(params_to_sign);
   const signature = cloudinary.utils.api_sign_request(params_to_sign, CLOUDINARY_SECRET);
   return res.json({ signature });
 });
-
-
-console.log(cloudinary.config());
 
 export default router;

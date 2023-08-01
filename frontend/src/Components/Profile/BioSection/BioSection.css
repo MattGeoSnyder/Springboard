@@ -1,19 +1,11 @@
-.bio-wrapper {
-  height: 100%;
-  padding: 50px;
-  padding-right: 0px;
-  box-sizing: border-box;
-
-  grid-column: 1 / 2;
-  grid-row: 1 / 4;
-}
-
 .bio-container {
-  height: 100%;
   width: 400px;
   min-width: 350px;
   max-width: 400px;
 
+  grid-row: 1 / -1;
+
+  margin: 50px 25px;
   padding: 25px;
 
   box-sizing: border-box;
@@ -55,7 +47,7 @@
   outline: 1px solid var(--accent-one);
 }
 
-.bio-container button {
+#update-profile-btn {
   flex-basis: fit-content;
   display: inline-block;
   box-sizing: border-box;
@@ -72,6 +64,12 @@
   font-size: 16px;
 }
 
-.bio-container p {
+.bio-content p {
   font-size: 22px;
+}
+
+@media (max-width: 1120px) {
+  #update-profile-btn {
+    order: 10;
+  }
 }

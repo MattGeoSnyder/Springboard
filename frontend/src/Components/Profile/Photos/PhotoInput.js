@@ -69,8 +69,6 @@ const PhotoInput = ({ name, photoLabel }) => {
 
     if (!editable) return;
 
-    console.log(typeof photo);
-    console.log(originalURL);
     setHasPhoto(false);
     if (photo.includes(name)) {
       dispatch(deletePhoto({ public_id: `${username}/${name}`, name }));

@@ -1,8 +1,8 @@
 #signup-form {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 #signup-form form {

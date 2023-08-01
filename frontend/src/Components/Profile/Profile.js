@@ -10,7 +10,6 @@ import Sidebar from '../Sidebar/Sidebar';
 import Overlay from "./Overlay/Overlay";
 import './Profile.css'
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import BioSection from './BioSection/BioSection';
 
 
 const OffScreenContent = memo(function OffScreenContent() {
@@ -76,7 +75,7 @@ const Profile = ({ id }) => {
   const [ dragDistance, setDragDistance ] = useState(0);
   const [ tilt, setTilt ] = useState('0deg');
 
-  const resetState = () => {
+  const resetDragState = () => {
     setInitialMouseX(0);
     setCurrentMouseX(0);
     setDragDistance(0);
@@ -101,13 +100,14 @@ const Profile = ({ id }) => {
 
 
   const handleDragStart = (e) => {
-    setInitialMouseX(e.clientX);
+    setInitialMouseX(e.screenX);
+    setCurrentMouseX(e.screenX);
     const image = document.createElement('img');
     e.dataTransfer.setDragImage(image, 0, 0);
   }
 
   const handleDrag = (e) => {
-    setCurrentMouseX(e.clientX);
+    setCurrentMouseX(e.screenX);
     calculateDragDistance();
   }
 
@@ -127,11 +127,11 @@ const Profile = ({ id }) => {
       dispatch(addLike({ userId, currentUserId: id}));
 
       setTimeout(() => {
-        resetState();
+        resetDragState();
       }, 1000);
 
     }
-    resetState();
+    resetDragState();
   }
 
   const likes = useSelector(state => state.currentUser.likes);
@@ -146,6 +146,44 @@ const Profile = ({ id }) => {
     }
   }
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// Copy swipe code above for mobile
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const handleTouchStart = (e) => {
+    setInitialMouseX(e.touches[0].screenX);
+    setCurrentMouseX(e.touches[0].screenX);
+  }
+  
+  const handleTouchMove = (e) => {
+    setCurrentMouseX(e.touches[0].screenX);
+    calculateDragDistance();
+  }
+
+  const handleTouchEnd = () => {
+    if (dragDistance < -20) {
+      //dispatch dislike
+      dispatch(setLikes(false));
+      dispatch(addDislike({ userId, currentUserId: id }));
+
+      setTimeout(() => {
+        setDragDistance(0);
+      }, 1000);
+
+    } else if (dragDistance > 20) {
+      //dispatch like
+      dispatch(setLikes(true));
+      dispatch(addLike({ userId, currentUserId: id}));
+
+      setTimeout(() => {
+        resetDragState();
+      }, 1000);
+
+    }
+    resetDragState();
+  }
+
+
   return (
       <>
       <div
@@ -155,6 +193,9 @@ const Profile = ({ id }) => {
         onDragStart={handleDragStart} 
         onDrag={handleDrag}
         onDragEnd={handleDragEnd}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={id !== userId ? {transform: `rotate(${tilt}) translate(${dragDistance}%, ${-Math.abs(dragDistance)}%)`} : {}}
         >
         {/* {ProfileContent} */}

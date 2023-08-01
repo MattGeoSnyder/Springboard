@@ -4,6 +4,8 @@
     justify-content: flex-start;
     align-items: center;
     gap: 15px;
+    padding: 10px;
+    padding-bottom: 100px;
 }
 #conversations hr {
     border: 0;

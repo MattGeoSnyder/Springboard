@@ -12,15 +12,15 @@ const Disclaimer = () => {
           A Quick Disclaimer
         </h1>
         <p>
-          Haters is a portfolio project not intended for actual use. This app is seeded with bot users to demonstrate all of the features. 
+          Haters is a portfolio project not intended for actual use. This app is seeded with bot users to demonstrate all of the features.
+          These bots should be easy to identify.
         </p>
         <p>
-          These bots should be easy to identify. Upon signing up, you'll be matched with an AI companion
+          Upon signing up, you'll be matched with an AI companion
           that will keep you company and demonstrate the messaging features.
         </p>
         <p>
-          While this app is intended to be a portfolio project, on the off-chance that you do talk with another person, always be kind. Haters is meant to
-          be a light hearted concept, not a place for actual hate.
+          While this app is intended to be a portfolio project, on the off-chance that you do talk with another person, always be kind. Haters is a light hearted concept, not a place for actual hate.
         </p>
         <div id="signature">
           <p>Hater's Creator</p>

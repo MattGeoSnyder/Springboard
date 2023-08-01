@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, memo } from 'react';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 import PhotoInput from "./Photos/PhotoInput";
 import BioSection from "./BioSection/BioSection";
 import Prompt from './Prompts/Prompt';
@@ -20,6 +21,9 @@ const UserContent = memo(() => {
     }
 
     loadPrompts();
+    if (container.current) {
+      container.current.scrollLeft = 0;
+    }
   }, []);
 
   const render = () => {

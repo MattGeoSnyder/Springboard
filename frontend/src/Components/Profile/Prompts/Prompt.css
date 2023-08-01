@@ -100,4 +100,11 @@
   border: 2px solid blueviolet;
 }
 
-
+@media (max-width: 1120px) {
+  .prompt {
+    align-self: center;
+    width: 100%;
+    min-width: 0px;
+    margin: 0;
+  }
+}

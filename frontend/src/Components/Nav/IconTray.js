@@ -6,6 +6,7 @@ import NotificationBadge from '../Profile/NotificationBadge';
 import UserIcon from '../Profile/UserIcon';
 import './IconTray.css'
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 
 const IconTray = () => {
@@ -13,6 +14,7 @@ const IconTray = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [ get, set, remove ] = useLocalStorage();
+  const { width } = useWindowDimensions();
 
   const user = useSelector(state => state.user.user);
   const userId = user.id;
@@ -36,19 +38,22 @@ const IconTray = () => {
   }
 
   return (
-    <div id="icon-tray">
+    <div id="icon-tray" >
+      {width <= 650 && <div className='icon home' onClick={() => {navigate(`/users/${userId}`)}}>
+        <i className="fa-solid fa-house"></i>
+      </div>}
       <div className='icon message' onClick={messageClick}>
         <NotificationBadge notifications={notifications} mode={'nav'}/>
         <i className="fa-solid fa-message"></i>
       </div>
       <div className='icon profile' onClick={profileClick}>
-        <p>{user.first_name}</p>
+        {width > 650 &&<p>{user.first_name}</p>}
         <UserIcon mode={'nav'} user={user}/>
       </div>
-      <div className='icon logout' onClick={logout}>
-        <p>Logout</p>
+      { width > 650 && <div className='icon logout' onClick={logout}>
+        {width > 650 && <p>Logout</p>}
         <i className="fa-solid fa-right-to-bracket"></i>
-      </div>
+      </div> }
     </div>
   )
 }

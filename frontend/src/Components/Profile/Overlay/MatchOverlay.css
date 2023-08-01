@@ -7,6 +7,7 @@
   box-sizing: border-box;
   position: absolute;
   z-index: 100;
+  min-width: 300px;
 }
 
 #match-overlay #match-message {
