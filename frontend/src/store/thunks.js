@@ -6,7 +6,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 const BOT_PIC_BASE_URL = `https:randomuser.me/portraits`;
 const USER_PIC_BASE_URL = 'https://res.cloudinary.com/dubjhgxii/image/upload';
 
-const register = createAsyncThunk('/user/registerUser', async (userData, { rejectWithValue }) => {
+const register = createAsyncThunk('register', async (userData, { rejectWithValue }) => {
   try {
       const { userId, token } = await API.signup(userData);
       const newUser = await API.getUserById(userId, token);
@@ -25,8 +25,6 @@ const login = createAsyncThunk('/login', async (userData, { rejectWithValue }) =
       return rejectWithValue(error);
   }
 });
-
-
 
 const getCurrentUserById = createAsyncThunk('/getCurrentUserById', async (userId, { rejectWithValue, getState }) => {
   const token = getState().user.user.token;
