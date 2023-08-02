@@ -1,7 +1,7 @@
 #profile-page {
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 450px 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: minmax(400px, 1fr) 1fr 1fr;
 
   position: relative;
 
@@ -16,6 +16,21 @@
 
 #profile-page[draggable='true'] {
   cursor: grab;
+}
+
+#profile-page #photos {
+  grid-row: 1 / -1;
+  grid-column: 2 / 3;
+
+  height: 100%;
+
+  overflow-y: scroll;
+
+  display: grid;
+  grid-auto-rows: 33vw;
+
+  scroll-snap-type: y mandatory;
+  padding-top: 25px;
 }
 
 #profile-page.dislikes {

@@ -103,7 +103,7 @@ const Prompt = ({ prompts, name, order="" }) => {
   }
 
   return (
-    <div id={name} className='prompt' onClick={selectPrompt}>
+    <div id={name} className={`prompt ${ (optionsActive || textareaActive) ? 'active' : ''}`} onClick={selectPrompt}>
       {editable && <i className="fa-solid fa-plus"></i>}
       <div><p>{prompt.prompt}</p></div>
       {renderText()}

@@ -197,7 +197,7 @@ const Profile = ({ id }) => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         style={id !== userId ? {transform: `rotate(${tilt}) translate(${dragDistance}%, ${-Math.abs(dragDistance)}%)`} : {}}
-        >
+      >
         {/* {ProfileContent} */}
         <UserContent />
 

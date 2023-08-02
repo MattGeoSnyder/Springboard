@@ -22,8 +22,8 @@ const Home = () => {
       <section id='hero'>
         <img src={couple}/>
         <div>
-          <h1>Find your hate mate</h1>
-          <p>Find your perfect match from your dislikes, gripes and pet peeves</p>
+          <h1>Find your love with hate</h1>
+          <p>Find your perfect match from your dislikes, gripes, and pet peeves</p>
         </div>
       </section>
       <section id='profile'>

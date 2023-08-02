@@ -1,12 +1,10 @@
 .bio-container {
-  width: 400px;
-  min-width: 350px;
-  max-width: 400px;
+  width: 80%;
 
   grid-row: 1 / -1;
 
-  margin: 50px 25px;
   padding: 25px;
+  margin: 50px;
 
   box-sizing: border-box;
 
@@ -14,6 +12,8 @@
   box-shadow: 0px 0px 10px gray;
 
   border-radius: 20px;
+
+  justify-self: center;
 
   display: flex;
   flex-direction: column;

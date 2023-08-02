@@ -31,7 +31,6 @@ const Prompts = () => {
 
   return (
     <div className="prompts-container">
-      <div></div>
       <Prompt key={uuid()} prompts={prompts} name="prompt1" order='first' idx={0} />
       <Prompt key={uuid()} prompts={prompts} name="prompt2" order='second' idx={1}/>
       <Prompt key={uuid()} prompts={prompts} name="prompt3" order='last' idx={2}/>

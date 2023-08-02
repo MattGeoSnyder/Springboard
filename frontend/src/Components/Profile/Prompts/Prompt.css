@@ -1,11 +1,13 @@
 .prompt {
+  --prompt-width: 90%;
+  --prompt-height: fit-content;
   border-radius: 20px;
   background-color: var(--accent-two);
   color: white;
   box-sizing: border-box;
   padding: 5px 40px 30px; 
-  width: 90%;
-  height: fit-content;
+  width: var(--prompt-width);
+  height: var(--prompt-height);
   position: relative;
   /* box-shadow: 0 0 10px black; */
   justify-self: center;
@@ -13,6 +15,15 @@
 
   scroll-snap-align: center;
   scroll-snap-stop: always;
+
+  box-shadow: 0 0 0px black;
+
+  transition: padding 0.5s ease, box-shadow 0.5s ease;
+}
+
+.prompt.active {
+  padding: 10px 45px 35px;
+  box-shadow: 0px 0px 20px black;
 }
 
 .prompt p {
@@ -102,8 +113,8 @@
 
 @media (max-width: 1120px) {
   .prompt {
+    --prompt-width: 95%;
     align-self: center;
-    width: 100%;
     min-width: 0px;
     margin: 0;
   }
