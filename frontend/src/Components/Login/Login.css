@@ -96,7 +96,7 @@
 #login #err-msg {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 #login #err-msg p {
@@ -113,6 +113,19 @@
   height: 100%;
   flex: 1;
   background-color: blueviolet;
+}
+
+#login i.loader {
+  font-size: 22px;
+  animation: 2s linear infinite spin ;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 750px) {

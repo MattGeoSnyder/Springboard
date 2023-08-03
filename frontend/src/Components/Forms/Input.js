@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { v4 as uuid } from 'uuid';
 import './Input.css';
 
@@ -17,7 +17,8 @@ const Input = ({ name, type='text',
                 conditions = [[true, '']], validationMsg = '', 
                 value, setFormData,
                 iconClass = '',
-                setValid = () => {} }) => {
+                setValid = () => {},
+              }) => {
   
   const [ seen, setSeen ] = useState(false);
 
@@ -48,6 +49,7 @@ const Input = ({ name, type='text',
         value={value}
         onChange={handleChange}
         onBlur={isSeen}
+        onFocus={(e) => { e.currentTarget.focus({ preventScroll: true })}}
       />
       <div className='validation'>
         {(!valid && seen) && <p id='title' >{validationMsg}</p>}

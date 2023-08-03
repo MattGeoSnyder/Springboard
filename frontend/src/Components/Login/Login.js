@@ -30,8 +30,8 @@ const Login = () => {
 
   //Initial form data for login
   const initialData = {
-    username: 'MattGeoSnyder',
-    pw: 'Fakepw1234'
+    username: '',
+    pw: ''
   }
 
   const [ formData, setFormData ] = useState(initialData);
@@ -72,7 +72,7 @@ const Login = () => {
             setFormData={setFormData}
             iconClass='fa-solid fa-key'
           />
-            {status === 'pending' && <i className="fa-solid fa-spinner"></i>}
+            {status === 'pending' && <i className="fa-solid fa-spinner loader"></i>}
             {status !== 'pending' && <button>Login</button>}
         </form>
         <div id='err-msg'>

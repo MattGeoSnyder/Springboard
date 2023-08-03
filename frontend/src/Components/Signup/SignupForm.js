@@ -24,6 +24,9 @@ const SignupForm = ({ page, setPage }) => {
     setTops([0, 100, 200].map((val) => page * -100 + val));
   }, [page]);
 
+  console.log(page);
+  console.log(tops);
+
   useEffect(() => {
     if (status === 'rejected') {
       dispatch(setStatus('idle'));
@@ -37,13 +40,13 @@ const SignupForm = ({ page, setPage }) => {
   }, [status])
 
   const initialData = {
-    username: 'MattGeoSnyder',
-    pw: 'Fakepw1234',
-    pw_ver: 'Fakepw1234',
-    first_name: 'Matt',
-    birthday: '1996-08-11',
-    user_sex: 'male',
-    sex_preference: 'female'
+    username: '',
+    pw: '',
+    pw_ver: '',
+    first_name: '',
+    birthday: '',
+    user_sex: '',
+    sex_preference: ''
   }
 
   const [formData, setFormData] = useState(initialData);
@@ -51,9 +54,10 @@ const SignupForm = ({ page, setPage }) => {
     // set to true for testing. Change later.
     username: false,
     //Todo: fix pw_ver
-    pw_ver: true,
-    first_name: true,
-    birthday: true
+    pw: false,
+    pw_ver: false,
+    first_name: false,
+    birthday: false
   })
 
   const handleChange = (e) => {
@@ -68,16 +72,16 @@ const SignupForm = ({ page, setPage }) => {
     }
   }
 
-  const preventTabAndEnter = (e) => {
-    if (e.key === "Enter" || e.key === "Tab") {
-      e.preventDefault();
-    }
-  }
+  // const preventTabAndEnter = (e) => {
+  //   if (e.key === "Enter" || e.key === "Tab") {
+  //     e.preventDefault();
+  //   }
+  // }
 
   const renderButton = () => {
       switch (status) {
         case 'pending':
-          return (<i className="fa-solid fa-spinner .loader"></i>);
+          return (<i className="fa-solid fa-spinner loader"></i>);
       
         default:
           return (<button id='signup-button'>Sign up</button>);
@@ -86,13 +90,14 @@ const SignupForm = ({ page, setPage }) => {
 
   return (
     <div id='signup-form'>
-      <form onSubmit={handleSubmit} ref={form} onKeyDown={preventTabAndEnter}>
-        <div className='page' style={{top: `${tops[0]}%`}}>
+      <form onSubmit={handleSubmit} ref={form} >
+        <div className='page' style={{top: `${tops[0]}%`}} >
           <section className='title-box'>
             <h1 className='title'>Sign up</h1>
             <p className='subtitle'>Get started with Haters now</p>
           </section>
           <Input
+            key={0}
             labelText='Username' 
             placeholder='Create your username'
             name='username'
@@ -107,22 +112,13 @@ const SignupForm = ({ page, setPage }) => {
             setValid={setValid}
           />
           <Input 
+            key={1}
             labelText='Password'
             name='pw'
             type='password'
             value={formData.pw}
             iconClass='fa-solid fa-key'
-            setFormData={setFormData}
-          />
-          <Input 
-            labelText='Confirm your password'
-            name='pw_ver'
-            type='password'
-            value={formData.pw_ver}
-            validationMsg='Password Invalid'
-            iconClass='fa-solid fa-lock'
             conditions={[
-              [formData.pw === formData.pw_ver, "Password do not match"],
               [/[a-z]/.test(formData.pw), 'Password must contain at least one letter'],
               [/\d/.test(formData.pw), 'Password must contain at least one number'],
               [/[A-Z]/.test(formData.pw), 'Password must contain at least one upper case letter'],
@@ -130,16 +126,30 @@ const SignupForm = ({ page, setPage }) => {
               [formData.pw.length < 21, "Password can't be longer than 20 characters"]
             ]}
             setFormData={setFormData}
-            //Todo: Fix pw_ver
+            setValid={setValid}
+          />
+          <Input 
+            key={2}
+            labelText='Confirm your password'
+            name='pw_ver'
+            type='password'
+            value={formData.pw_ver}
+            validationMsg='Password Invalid'
+            iconClass='fa-solid fa-lock'
+            conditions={[
+              [formData.pw === formData.pw_ver, "Password do not match"]
+            ]}
+            setFormData={setFormData}
             setValid={setValid}
           />
         </div>
-        <div className='page' style={{top: `${tops[1]}%`}}>
+        <div className='page' style={{top: `${tops[1]}%`}} >
           <section>
             <h1 className='title'>Tell us about yourself</h1>
             <p className='subtitle'>Your name and age are public</p>
           </section>
           <Input
+            key={3}
             labelText='First name' 
             placeholder='Tell us your name'
             name='first_name'
@@ -155,6 +165,7 @@ const SignupForm = ({ page, setPage }) => {
             setValid={setValid}
           />
           <Input
+            key={4}
             labelText='Birthday' 
             placeholder='birthday'
             name='birthday'
@@ -169,12 +180,12 @@ const SignupForm = ({ page, setPage }) => {
             setValid={setValid}
           />
         </div>
-        <div className='page' style={{top: `${tops[2]}%`}}>
+        <div className='page' style={{top: `${tops[2]}%`}} >
           <section>
             <h1 className='title'>What are you looking for?</h1>
             <p className='subtitle'>Help us find your match</p>
           </section>
-          <div className='select'>
+          <div className='select' >
             <label>I am a </label>
             <select 
               name='user_sex'
