@@ -82,12 +82,14 @@ const updateUserProfile = createAsyncThunk('/userProfileUpdate', async (payload,
 
 const uploadPhoto = createAsyncThunk('/uploadPhoto', async (payload, { rejectWithValue, getState }) => {
   const token = getState().user.user.token;
-  const { image, options, name, userId } = payload;
+  const { image, options, name } = payload;
+  const userId = payload.userId || getState().user.user.id;
   try {
     const res = await CloudinaryAPI.uploadImage(image, options, token);
     const query = await API.addPhoto({ userId, publicId: res.public_id, imageUrl: res.secure_url }, token);
     return { name, ...query};
   } catch(error) {
+    console.log(error);
     return rejectWithValue("We can't upload your photo right now");
   }
 });

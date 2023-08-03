@@ -13,9 +13,10 @@ const ProtectedRoute = ({ children }) => {
   const userId = useSelector(state => state.user.user.id);
   const lsUser = get('user');
 
+  console.log(userId);
+
   useEffect(() => {
     if (!userId) {
-      console.log('rerouting...');
       navigate('/', { replace: true });
     }  
   }, [userId])

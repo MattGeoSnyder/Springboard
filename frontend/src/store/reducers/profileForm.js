@@ -48,6 +48,7 @@ export const profileForm = createSlice({
     });
     builder.addCase(updateUserProfile.rejected, (state, action) => {
       state.status = 'rejected';
+      console.log(action.payload);
       state.message = action.payload;
     });
     builder.addCase(uploadPhoto. rejected, (state, action) => {

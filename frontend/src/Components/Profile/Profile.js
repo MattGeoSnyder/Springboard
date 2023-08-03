@@ -43,7 +43,6 @@ const Profile = ({ id }) => {
   // set editPermission to true
   useEffect(() => {
     if (userId === id) {
-      console.log('setting edit true');
       dispatch(setEditPermissions(true));
     } else {
       dispatch(setEditPermissions(false));

@@ -17,10 +17,6 @@ const PhotoInput = ({ name, photoLabel }) => {
   const [ hasPhoto, setHasPhoto ] = useState(false);
   const input = useRef(null);
 
-  const originalURL = useMemo(() => {
-    return photo;
-  }, []);
-
   //I decided to keep another piece of state for clarity
   useEffect(() => {
     if (photo) {

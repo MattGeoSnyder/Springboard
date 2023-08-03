@@ -31,6 +31,8 @@ class CloudinaryAPI {
       formData.append(key,val);
     }); 
 
+    console.log(CLOUD_NAME);
+
     try {
       const res = await axios.post(`${CLOUDINARY_BASE_URL}/${CLOUD_NAME}/image/upload`, formData);
       return res.data;

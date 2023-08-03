@@ -40,13 +40,13 @@ const SignupForm = ({ page, setPage }) => {
   }, [status])
 
   const initialData = {
-    username: '',
-    pw: '',
-    pw_ver: '',
-    first_name: '',
-    birthday: '',
-    user_sex: '',
-    sex_preference: ''
+    username: 'MattGeoSnyder',
+    pw: 'Fakepw1234',
+    pw_ver: 'Fakepw1234',
+    first_name: 'Matt',
+    birthday: '08-11-1996',
+    user_sex: 'male',
+    sex_preference: 'female'
   }
 
   const [formData, setFormData] = useState(initialData);
