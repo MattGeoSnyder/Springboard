@@ -6,12 +6,9 @@ import { useEffect } from "react";
 
 
 const ProtectedRoute = ({ children }) => {
-  const [ get, set, remove ] = useLocalStorage();
-  const dispatch = useDispatch();
   const navigate = useNavigate()
 
   const userId = useSelector(state => state.user.user.id);
-  const lsUser = get('user');
 
   console.log(userId);
 

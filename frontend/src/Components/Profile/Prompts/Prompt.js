@@ -13,13 +13,15 @@ import './Prompt.css';
 const Prompt = ({ prompts, name, order="" }) => {
   const defaultPrompt = useMemo(() => ({id: 0, prompt: `Choose your ${order} prompt`}), [order]);
 
+  console.log(prompts);
+
   const dispatch = useDispatch();
   
   const [ optionsActive, setOptionsActive ] = useState(false);
   const [ textareaActive, setTextareaActive ] = useState(false);
 
   const [ prompt, setPrompt ] = useState(defaultPrompt);
-  const [ promptChosen, setPromptChosen ] = useState(prompt.id !== 0);
+  const [ promptChosen, setPromptChosen ] = useState(prompt?.id !== 0);
 
   //Prompt id that the user selects
   const promptId = useSelector(state => state.profileForm.formData?.prompts[name]?.id);
@@ -35,20 +37,16 @@ const Prompt = ({ prompts, name, order="" }) => {
   //Should be able to sort through prompts prop and match ids
   //TODO: Improve this
   useEffect(() => {
-    if(promptId) {
-      const getPromptById = async () => {
-        const prompt = await API.getPromptById(promptId);
-        setPrompt(prompt);
-      }
-      
-      getPromptById();
+    if(promptId && prompts) {
+      const prompt = prompts.filter(prompt => prompt.id === promptId)[0];
+      setPrompt(prompt);
     } 
-  }, [promptId, setPrompt]);
+  }, [promptId, prompts, setPrompt]);
   
 
   //See if default prompt is chosen
   useEffect(() => {
-    setPromptChosen(prompt.id !== 0);
+    setPromptChosen(prompt?.id !== 0);
   }, [prompt, setPromptChosen]);
 
   //See if textarea should be active on prompt
@@ -85,7 +83,7 @@ const Prompt = ({ prompts, name, order="" }) => {
   //Changes prompt value
   const handleChange = (e) => {
     const promptRes = e.target.value;
-    dispatch(changePrompt({ name, id: prompt.id, promptRes }));
+    dispatch(changePrompt({ name, id: prompt?.id, promptRes }));
   }
 
   //Render based on editing priveliges
@@ -106,7 +104,7 @@ const Prompt = ({ prompts, name, order="" }) => {
   return (
     <div id={name} className={`prompt ${ (optionsActive || textareaActive) && editable ? 'active' : ''}`} onClick={selectPrompt}>
       {editable && <i className="fa-solid fa-plus"></i>}
-      <div><p>{prompt.prompt}</p></div>
+      <div><p>{prompt?.prompt}</p></div>
       {renderText()}
         {editable && <div className={`options ${optionsActive ? 'active' : ""}`}>
         {prompts.map((prompt) => (
