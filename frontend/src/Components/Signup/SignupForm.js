@@ -12,6 +12,7 @@ const SignupForm = ({ page, setPage }) => {
 
   const form = useRef(null);
   const [ tops, setTops ] = useState([0, 100, 200]);
+  const tabCount = useState(0);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

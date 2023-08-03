@@ -16,8 +16,8 @@ const Prompt = ({ prompts, name, order="" }) => {
   const dispatch = useDispatch();
   
   const [ optionsActive, setOptionsActive ] = useState(false);
+  const [ textareaActive, setTextareaActive ] = useState(false);
 
-  //prom
   const [ prompt, setPrompt ] = useState(defaultPrompt);
   const [ promptChosen, setPromptChosen ] = useState(prompt.id !== 0);
 
@@ -51,9 +51,10 @@ const Prompt = ({ prompts, name, order="" }) => {
     setPromptChosen(prompt.id !== 0);
   }, [prompt, setPromptChosen]);
 
-
-  //Was trying to fix a rerender issue. This was fixed not by this but by wrapping Profiles children in memo
-  const textareaActive = useMemo(() => promptChosen || promptRes, [promptChosen, promptRes]);
+  //See if textarea should be active on prompt
+  useEffect(() => {
+    setTextareaActive((promptChosen || promptRes))
+  }, [promptChosen, promptRes, setTextareaActive])
 
   //Event listener for the document. 
   //This will unselect options when we click off of the prompt.
@@ -103,7 +104,7 @@ const Prompt = ({ prompts, name, order="" }) => {
   }
 
   return (
-    <div id={name} className={`prompt ${ (optionsActive || textareaActive) ? 'active' : ''}`} onClick={selectPrompt}>
+    <div id={name} className={`prompt ${ (optionsActive || textareaActive) && editable ? 'active' : ''}`} onClick={selectPrompt}>
       {editable && <i className="fa-solid fa-plus"></i>}
       <div><p>{prompt.prompt}</p></div>
       {renderText()}
