@@ -12,7 +12,6 @@ const SignupForm = ({ page, setPage }) => {
 
   const form = useRef(null);
   const [ tops, setTops ] = useState([0, 100, 200]);
-  const tabCount = useState(0);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,9 +20,10 @@ const SignupForm = ({ page, setPage }) => {
   const userId = useSelector(state => state.user.user.id);
   const status = useSelector(state => state.user.status);
 
-  useEffect(() => {
-    setTops([0, 100, 200].map((val) => page * -100 + val));
-  }, [page]);
+  // useEffect breaks the scroller for some reason.
+  // useEffect(() => {
+  //   setTops([0, 100, 200].map((val) => page * -100 + val));
+  // }, [page]);
 
   console.log(page);
   console.log(tops);
@@ -73,12 +73,6 @@ const SignupForm = ({ page, setPage }) => {
     }
   }
 
-  // const preventTabAndEnter = (e) => {
-  //   if (e.key === "Enter" || e.key === "Tab") {
-  //     e.preventDefault();
-  //   }
-  // }
-
   const renderButton = () => {
       switch (status) {
         case 'pending':
@@ -91,7 +85,7 @@ const SignupForm = ({ page, setPage }) => {
 
   return (
     <div id='signup-form'>
-      <form onSubmit={handleSubmit} ref={form} >
+      <form onSubmit={handleSubmit} ref={form} onScroll={(e) => { e.preventDefault() }}>
         <div className='page' style={{top: `${tops[0]}%`}} >
           <section className='title-box'>
             <h1 className='title'>Sign up</h1>
@@ -111,6 +105,8 @@ const SignupForm = ({ page, setPage }) => {
             ]}
             setFormData={setFormData}
             setValid={setValid}
+            //Pass this function to set page once tab focuses here.
+            setPage={() => { setPage(0) }}
           />
           <Input 
             key={1}
@@ -164,6 +160,8 @@ const SignupForm = ({ page, setPage }) => {
             validationMsg='First Name Invalid'
             setFormData={setFormData}
             setValid={setValid}
+            //Pass this function to set page once tab focuses here.
+            setPage={() => { setPage(1) }}
           />
           <Input
             key={4}
@@ -192,6 +190,8 @@ const SignupForm = ({ page, setPage }) => {
               name='user_sex'
               value={formData.value}
               onChange={handleChange}
+              //Pass this function to set page once tab focuses here.
+              onFocus={() => setPage(2)}
             >
               <option value='female'>Woman</option>
               <option value='male'>Man</option>
@@ -210,7 +210,7 @@ const SignupForm = ({ page, setPage }) => {
         </div>
       </form>
       <div id='login-prompt'>Already have an account? Login <Link to={'/login'}>here</Link></div>
-      <ScrollClicker page={page} setPage={setPage}/>
+      <ScrollClicker page={page} setPage={setPage} setTops={setTops}/>
       {errMsg && <p id='err-msg'>{errMsg}</p>}
     </div>
   )

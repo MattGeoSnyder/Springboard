@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import './ScrollClicker.css';
 
-const ScrollClicker = ({ page, setPage }) => {
+const ScrollClicker = ({ page, setPage, setTops }) => {
 
   const handlePrevClick = () => {
     if (page > 0) {
       setPage(state => state - 1);
+      setTops(tops => tops.map(val => val + 100));
     }
   }
 
   const handleNextClick = () => {
     if (page < 2) {
       setPage(state => state + 1);
+      setTops(tops => tops.map(val => val - 100));
     }
   }
 

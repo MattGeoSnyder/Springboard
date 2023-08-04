@@ -18,6 +18,7 @@ const Input = ({ name, type='text',
                 value, setFormData,
                 iconClass = '',
                 setValid = () => {},
+                setPage = () => {}
               }) => {
   
   const [ seen, setSeen ] = useState(false);
@@ -26,7 +27,7 @@ const Input = ({ name, type='text',
 
   useEffect(() => {
     setValid(val => ({ ...val, [name]: valid }))
-  }, [valid, name, setValid])
+  }, [valid, name, setValid]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,7 +50,7 @@ const Input = ({ name, type='text',
         value={value}
         onChange={handleChange}
         onBlur={isSeen}
-        onFocus={(e) => { e.currentTarget.focus({ preventScroll: true })}}
+        onFocus={(e) => { setPage() }}
       />
       <div className='validation'>
         {(!valid && seen) && <p id='title' >{validationMsg}</p>}
