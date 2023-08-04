@@ -9,6 +9,7 @@
 
 #disclaimer-page #main-body {
   height: 95%;
+  width: fit-content;
   background-color: white;
   margin: 0 25px;
 
