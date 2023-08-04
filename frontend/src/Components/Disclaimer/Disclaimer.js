@@ -25,8 +25,6 @@ const Disclaimer = () => {
         <div id="signature">
           <p>Hater's Creator</p>
           <p>-Matt</p>
-        </div>
-        <div id='link-bar'>
           <Link to={`/users/${userId}/profile`}>I understand, let's go <i className="fa-solid fa-arrow-right"></i></Link>
         </div>
       </div>

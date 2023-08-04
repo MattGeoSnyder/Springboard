@@ -10,6 +10,7 @@ const UserContent = memo(() => {
   const [prompts, setPrompts] = useState([]);
   const { height, width } = useWindowDimensions();
 
+  console.log('Prompts in UserContent', prompts);
 
   useEffect(() => {
     const loadPrompts = async () => {
