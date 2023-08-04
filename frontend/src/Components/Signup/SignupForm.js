@@ -138,6 +138,7 @@ const SignupForm = ({ page, setPage }) => {
             ]}
             setFormData={setFormData}
             setValid={setValid}
+            setPage={() => { setPage(0) }}
           />
         </div>
         <div className='page' style={{top: `${tops[1]}%`}} >
@@ -177,6 +178,7 @@ const SignupForm = ({ page, setPage }) => {
             ]}
             setFormData={setFormData}
             setValid={setValid}
+            setPage={() => { setPage(1) }}
           />
         </div>
         <div className='page' style={{top: `${tops[2]}%`}} >

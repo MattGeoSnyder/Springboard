@@ -15,7 +15,7 @@ class CloudinaryAPI {
       const res = await API.authPost(`/images/auth`, paramsToSign, token);
       return res;
     } catch (error) {
-      throw error;
+      throw error.response.data.message;
     }
   }
 
