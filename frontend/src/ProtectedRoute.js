@@ -8,9 +8,7 @@ import { useEffect } from "react";
 const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate()
 
-  const userId = useSelector(state => state.user.user.id);
-
-  console.log(userId);
+  const userId = useSelector(state => state.user?.user?.id);
 
   useEffect(() => {
     if (!userId) {
