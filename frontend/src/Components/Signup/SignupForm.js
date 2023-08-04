@@ -24,9 +24,6 @@ const SignupForm = ({ page, setPage }) => {
     setTops([0, 100, 200].map((val) => page * -100 + val));
   }, [page]);
 
-  console.log(page);
-  console.log(tops);
-
   useEffect(() => {
     if (status === 'rejected') {
       dispatch(setStatus('idle'));
@@ -37,7 +34,7 @@ const SignupForm = ({ page, setPage }) => {
         dispatch(setStatus('idle'));
         navigate(`/disclaimer`);
     }
-  }, [status])
+  }, [status]);
 
   const initialData = {
     username: 'MattGeoSnyder',
@@ -91,7 +88,7 @@ const SignupForm = ({ page, setPage }) => {
   return (
     <div id='signup-form'>
       <form onSubmit={handleSubmit} ref={form} >
-        <div className='page' style={{top: `${tops[0]}%`}} >
+        <div className='page' style={{top: `${tops[0]}%`}} onFocus={() => {setPage(0)}}>
           <section className='title-box'>
             <h1 className='title'>Sign up</h1>
             <p className='subtitle'>Get started with Haters now</p>
@@ -143,7 +140,7 @@ const SignupForm = ({ page, setPage }) => {
             setValid={setValid}
           />
         </div>
-        <div className='page' style={{top: `${tops[1]}%`}} >
+        <div className='page' style={{top: `${tops[1]}%`}} onFocus={() => {setPage(1)}}>
           <section>
             <h1 className='title'>Tell us about yourself</h1>
             <p className='subtitle'>Your name and age are public</p>
@@ -180,7 +177,7 @@ const SignupForm = ({ page, setPage }) => {
             setValid={setValid}
           />
         </div>
-        <div className='page' style={{top: `${tops[2]}%`}} >
+        <div className='page' style={{top: `${tops[2]}%`}} onFocus={() => {setPage(2)}}>
           <section>
             <h1 className='title'>What are you looking for?</h1>
             <p className='subtitle'>Help us find your match</p>

@@ -37,6 +37,10 @@ const Input = ({ name, type='text',
     setSeen(true);
   }
 
+  const handleFocus = (e) => {
+    
+  }
+
   return (
     <div className="input">
       <i className={iconClass}></i>
@@ -49,7 +53,7 @@ const Input = ({ name, type='text',
         value={value}
         onChange={handleChange}
         onBlur={isSeen}
-        onFocus={(e) => { e.currentTarget.focus({ preventScroll: true })}}
+        onFocus={handleFocus}
       />
       <div className='validation'>
         {(!valid && seen) && <p id='title' >{validationMsg}</p>}
