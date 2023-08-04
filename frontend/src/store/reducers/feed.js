@@ -3,8 +3,12 @@ import API from '../../api';
 
 const loadFeed = createAsyncThunk('/feed/loadFeed', async (payload, { getState }) => {
   const token = getState().user.user.token;
-  const userIds = await API.getUserIds(payload, token);
-  return userIds;
+  try {
+    const userIds = await API.getUserIds(payload, token);
+    return userIds;      
+  } catch (error) {
+    return error;
+  }
 })
 
 export const feed = createSlice({

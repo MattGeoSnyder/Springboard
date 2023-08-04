@@ -20,7 +20,9 @@ const UserHome = () => {
 
     //load users matches and notifications upon going to the home page.
     useEffect(() => {
-        dispatch(loadUserAssets(userId));
+        if (userId) {
+            dispatch(loadUserAssets(userId));
+        }
     },[userId, dispatch]);
 
     useEffect(() => {
