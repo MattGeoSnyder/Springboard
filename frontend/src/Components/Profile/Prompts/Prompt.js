@@ -104,7 +104,7 @@ const Prompt = ({ prompts, name, order="" }) => {
   return (
     <div id={name} className={`prompt ${ (optionsActive || textareaActive) && editable ? 'active' : ''}`} onClick={selectPrompt}>
       {editable && <i className="fa-solid fa-plus"></i>}
-      <div><p>{prompt?.prompt}</p></div>
+      <div><p>{prompt ? prompt.prompt : defaultPrompt.prompt}</p></div>
       {renderText()}
         {editable && <div className={`options ${optionsActive ? 'active' : ""}`}>
         {prompts.map((prompt) => (
