@@ -36,11 +36,11 @@ function App() {
       dispatch(loadUserAssets(lsUser.id));
       navigate(`/users/${lsUser.id}`);
     }
-  }, []);
+  }, [dispatch, navigate, get]);
 
   useEffect(() => {
     set(user);
-  }, [user]);
+  }, [user, set]);
 
   useEffect(() => {
 
@@ -69,7 +69,7 @@ function App() {
     }
 
     // return () => { ws.close() }
-  }, [userId]);
+  }, [userId, dispatch]);
 
   return (
     <Routes>

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { updateUserProfile, getCurrentUserById, uploadPhoto } from '../thunks';
-import { USER_PIC_BASE_URL } from '../../cloudinaryAPI'
+import { getCurrentUserById } from '../thunks';
 
 export const currentUser = createSlice({
   name: 'currentUser',

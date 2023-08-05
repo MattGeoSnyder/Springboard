@@ -6,7 +6,7 @@ const UserIcon = ({ mode, user }) => {
 
   const render = () => {
     if (image) {
-      return (<img src={image}/>)
+      return (<img src={image} alt='' />)
     } else {
       return (<span>{first_name ? first_name[0] : ''}</span>);
     }

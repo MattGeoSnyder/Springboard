@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { changePrompt } from '../../../store/reducers/profileForm';
 import { useState, useEffect, useMemo } from 'react';
-import API from '../../../api';
 import PromptOption from './PromptOption';
 import { v4 as uuid } from 'uuid';
 import './Prompt.css';

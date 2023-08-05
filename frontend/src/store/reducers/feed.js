@@ -20,6 +20,9 @@ export const feed = createSlice({
   reducers: {
     getNextUser: (state, action) =>{
       state.userIds.shift();
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload;
     }
   },
   extraReducers(builder) {
@@ -30,9 +33,12 @@ export const feed = createSlice({
       state.userIds = action.payload;
       state.status = 'success';
     });
+    builder.addCase(loadFeed.rejected, (state, action) => {
+      state.status = 'rejected';
+    });
   } 
 });
 
 export default feed.reducer;
 export { loadFeed }
-export const { getNextUser } = feed.actions;
+export const { getNextUser, setStatus } = feed.actions;

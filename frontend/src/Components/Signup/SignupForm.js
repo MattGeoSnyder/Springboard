@@ -17,7 +17,6 @@ const SignupForm = ({ page, setPage }) => {
   const navigate = useNavigate();
 
   const errMsg = useSelector(state => state.user.errMsg);
-  const userId = useSelector(state => state.user.user.id);
   const status = useSelector(state => state.user.status);
 
   // useEffect breaks the scroller for some reason.
@@ -38,7 +37,7 @@ const SignupForm = ({ page, setPage }) => {
         dispatch(setStatus('idle'));
         navigate(`/disclaimer`);
     }
-  }, [status])
+  }, [status, dispatch, navigate])
 
   const initialData = {
     username: 'MattGeoSnyder',
