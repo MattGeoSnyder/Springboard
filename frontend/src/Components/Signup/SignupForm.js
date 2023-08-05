@@ -40,13 +40,13 @@ const SignupForm = ({ page, setPage }) => {
   }, [status, dispatch, navigate])
 
   const initialData = {
-    username: 'MattGeoSnyder',
-    pw: 'Fakepw1234',
-    pw_ver: 'Fakepw1234',
-    first_name: 'Matt',
-    birthday: '08-11-1996',
-    user_sex: 'male',
-    sex_preference: 'female'
+    username: '',
+    pw: '',
+    pw_ver: '',
+    first_name: '',
+    birthday: '',
+    user_sex: 'female',
+    sex_preference: 'male'
   }
 
   const [formData, setFormData] = useState(initialData);
@@ -110,10 +110,12 @@ const SignupForm = ({ page, setPage }) => {
           <Input 
             key={1}
             labelText='Password'
+            placeholder='Password'
             name='pw'
             type='password'
             value={formData.pw}
             iconClass='fa-solid fa-key'
+            validationMsg='Password Invalid'
             conditions={[
               [/[a-z]/.test(formData.pw), 'Password must contain at least one letter'],
               [/\d/.test(formData.pw), 'Password must contain at least one number'],
@@ -127,6 +129,7 @@ const SignupForm = ({ page, setPage }) => {
           <Input 
             key={2}
             labelText='Confirm your password'
+            placeholder='Confirm your password'
             name='pw_ver'
             type='password'
             value={formData.pw_ver}
@@ -189,7 +192,7 @@ const SignupForm = ({ page, setPage }) => {
             <label>I am a </label>
             <select 
               name='user_sex'
-              value={formData.value}
+              value={formData.user_sex}
               onChange={handleChange}
               //Pass this function to set page once tab focuses here.
               onFocus={() => setPage(2)}

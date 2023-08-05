@@ -68,6 +68,7 @@ const Login = () => {
             name='pw'
             type='password'
             labelText='Password'
+            placeholder='Password'
             value={formData.pw}
             setFormData={setFormData}
             iconClass='fa-solid fa-key'
