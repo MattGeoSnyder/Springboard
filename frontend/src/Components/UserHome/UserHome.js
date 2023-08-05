@@ -15,6 +15,8 @@ const UserHome = () => {
 
     const userId = useSelector(state => state.user.user.id);
 
+    const status = useSelector(state => state.currentUser.status);
+
     const likes = useSelector(state => state.currentUser.likes);
     const userIds = useSelector(state => state.feed.userIds);
 
@@ -26,11 +28,11 @@ const UserHome = () => {
     },[userId, dispatch]);
 
     useEffect(() => {
-        if (userIds?.length === 0) {
+        if (userIds?.length === 0 && userId) {
             dispatch(loadFeed({ userId, offset }));
             setOffset(state => state + 10);
         }
-    }, [userIds, dispatch]);
+    }, [userIds, userId, dispatch]);
 
     useEffect(() => {
         if (likes !== null) {
@@ -42,9 +44,9 @@ const UserHome = () => {
     }, [likes, dispatch]);
 
     const render = () => {
-        if (userIds) {
+        if (userIds[0]) {
             return <Profile id={userIds[0]}/>
-        } else {
+        } else if (status === 'pending') {
             return <ProfileLoading />
         }
     }
