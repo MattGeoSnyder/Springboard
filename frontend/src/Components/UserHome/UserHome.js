@@ -28,7 +28,7 @@ const UserHome = () => {
 
     useEffect(() => {
         if (status === 'success') {
-            setStatus('idle');
+            dispatch(setStatus('idle'));
         }
     }, [status])
 
