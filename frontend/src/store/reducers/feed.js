@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import API from '../../api';
 
-const loadFeed = createAsyncThunk('/feed/loadFeed', async (payload, { getState }) => {
+const loadFeed = createAsyncThunk('/feed/loadFeed', async (payload, { getState, rejectWithValue }) => {
   const token = getState().user.user.token;
   try {
     const userIds = await API.getUserIds(payload, token);
     return userIds;      
   } catch (error) {
-    return error;
+    return rejectWithValue(error);
   }
 })
 
