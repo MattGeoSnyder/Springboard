@@ -12,8 +12,6 @@ import './Prompt.css';
 const Prompt = ({ prompts, name, order="" }) => {
   const defaultPrompt = useMemo(() => ({id: 0, prompt: `Choose your ${order} prompt`}), [order]);
 
-  console.log(prompts);
-
   const dispatch = useDispatch();
   
   const [ optionsActive, setOptionsActive ] = useState(false);
