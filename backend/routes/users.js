@@ -64,8 +64,6 @@ router.delete('/:userId/photo', [ ensureLoggedIn, isUser ], async function(req, 
     }
 });
 
-
-
 router.get('/:userId/matches', [ ensureLoggedIn, isUser], async function(req, res, next) {
     try {
         const { userId } = req.params;

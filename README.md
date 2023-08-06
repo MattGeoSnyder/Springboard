@@ -1,207 +1,51 @@
 # Visit Haters at: https://haters.onrender.com
 
-## Database: [schema](https://drawsql.app/teams/haters/diagrams/haters)
+## ![image](./mdIcons/database.png) Database: [schema](https://drawsql.app/teams/haters/diagrams/haters)
 
 ## Haters API
 
-**Technologies used:** _Node.js, Express.js, PostgreSQL, JWT, bcrypt, Cloudinary API (to authenticate frontend requests to Cloudinary), OpenAI API (chat bot messaaging)._
+![image](./mdIcons/rocket.png) **Technologies used:** _Node.js, Express.js, PostgreSQL, JWT, bcrypt, Cloudinary API (to authenticate frontend requests to Cloudinary), OpenAI API (chat bot messaaging)._
 
 ### API Base URL: https://hatersapi.onrender.com
 
-### Authentication Routes: /auth
-
-#### POST /register
-
-    userInfo = { username, pw, first_name, birthday, user_sex, sex_preference } -->
-
-    returns user = { userId, is_admin, token }
-
-    Saves user info to db, creates a token for API, matches with chat bot, sends introduction from chatBot to user.
-
-    Will throw 401 error if username is taken.
-
-#### POST /login
-
-    userInfo = { username, pw } -->
-
-    returns user = { id, token }
-
-    Verifies username an pw using bcrypt.
-
-    Throws 401 error if username not found or if password does not match.
-
-### Dislike Routes: /dislikes
-
-#### POST /:dislikerId/:dislikeeId
-
-    returns { disliker_id, dislikee_id }
-
-    Adds dislike to dislike table
-
-### Hates Routes: /hates
-
-#### GET /
-
-    returns hates = { hateId: { id, category, hate }}
-
-    Gets all hates.
-
-#### GET /:id
-
-    returns hate = { id, category, hate}
-
-    Gets hate by id
-
-### Images Routes: /images
-
-#### GET /:username/:name
-
-    returns photo = { public_id, user_id, image_url }
-
-    public_id is uniquely identified by username/name where name is either photo1, photo2, or photo3.
-
-#### POST /auth
-
-    returns { signature }
-
-    Authentication Route for making Cloudinary API requests on the front end. Returns a signature from cloudinary API. This is used by subsequent Cloudinary API requests on the front end.
-
-### Likes Routes: /likes
-
-#### GET /:likerId/:likeeId
-
-    returns like = { liker_id, likee_id }
-
-    Gets like from user ids
-
-#### POST /:likerId/:likeeId
-
-    returns like = { liker_id, likee_id }
-    or
-    match = { user1_id, user2_id }
-
-    Checks first to see if { likee_id, liker_id } is in likes. If the like is reciprocated returns match. Matches are stored user1_id < user2_id for uniqueness.
-
-### Messages Routes: /messages
-
-#### PATCH /match/:matchId
-
-    requires: { userId }
-
-    returns messages = { matchId: { id, from_user, to_user, sent_at, seen_at, content}, ... }
-
-    Updates seen_at to current time for messages with to_user userId and in match matchId. Returns messages with updated time
-
-#### PATCH /:messageId
-
-    returns message = { id, from_user, to_user, sent_at, seen_at, content }
-
-    Updates seen_at for message with id messageId to now.
-
-### Prompts Routes: /prompts
-
-#### GET /
-
-    returns prompts = [ { id, prompt }, ... ]
-
-    Gets all prompts.
-
-#### GET /:promptId
-
-    returns prompt = { id, prompt }
-
-    Gets prompt with id promptId
-
-### User Routes: /users
-
-#### GET /:userId
-
-    returns user = {
-        id,
-        username,
-        first_name,
-        birthday,
-        user_sex,
-        sex_preference,
-        hates = []
-        photos = { photo1: { public_id, user_id, image_url}, ...}
-    }
-
-    returns user with id of userId
-
-#### GET /:userId/users
-
-    returns userIds = [ user1.id, ...]
-
-    Returns array of userIds that are not included in likes, dislikes, matches, or not of either parties sex_preference.
-    These are the potential matches of user with id userId
-
-#### POST /:userId/photos
-
-    requires req.body = { publicId, imageUrl }
-
-    returns photo = { public_id, user_id, image_url }
-
-    Updates photo with public_id of publicId. If the photo does not exist it will be added.
-
-#### DELETE /:userId/photo
-
-    requires req.body = { public_id }
-
-    Returns { message }
-
-    Deletes photo with public_id public_id
-
-#### GET /:userId/matches
-
-    returns matches = { matchId: user = {
-        id,
-        username,
-        first_name,
-        birthday,
-        hates,
-        photos,
-        messages = { notifications,
-                    messages: [{ id,
-                                from_user,
-                                to_user,
-                                sent_at,
-                                seen_at,
-                                content}, ...]
-                    }
-        }
-    }
-
-    returns matches for user with id of userId
-
-#### POST /:userId/bio
-
-    returns { bio }
-
-    posts bio for user with id of userId
-
-#### POST /:userId/hates
-
-    returns hates = [hate = { id, category, hate}, ...]
-
-    posts hates for user with id userId
-
-#### POST /:userId/prompts
-
-    returns prompts = { prompt1: { name, id, promptRes }, ...}
-
-    Posts prompts for user with id userId. Returns users prompts.
-
-#### GET /:userId/notifications
-
-    returns notification = { matchId: { notifications }}
-
-    returns notifications for user with id of userId. Notifications are the count of messages with seen_at = null
-    for message with to_user of userId
+### Routes
+
+| Request Type  | Route                    | Description                                     | Authorization         | returns                                                                                                                                              |
+| ------------- | ------------------------ | ----------------------------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **/auth**     |
+| POST          | /register                | Adds new user to database                       | None                  | { userId, token }                                                                                                                                    |
+| POST          | /login                   | Verifies username & password                    | None                  | { userId, token }                                                                                                                                    |
+| **/dislikes** |
+| POST          | /:dislikerId/:dislikeeId | Adds dislke to table                            | userId = dislikerId   |                                                                                                                                                      |
+| **/hates**    |
+| GET           | /                        | Gets hates from database                        | None                  | hates = [{ hate }, ...] where hate is entire row from hates table                                                                                    |
+| GET           | /:id                     | Gets hate by id                                 | None                  | hate                                                                                                                                                 |
+| /images       |
+| GET           | /:username/:name         | Get image by id                                 | Logged in user        | row from photos table                                                                                                                                |
+| POST          | /auth                    | Gets signautre to verify cloudinary API request | Logged in user        | { signature }                                                                                                                                        |
+| **/likes**    |
+| GET           | /:likerId/:likeeId       | Gets like from likes table                      | userId = likerId      | { liker_id, likee_id }                                                                                                                               |
+| POST          | /:likerId/:likeeId       | Adds like to likes table                        | userId = likerId      | either </br> { liker_id, likee_id } </br> or </br> { match_id }                                                                                      |
+| **/messages** |
+| PATCH         | /match/:matchId          | Updates messages to read before returning them. | User belongs to match | messages = [{ message }, ...]                                                                                                                        |
+| PATCH         | /:messageId              | Update message to read                          | Message sent to user  |                                                                                                                                                      |
+| **/prompts**  |
+| GET           | /                        | Get all prompts from database                   | None                  | prompts = [{ prompt }, ...]                                                                                                                          |
+| GET           | /:promptId               | Gets prompt with id promptId                    | None                  | row from prompts table                                                                                                                               |
+| **/users**    |
+| GET           | /:userId                 | Gets user from database                         | Logged in user        | user = { </br> id, </br> username, </br>first_name, </br>user_sex, </br>sex_preference, </br>hates = [ hate.id, ...], </br>photos = { photo1, ...} } |
+| GET           | /:userId/users           | Gets list of potential matches for user         | user.id = userId      | userIds = [ user1.id, ... ]                                                                                                                          |
+| POST          | /:userId/photos          | adds photo to photos table                      | user.id = userId      | row from photos table                                                                                                                                |
+| DELETE        | /:userId/photo           | deletes photo from photos table                 | user.id = userId      | message confirming deletion                                                                                                                          |
+| GET           | /:userId/matches         | Gets users matches                              | user.id = userId      | matches = { matchId: { user }, ... }                                                                                                                 |
+| POST          | /:userId/bio             | Posts user's bio                                | user.id = userId      | { bio }                                                                                                                                              |
+| POST          | /:userId/hates           | adds hate.id to user table                      | user.id = userId      | hates = [ { hate }, ... ]                                                                                                                            |
+| POST          | /:userId/prompt          | adds prompt.id and promt_res to users table     | user.id = userId      | prompts = { { prompt1 }, ... }                                                                                                                       |
+| GET           | /:userId/notifications   | gets user notifications from table              | user.id = userId      | notifications = number                                                                                                                               |
 
 ## Haters Frontend
 
-**Technology used:** _React.js, Redux.js, CSS._
+![image](./mdIcons/rocket.png) **Technologies used:** _React.js, Redux.js, CSS._
 
 ### Routes
 
@@ -259,3 +103,176 @@
 > - profileForm: State for form where user updates user profile.
 
 > - overlay: State for overlay
+
+#### Redux Thunks:
+
+```
+reigster(userData):
+    userData = {
+        username,
+        pw,
+        first_name,
+        birthday,
+        user_sex,
+        sex_preference
+    }
+
+returns
+    user = {
+        id,
+        token
+        username,
+        first_name,
+        birthday,
+        user_sex,
+        sex_preference,
+        hates,
+        prompts,
+        photos
+    }
+
+Writes to users table
+Modifies user state
+```
+
+```
+login(userData):
+    userData = {
+        username,
+        pw
+    }
+
+returns
+    user = {
+        id,
+        token
+        username,
+        first_name,
+        birthday,
+        user_sex,
+        sex_preference,
+        hates,
+        prompts,
+        photos
+    }
+
+Modifies user state
+```
+
+```
+getCurrentUserById(userId):
+
+returns
+    user = {
+        id,
+        username,
+        first_name,
+        birthday,
+        hates,
+        photos,
+        prompts
+    }
+
+Modifies currentUserState
+```
+
+```
+loadUserAssets(userId):
+
+returns
+{
+    matches = {
+        matchId: {
+            user
+        }
+    },
+    notifications = {
+        matchId: notifications (int)
+    }
+}
+
+Modifies matches and messages state.
+```
+
+```
+updateUserProfile({ formData, userId }):
+
+formData = {
+    hates: [int],
+    prompts: {
+        name,
+        promptId,
+        promptRes,
+    },
+    bio
+}
+
+returns
+    { hates, bio, prompts }
+
+Updates users table.
+
+Modifies profileForm state on pending and error. Modifies user state on success.
+```
+
+```
+uploadPhoto({ image, options, name, userId })
+
+image: ArrayBuffer
+options: {
+    folder: username
+    public_id: photo1, photo2, or photo3,
+    overwrite: true
+}
+name: photo1, photo2, or photo3
+
+returns
+    CloudinaryAPI response on success
+    We only need the public_id from this response
+
+    Message on API error.
+
+Writes to photos table.
+Modifies user state.
+```
+
+```
+deletePhoto( name, public_id ):
+
+returns
+    message on success and failure
+
+Deletes from photos table.
+Modifies user state.
+```
+
+```
+getConversation({ userId, matchId }):
+
+returns
+    { matchId: { messages: [] }, ... }
+
+Writes to messages table
+Modifies messages state
+```
+
+```
+addNewMessage({ userId, message }):
+
+message: {
+    from_user,
+    to_user,
+    content
+}
+
+Writes to messages table.
+Modifies messages state.
+```
+
+## ![image](./mdIcons/hourglass.png) Project Status
+
+The project is considered complete, but may still receive some small contributions:
+
+- Styling changes
+- Scroll to query matches
+- Ability for users to block other users
