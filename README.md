@@ -1,5 +1,23 @@
 # Visit Haters at: https://haters.onrender.com
 
+Haters is a dating app where you meet potential matches from common dislikes, gripes, and pet-peeves.
+
+## Features
+
+- Real time messaging and notifications delivered via websockets
+- Chat bot companion powered by Chat GPT 3.5
+- Dynamic frontend UI allowing users to swipe for likes/dislikes
+- Client side routing for faster user experiences
+
+## User Flow
+
+- First time users will be directed to the homepage where they will be encouraged to signup.
+- At signup they will input the required information to create an account.
+- After signup users are given a short disclaimer about using the site.
+- Users are then directed to their profile where they can add additional information to their profile
+- After completing their profile (optional), they can go to their user home to start swiping
+  or chat with the chat bot that has sent them a greeting.
+
 ## ![image](./mdIcons/database.png) Database: [schema](https://drawsql.app/teams/haters/diagrams/haters)
 
 ## Haters API
@@ -45,7 +63,7 @@
 
 ## Haters Frontend
 
-![image](./mdIcons/rocket.png) **Technologies used:** _React.js, Redux.js, CSS._
+![image](./mdIcons/rocket.png) **Technologies used:** _React.js, Redux.js, CSS, React Router_
 
 ### Routes
 
@@ -271,8 +289,11 @@ Modifies messages state.
 
 ## ![image](./mdIcons/hourglass.png) Project Status
 
-The project is considered complete, but may still receive some small contributions:
+The project is considered complete, but may still receive some small contributions (in no particular order):
 
 - Styling changes
+- Tests for API routes
+- Additional edits to profile information: name, sex, sex preference
+- Minimum profile requirements to appear in other users queries
 - Scroll to query matches
 - Ability for users to block other users
