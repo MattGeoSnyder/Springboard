@@ -30,13 +30,11 @@ const Prompt = ({ prompts, name, order="" }) => {
   //Can edit if CurrentUser = User
   const editable = useSelector(state => state.currentUser.editable);
 
-  //We actually shouldn't need to make an API call for this.
-  //Should be able to sort through prompts prop and match ids
-  //TODO: Improve this
+
   useEffect(() => {
     if(promptId && prompts) {
-      const prompt = prompts.filter(prompt => prompt.id === promptId)[0];
-      setPrompt(prompt);
+      const currPrompt = prompts.filter(prompt => prompt.id === promptId)[0];
+      setPrompt(currPrompt);
     } 
   }, [promptId, prompts, setPrompt]);
   
