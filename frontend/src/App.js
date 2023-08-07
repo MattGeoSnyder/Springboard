@@ -28,15 +28,17 @@ function App() {
   const [ get, set, remove ] = useLocalStorage();
 
   
-  // useEffect(() => {
-  //   const lsUser = get() || {};
+  useEffect(() => {
+    if (userId) return;
+    
+    const lsUser = get() || {};
 
-  //   if (lsUser.id) {
-  //     dispatch(loadTokenUser(lsUser));
-  //     dispatch(loadUserAssets(lsUser.id));
-  //     navigate(`/users/${lsUser.id}`);
-  //   }
-  // }, [dispatch, navigate, get]);
+    if (lsUser.id) {
+      dispatch(loadTokenUser(lsUser));
+      dispatch(loadUserAssets(lsUser.id));
+      navigate(`/users/${lsUser.id}`);
+    }
+  }, [dispatch, navigate, get]);
 
   useEffect(() => {
     if (user.id) {

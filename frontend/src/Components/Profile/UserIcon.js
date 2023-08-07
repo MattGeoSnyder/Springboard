@@ -1,6 +1,7 @@
 import './UserIcon.css';
 
 const UserIcon = ({ mode, user }) => {
+  console.log(user);
   const image = user.photos.photo1?.image_url;
   const first_name = user.first_name;
 
