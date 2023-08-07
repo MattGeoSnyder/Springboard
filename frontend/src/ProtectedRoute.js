@@ -1,6 +1,4 @@
-import { useSelector, useDispatch } from "react-redux"
-import { setUser } from "./store/reducers/user";
-import { useLocalStorage } from "./hooks/useLocalStorage";
+import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -14,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
     if (!userId) {
       navigate('/', { replace: true });
     }  
-  }, [userId])
+  }, [userId, navigate])
 
   return(<>
     {children}

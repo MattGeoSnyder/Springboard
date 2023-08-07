@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { loadUserAssets } from '../../store/thunks';
 import { setLikes } from '../../store/reducers/currentUser'
-import { loadFeed, getNextUser } from '../../store/reducers/feed';
+import { loadFeed, getNextUser, setStatus } from '../../store/reducers/feed';
 import Profile from "../Profile/Profile";
 import ProfileLoading from './ProfileLoading';
 import './UserHome.css'
@@ -15,20 +14,29 @@ const UserHome = () => {
 
     const userId = useSelector(state => state.user.user.id);
 
+    const status = useSelector(state => state.feed.status);
+
     const likes = useSelector(state => state.currentUser.likes);
     const userIds = useSelector(state => state.feed.userIds);
 
     //load users matches and notifications upon going to the home page.
     useEffect(() => {
-        dispatch(loadUserAssets(userId));
+        if (userId) {
+            dispatch(loadUserAssets(userId));
+        }
     },[userId, dispatch]);
 
     useEffect(() => {
-        if (userIds?.length === 0) {
-            dispatch(loadFeed({ userId, offset }));
-            setOffset(state => state + 10);
+        if (status === 'success') {
+            dispatch(setStatus('idle'));
         }
-    }, [userIds, dispatch]);
+    }, [status])
+
+    useEffect(() => {
+        if (userIds?.length === 0 && userId) {
+            dispatch(loadFeed({ userId, offset }));
+        }
+    }, [userIds, userId, dispatch]);
 
     useEffect(() => {
         if (likes !== null) {
@@ -40,9 +48,9 @@ const UserHome = () => {
     }, [likes, dispatch]);
 
     const render = () => {
-        if (userIds) {
+        if (userIds[0]) {
             return <Profile id={userIds[0]}/>
-        } else {
+        } else if (status === 'pending') {
             return <ProfileLoading />
         }
     }

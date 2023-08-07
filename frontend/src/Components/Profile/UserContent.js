@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, memo } from 'react';
+import { useState, useEffect, memo } from 'react';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import PhotoInput from "./Photos/PhotoInput";
 import BioSection from "./BioSection/BioSection";
@@ -8,9 +8,7 @@ import { v4 as uuid } from 'uuid';
 
 const UserContent = memo(() => {
   const [prompts, setPrompts] = useState([]);
-  const { height, width } = useWindowDimensions();
-
-  console.log('Prompts in UserContent', prompts);
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     const loadPrompts = async () => {

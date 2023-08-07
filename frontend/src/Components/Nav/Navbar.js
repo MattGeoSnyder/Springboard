@@ -20,7 +20,7 @@ const Navbar = () => {
   
   return (
     <nav id="navbar">
-      { width > 650 && <div id='banner' onClick={homeClick}><p>Haters</p><i className="fa-solid fa-fire"></i></div> }
+      { width > 800 && <div id='banner' onClick={homeClick}><p>Haters</p><i className="fa-solid fa-fire"></i></div> }
       {userId && <IconTray />}
     </nav>
   )

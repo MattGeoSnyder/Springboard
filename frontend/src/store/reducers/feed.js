@@ -1,10 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import API from '../../api';
 
-const loadFeed = createAsyncThunk('/feed/loadFeed', async (payload, { getState }) => {
+const loadFeed = createAsyncThunk('/feed/loadFeed', async (payload, { getState, rejectWithValue }) => {
   const token = getState().user.user.token;
-  const userIds = await API.getUserIds(payload, token);
-  return userIds;
+  try {
+    const userIds = await API.getUserIds(payload, token);
+    return userIds;      
+  } catch (error) {
+    return rejectWithValue(error);
+  }
 })
 
 export const feed = createSlice({
@@ -16,6 +20,9 @@ export const feed = createSlice({
   reducers: {
     getNextUser: (state, action) =>{
       state.userIds.shift();
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload;
     }
   },
   extraReducers(builder) {
@@ -26,9 +33,12 @@ export const feed = createSlice({
       state.userIds = action.payload;
       state.status = 'success';
     });
+    builder.addCase(loadFeed.rejected, (state, action) => {
+      state.status = 'rejected';
+    });
   } 
 });
 
 export default feed.reducer;
 export { loadFeed }
-export const { getNextUser } = feed.actions;
+export const { getNextUser, setStatus } = feed.actions;

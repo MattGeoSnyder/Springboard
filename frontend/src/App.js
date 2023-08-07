@@ -28,19 +28,19 @@ function App() {
   const [ get, set, remove ] = useLocalStorage();
 
   
-  useEffect(() => {
-    const lsUser = get() || {};
+  // useEffect(() => {
+  //   const lsUser = get() || {};
 
-    if (lsUser.id) {
-      dispatch(loadTokenUser(lsUser));
-      dispatch(loadUserAssets(lsUser.id));
-      navigate(`/users/${lsUser.id}`);
-    }
-  }, []);
+  //   if (lsUser.id) {
+  //     dispatch(loadTokenUser(lsUser));
+  //     dispatch(loadUserAssets(lsUser.id));
+  //     navigate(`/users/${lsUser.id}`);
+  //   }
+  // }, [dispatch, navigate, get]);
 
   useEffect(() => {
     set(user);
-  }, [user]);
+  }, [user, set]);
 
   useEffect(() => {
 
@@ -69,17 +69,14 @@ function App() {
     }
 
     // return () => { ws.close() }
-  }, [userId]);
+  }, [userId, dispatch]);
 
   return (
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/signup' element={<Signup/>}/>
       <Route path='/login' element={ <Login /> }/>
-      <Route path='disclaimer' 
-            element={<ProtectedRoute> 
-                        <Disclaimer /> 
-                      </ProtectedRoute>}/>
+      <Route path='/disclaimer' element={ <Disclaimer /> }/>
       <Route path='/users/:userId' 
             element={<ProtectedRoute>
                         <UserHome/>
