@@ -81,13 +81,8 @@ const SignupForm = ({ page, setPage }) => {
 
   return (
     <div id='signup-form'>
-<<<<<<< HEAD
-      <form onSubmit={handleSubmit} ref={form} >
-        <div className='page' style={{top: `${tops[0]}%`}} onFocus={() => {setPage(0)}}>
-=======
       <form onSubmit={handleSubmit} ref={form} onScroll={(e) => { e.preventDefault() }}>
         <div className='page' style={{top: `${tops[0]}%`}} >
->>>>>>> 0189f11bc468ce0b10e0f5785d7c94d31850602b
           <section className='title-box'>
             <h1 className='title'>Sign up</h1>
             <p className='subtitle'>Get started with Haters now</p>

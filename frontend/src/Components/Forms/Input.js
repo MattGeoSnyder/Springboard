@@ -54,11 +54,7 @@ const Input = ({ name, type='text',
         value={value}
         onChange={handleChange}
         onBlur={isSeen}
-<<<<<<< HEAD
-        onFocus={handleFocus}
-=======
         onFocus={(e) => { setPage() }}
->>>>>>> 0189f11bc468ce0b10e0f5785d7c94d31850602b
       />
       <div className='validation'>
         {(!valid && seen) && <p id='title' >{validationMsg}</p>}
