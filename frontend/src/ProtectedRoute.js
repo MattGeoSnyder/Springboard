@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
     if (!userId) {
       navigate('/', { replace: true });
     }  
-  }, [userId, navigate])
+  }, [userId, navigate]);
 
   return(<>
     {children}

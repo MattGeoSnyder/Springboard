@@ -39,7 +39,9 @@ function App() {
   // }, [dispatch, navigate, get]);
 
   useEffect(() => {
-    set(user);
+    if (user.id) {
+      set(user);
+    }
   }, [user, set]);
 
   useEffect(() => {
