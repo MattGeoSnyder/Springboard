@@ -35,9 +35,8 @@ const UserHome = () => {
     useEffect(() => {
         if (userIds?.length === 0 && userId) {
             dispatch(loadFeed({ userId, offset }));
-            setOffset(state => state + 10);
         }
-    }, [userIds, userId, offset, dispatch]);
+    }, [userIds, userId, dispatch]);
 
     useEffect(() => {
         if (likes !== null) {
