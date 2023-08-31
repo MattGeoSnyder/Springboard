@@ -3,6 +3,7 @@ const getLocalStorge = () => {
 }
 
 const setLocalStorage = (user) => {
+  console.trace("Setting user", user);
   window.localStorage.setItem('user', JSON.stringify(user));
 }
 

@@ -38,6 +38,10 @@ const Input = ({ name, type='text',
     setSeen(true);
   }
 
+  const handleFocus = (e) => {
+    
+  }
+
   return (
     <div className="input">
       <i className={iconClass}></i>

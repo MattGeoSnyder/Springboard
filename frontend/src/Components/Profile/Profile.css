@@ -23,13 +23,16 @@
 
   height: 100%;
 
+  box-sizing: border-box;
+
   overflow-y: scroll;
 
   display: grid;
   grid-auto-rows: 33vw;
 
   scroll-snap-type: y mandatory;
-  padding-top: 25px;
+  padding: 25px 0;
+  scroll-margin-top: 25px;
 }
 
 #profile-page.dislikes {

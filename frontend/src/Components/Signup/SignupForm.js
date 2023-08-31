@@ -24,9 +24,6 @@ const SignupForm = ({ page, setPage }) => {
   //   setTops([0, 100, 200].map((val) => page * -100 + val));
   // }, [page]);
 
-  console.log(page);
-  console.log(tops);
-
   useEffect(() => {
     if (status === 'rejected') {
       dispatch(setStatus('idle'));
@@ -143,7 +140,7 @@ const SignupForm = ({ page, setPage }) => {
             setPage={() => { setPage(0) }}
           />
         </div>
-        <div className='page' style={{top: `${tops[1]}%`}} >
+        <div className='page' style={{top: `${tops[1]}%`}} onFocus={() => {setPage(1)}}>
           <section>
             <h1 className='title'>Tell us about yourself</h1>
             <p className='subtitle'>Your name and age are public</p>
@@ -183,7 +180,7 @@ const SignupForm = ({ page, setPage }) => {
             setPage={() => { setPage(1) }}
           />
         </div>
-        <div className='page' style={{top: `${tops[2]}%`}} >
+        <div className='page' style={{top: `${tops[2]}%`}} onFocus={() => {setPage(2)}}>
           <section>
             <h1 className='title'>What are you looking for?</h1>
             <p className='subtitle'>Help us find your match</p>
