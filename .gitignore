@@ -62,6 +62,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Springboard/master
 =======
@@ -486,3 +487,6 @@ __pycache__/
 >>>>>>> microblog/master
 =======
 >>>>>>> shoply/master
+=======
+node_modules/
+>>>>>>> Assessment6/master
