@@ -1,0 +1,28 @@
+{% extends 'base.html' %} 
+
+{% block stylesheet %} 
+<link rel="stylesheet" href="./static/css/root.css">
+{% endblock %} 
+
+{% block heading %} 
+<h1>Forex Converter</h1>
+{% endblock %} 
+
+{% block content %} 
+
+<div id="form-container">
+    <form action="/convert" method="get">
+        <div class="input-container">
+            <label for="from-currency">Converting from: </label><input id="from-currency" type="text" name="from-currency">
+        </div>
+        <div class="input-container">
+            <label for="to-currency">Converting to: </label><input id="to-currency" type="text" name="to-currency">
+        </div>
+        <div class="input-container">
+            <label for="amount">Amount: </label><input id="amount" type="number" name="amount" step="0.01">
+        </div>
+        <button>Convert</button>
+    </form>
+</div>
+
+{% endblock %} 
