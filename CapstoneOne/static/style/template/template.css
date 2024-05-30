@@ -1,0 +1,127 @@
+:root {
+    --text-gray: #9b9b9b;
+    --text-gray-two: #515151;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+i {
+    color: var(--my-red);
+}
+
+button a {
+    color: var(--my-white);
+}
+button:hover a {
+    color: var(--my-red);
+}
+
+.button-bar {
+    margin-top: 1rem;
+
+    display: flex;
+    justify-content: space-around;
+}
+
+#main-content {
+    margin-top: 1.5rem;
+    height: 90vh;
+}
+
+#content-wrapper {
+    width: 40%;
+    height: 100%;
+}
+
+#banner {
+    height: fit-content;
+
+    position: relative;
+
+    margin-bottom: 1rem;
+}
+
+#banner i {
+    padding-right: 10px;
+}
+
+
+#banner a {
+    font-size: 20px;
+}
+
+p {
+    line-height: 1.75rem;
+    margin: 0 15px;
+    color: var(--text-gray-two);
+    letter-spacing: .1rem;
+}
+
+#add-template {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+
+    color: var(--my-red);
+    display: flex;
+    align-items: center;
+}
+
+#templates {
+    overflow-y: scroll;
+    height: 60vh;
+}
+
+.template {
+    padding: 20px;
+    margin: 0px 5px 1rem 5px;
+
+    border: 1px solid var(--my-gray);
+    border-radius: 5px;
+    box-shadow: 1px 2px var(--my-gray);
+}
+
+.template-info {
+    min-height: 100px;
+}
+
+.template-link {
+    color: var(--my-red);
+}
+
+.template-link:hover {
+    color: var(--my-black);
+}
+
+.exercise-dropdown {
+    font-size: 24px;
+}
+
+.exercise-wrapper {
+    max-height: 0px;
+    overflow-y: hidden;
+
+    transition: max-height 0.3s ease;
+    margin: 0 5%;
+}
+
+.exercise-name {
+    font-size: 18px;
+    letter-spacing: 0.075rem;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+    #content-wrapper {
+        width: 65%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #content-wrapper {
+        width: 100%;
+    }
+}

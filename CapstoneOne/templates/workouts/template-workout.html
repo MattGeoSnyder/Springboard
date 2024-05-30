@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="/static/style/workout/template-workout.css">
+{% endblock %}
+
+{% block content %}
+  <div id="content-container">
+    <div id="input-container">
+      <form id="submit" action="/workouts/new" method="POST">
+        <div id="workout-name-wrapper">
+          {{form.name(id='workout-name', placeholder='Workout Name', value=template.name)}}
+        </div>
+        <div id="date-input">
+          {{form.hidden_tag()}}
+          {{form.scheduled.label}} {{form.scheduled(class='form-control')}}
+        </div>
+        <div id="exercise-wrapper">
+          {% for exercise in template.exercises %}
+          <div class="slide">
+            <input type="hidden" name="ex-info" data-id="{{exercise.exercise_id}}"
+            data-name="{{exercise.exercise_name}}" data-muscle="{{exercise.muscle_group}}">
+            <h3>{{exercise.exercise_name}}</h3>
+
+          </div>
+          {% endfor %}
+        </div>
+        <div id="btn-bar">
+          <button id="back-btn" type="button" class="btn">Back</button>
+          <button id="add-set-btn" type="button" class="btn">Add Set</button>
+          <button id="next-btn" type="button" class="btn">Next Exercise</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="submission-bar">
+    <button class="btn" form="submit">Create Exercise</button>
+  </div>
+{% endblock %}
+
+{% block script %}
+<script src="/static/script/template-workout.js"></script>
+{% endblock %}

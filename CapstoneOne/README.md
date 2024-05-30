@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Fitter
 
-## Getting Started
+I created a free fitness web-app designed to make logging your workouts quick and easy.
 
-First, run the development server:
+You can find my app at: [fitter.herokuapp.com](https://fitter.herokuapp.com)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Motivation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+I wanted to create a fitness app that I would want to use. There are a couple of pain points that I've experienced using fitness apps:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. It takes too long to log your workout information.
+2. It's often not easy to change your workout information once entered.
+3. They aren't always designed to go through your workout with you.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## User Flow
 
-## Learn More
+Fitter allows you to create "Routines". "Routines" are a way for you to create a workout template for a set of exericses that you normally do when you go to the gym. From a routine you can quickly create and schedule a workout by entering your set and rep information (However, you do also have the ability to create a workout without a template). Your set and rep information are the set as flexible goals, or target values. This means that you have the ability to enter in the amount of weight and reps that you actually complete later on.
 
-To learn more about Next.js, take a look at the following resources:
+Once you create a workout, it'll show up on your homepage for you to complete. After clicking on the workout, your exercise information will be pulled up. If you opt to enter in rest times for your sets, upon completing your set a timer will be displayed to keep your workout on track.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+After completing your workout, your finished workout information will be available on your homescreen for your most recently completed workouts. You can also view all of your completed workouts on the progress tab, with a plot summarizing your progress for exercises.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Technologies Used
 
-## Deploy on Vercel
+This project was built using [Flask v2.2.2] and uses the following technologies:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Frontend:
+  - HTML
+  - CSS
+  - Bootstrap
+  - Javascript
+- Backend:
+  - Python
+  - PostgreSQL
+  - Flask SQLAlchemy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+I also used the [WGER](https://wger.de/api/v2) API to source the exercise data.
+
+## Setup
+
+If you'd like to run the application locally you can follow these steps:
+
+1. Install Python and PostgreSQL
+2. Create a virtual environment in python
+
+   > ```console
+   > python -m venv venv
+   > ```
+
+3. Install requirements
+
+   > ```console
+   > pip install -r requirements.txt
+   > ```
+
+4. Create your Postgresql database
+
+   > ```console
+   > createdb CapstoneOne
+   > ```
+
+5. Seed the database
+
+   > ```console
+   > psql < seed_units.psql
+   > ```
+
+6. In app.py change config to
+
+   > ```python
+   > app.config['SQLALCEMY_DATABASE_URI'] = "postgresql:///CapstoneOne"
+   > ```
+
+## Models
+
+[Schema](./static/resources/SchemaDiagram.pdf)
+
+## Server Routes
+
+| Method                  | URL                                   | Description                                                                                                                                                                                                   |
+| :---------------------- | :------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| home()                  | /                                     | Takes you to home page. If not logged in, will redirect to /login                                                                                                                                             |
+| login()                 | /login                                | Login page.                                                                                                                                                                                                   |
+| signup()                | /signup                               | Sign up page.                                                                                                                                                                                                 |
+| templates()             | /templates                            | Page to view and manage templates ("Routines")                                                                                                                                                                |
+| edit_template()         | /templates/<int:temp_id>              | Edit specific template                                                                                                                                                                                        |
+| create_template()       | /templates/new                        | Create new template                                                                                                                                                                                           |
+| delete_template()       | /templates/<int:temp_id>/delete       | Delete specific Template                                                                                                                                                                                      |
+| create_workout()        | /workouts/new                         | Create new workout                                                                                                                                                                                            |
+| return_templates()      | /workouts/new/templates               | redirects to /templates to create new workout from template                                                                                                                                                   |
+| create_from_templates() | /workouts/new/templates/<int:temp_id> | Querys template to make workout from. Will POST new workout to /workouts/new                                                                                                                                  |
+| start_workout()         | /workouts/<int:workout_id>            | Querys specific workout and displays workout information. On POST will add completed workout information.                                                                                                     |
+| delete_workout()        | /workouts/delete/<int:workout_id>     | Deletes specific workotu                                                                                                                                                                                      |
+| get_progress            | /progress                             | Querys specific exercise for progress. Defaults to first exercise by name alphabetically. Calls upon create_plot to make progress plot. Displays prgress plot and completed workouts within search parameters |
+| update_profile()        | /profile                              | Gets additional user information. On post will update user information.                                                                                                                                       |

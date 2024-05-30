@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="/static/style/template/template.css">
+{% endblock %}
+
+{% block content %}
+<div id="main-content" class="container-fluid">
+  <div id="content-wrapper" class="container-fluid">
+    <div id="banner">
+      <h3>Routines</h3>
+      <a id="add-template" href="/templates/new">
+        <i class="fa-solid fa-plus fa-xl"></i> Create Routine
+      </a>
+      <p>
+        Routines are a way for you to create regularly recurring workouts more quickly. 
+        In a template you can select exercises and they will be saved here for you to create
+        workouts from.
+      </p>
+    </div>
+    {% if templates %}
+      <div id="templates">
+        {% for template in templates %}
+          <div class="template">
+            <div class="template-info">
+              <a class="template-link" href="/templates/{{template.id}}"><h3>{{template.name}}</h3></a>
+              <span class="exercise-dropdown">Exercises <i class="fa-solid fa-caret-down"></i></span>
+              <div class="exercise-wrapper">
+                {% for exercise in template.exercises %}
+                  <span class="exercise-name">{{exercise.exercise_name}}</span> <br>
+                {% endfor %}  
+              </div>
+            </div>
+            <div class="button-bar">
+              <button class="btn"> <a href="/templates/{{template.id}}/delete">Delete</a></button>
+              <button class="btn"><a href="/workouts/new/templates/{{template.id}}">Create Workout</a></button>
+            </div>  
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <h4 class="text-center">No templates to display</h4>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="/static/script/home.js"></script>
+{% endblock %}
