@@ -74,6 +74,9 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Springboard/master
 =======
 >>>>>>> Springboard/master
 =======
@@ -110,6 +113,7 @@ node_modules/
 =======
 >>>>>>> shoply/master
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> CapstoneOne/master
 =======
@@ -120,6 +124,8 @@ node_modules/
 >>>>>>> shoply/master
 =======
 >>>>>>> CapstoneOne/master
+=======
+>>>>>>> Springboard/master
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -139,6 +145,9 @@ node_modules/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Springboard/master
 =======
 >>>>>>> Springboard/master
 .yarn/install-state.gz
@@ -161,6 +170,7 @@ node_modules/
 =======
 >>>>>>> shoply/master
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 .yarn/install-state.gz
 >>>>>>> CapstoneOne/master
@@ -173,6 +183,8 @@ node_modules/
 =======
 .yarn/install-state.gz
 >>>>>>> CapstoneOne/master
+=======
+>>>>>>> Springboard/master
 
 # testing
 /coverage
@@ -190,12 +202,15 @@ node_modules/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> CapstoneOne/master
 =======
 >>>>>>> Springboard/master
 =======
 >>>>>>> CapstoneOne/master
+=======
+>>>>>>> Springboard/master
 =======
 >>>>>>> CapstoneOne/master
 =======
@@ -209,6 +224,9 @@ node_modules/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Springboard/master
 =======
 >>>>>>> Springboard/master
 =======
@@ -228,6 +246,7 @@ node_modules/
 =======
 >>>>>>> shoply/master
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> CapstoneOne/master
 =======
@@ -238,6 +257,8 @@ node_modules/
 >>>>>>> shoply/master
 =======
 >>>>>>> CapstoneOne/master
+=======
+>>>>>>> Springboard/master
 # production
 /build
 
@@ -256,12 +277,15 @@ node_modules/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> CapstoneOne/master
 =======
 >>>>>>> Springboard/master
 =======
 >>>>>>> CapstoneOne/master
+=======
+>>>>>>> Springboard/master
 =======
 >>>>>>> CapstoneOne/master
 =======
@@ -287,6 +311,9 @@ next-env.d.ts
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Springboard/master
 =======
 >>>>>>> Springboard/master
 >>>>>>> CapstoneOne/master
@@ -340,10 +367,13 @@ __pycache__/
 >>>>>>> microblog/master
 =======
 >>>>>>> shoply/master
+<<<<<<< HEAD
 =======
 >>>>>>> microblog/master
 =======
 >>>>>>> shoply/master
+=======
+>>>>>>> Springboard/master
 .env.local
 .env.development.local
 .env.test.local
@@ -359,6 +389,9 @@ yarn-error.log*
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Springboard/master
 >>>>>>> microblog/master
 =======
 node_modules/
@@ -464,6 +497,7 @@ __pycache__/
 =======
 >>>>>>> shoply/master
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 node_modules/
 >>>>>>> Assessment6/master
@@ -554,3 +588,5 @@ node_modules/
 venv/
 __pycache__/
 >>>>>>> SQL/master
+=======
+>>>>>>> Springboard/master
