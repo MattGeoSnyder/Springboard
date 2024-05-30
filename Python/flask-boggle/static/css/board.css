@@ -1,0 +1,29 @@
+#game {
+    border: 5px solid black;
+    border-radius: 15px;
+}
+
+#game tbody:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#game tbody:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#game .col {
+   
+    border: 3px solid black;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
+
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    size: 25px 25px;
+}
+

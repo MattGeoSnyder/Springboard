@@ -1,0 +1,84 @@
+body {
+    height: 100vh;
+    width: 100vw;
+}
+
+#main-container {
+    display: flex;
+    justify-content: center;
+
+    position: relative;
+    height: 50%;
+}
+
+#timer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 30%;
+
+    position: absolute;
+    left: 0px;
+}
+
+#form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#banner {
+    display: flex;
+    justify-content: space-evenly;
+
+    margin-top: 20px;
+    margin-bottom: 40px;
+
+    position: relative;
+}
+
+#title {
+    position: absolute;
+    left: 30px;
+}
+
+#result-section {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 425px) {
+    #timer-container {
+        top: 100%;
+        width: 100%;
+        z-index: -1;
+    }
+
+    #banner {
+        flex-wrap: wrap;
+    }
+
+    #games-played {
+        position: absolute;
+        right: 30px
+    }
+
+    #high-score {
+        position: absolute;
+        top: 25px;
+        left: 30px;
+    }
+
+    #score-section {
+        position: absolute;
+        top: 25px;
+        right: 30px;
+    }
+
+    #result-section {
+        margin: 50px 0px;
+    }
+}
+

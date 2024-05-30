@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block stylesheet %}
+<link href="../static/css/main.css" rel="stylesheet" />
+<link href="../static/css/board.css" rel="stylesheet" />
+<link href="../static/css/timer.css" rel="stylesheet" />
+{% endblock %} {% block content %}
+
+<div id="banner" class="container-fluid">
+  <div id="title">Boggle!</div>
+  <div id="games-played">Games Played:</div>
+  <div id="high-score">High Score:</div>
+  <div id="score-section">Score:</div>
+</div>
+
+<div id="result-section" class="container-fluid"></div>
+
+<div id="main-container" class="container-fluid">
+  <div id="timer-container">
+    <div id="timer">60</div>
+  </div>
+  <div id="game-container">
+    <div id="game" class="container-md text-center">
+      {% for row in board %}
+      <div class="row">
+        {% for item in row %}
+        <div class="col">{{item}}</div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div id="form-container" class="container-fluid">
+  <form action="#">
+    <input type="text" name="guess" placeholder="Your guess here" />
+    <button>Guess</button>
+  </form>
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../static/js/game.js"></script>
+<script src="../static/js/main.js"></script>
+{% endblock %}
