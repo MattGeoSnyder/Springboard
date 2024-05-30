@@ -64,6 +64,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Springboard/master
 =======
@@ -108,6 +109,8 @@ node_modules/
 >>>>>>> microblog/master
 =======
 >>>>>>> shoply/master
+=======
+>>>>>>> CapstoneOne/master
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -126,6 +129,7 @@ node_modules/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Springboard/master
 .yarn/install-state.gz
@@ -157,6 +161,9 @@ node_modules/
 >>>>>>> microblog/master
 =======
 >>>>>>> shoply/master
+=======
+.yarn/install-state.gz
+>>>>>>> CapstoneOne/master
 
 # testing
 /coverage
@@ -173,10 +180,13 @@ node_modules/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> CapstoneOne/master
 =======
 >>>>>>> Springboard/master
+=======
+>>>>>>> CapstoneOne/master
 =======
 >>>>>>> CapstoneOne/master
 =======
@@ -189,6 +199,7 @@ node_modules/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Springboard/master
 =======
@@ -216,6 +227,8 @@ node_modules/
 >>>>>>> microblog/master
 =======
 >>>>>>> shoply/master
+=======
+>>>>>>> CapstoneOne/master
 # production
 /build
 
@@ -233,10 +246,13 @@ node_modules/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> CapstoneOne/master
 =======
 >>>>>>> Springboard/master
+=======
+>>>>>>> CapstoneOne/master
 =======
 >>>>>>> CapstoneOne/master
 =======
@@ -257,6 +273,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -495,3 +512,5 @@ node_modules/
 node_modules/
 .env
 >>>>>>> Assessment7/master
+=======
+>>>>>>> CapstoneOne/master
