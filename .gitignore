@@ -73,6 +73,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Springboard/master
 =======
@@ -549,3 +550,7 @@ node_modules/
 =======
 node_modules/
 >>>>>>> ReactRouter/master
+=======
+venv/
+__pycache__/
+>>>>>>> SQL/master
