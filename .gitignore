@@ -63,6 +63,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Springboard/master
 =======
@@ -490,3 +491,7 @@ __pycache__/
 =======
 node_modules/
 >>>>>>> Assessment6/master
+=======
+node_modules/
+.env
+>>>>>>> Assessment7/master
