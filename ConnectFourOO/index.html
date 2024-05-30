@@ -1,0 +1,37 @@
+<!doctype html>
+<head>
+  <title>Connect 4</title>
+  <link href="connect4.css" rel="stylesheet">
+</head>
+<body>
+
+<datalist id="player-colors">
+  <option value="#ff0000">
+  <option value="#ffA500">
+  <option value="#ffff00">
+  <option value="#00ff00">
+  <option value="#0000ff">
+  <option value="#8f00ff">
+</datalist>
+
+<div id="color-selection">
+  <form id="color-form">
+    <span class="color-input">
+      <label for="player-1-color">Player 1</label>
+      <input type="color" list="player-colors" value="#ff0000" name="player1" id="player-1-color">  
+    </span>
+    <span class="color-input">
+      <label for="player-2-color">Player 2</label>
+      <input type="color" list="player-colors" value="#0000ff" name="player2" id="player-2-color">  
+    </span>
+    <button id="new-game">New Game</button>  
+</form>
+</div>
+<div id="game">
+  <table id="board"></table>
+</div>
+
+<script src="connect4.js"></script>
+
+</body>
+</html>
