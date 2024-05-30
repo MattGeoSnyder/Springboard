@@ -1,0 +1,14 @@
+.comment {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+
+    padding: 0px 20px;
+}
+
+.comment i {
+    color: red;
+}

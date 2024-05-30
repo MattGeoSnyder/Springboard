@@ -76,6 +76,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Springboard/master
 =======
@@ -127,6 +128,8 @@ node_modules/
 >>>>>>> CapstoneOne/master
 =======
 >>>>>>> Springboard/master
+=======
+>>>>>>> microblog/master
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -147,6 +150,7 @@ node_modules/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Springboard/master
 =======
@@ -186,10 +190,13 @@ node_modules/
 >>>>>>> CapstoneOne/master
 =======
 >>>>>>> Springboard/master
+=======
+>>>>>>> microblog/master
 
 # testing
 /coverage
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -260,11 +267,14 @@ node_modules/
 >>>>>>> CapstoneOne/master
 =======
 >>>>>>> Springboard/master
+=======
+>>>>>>> microblog/master
 # production
 /build
 
 # misc
 .DS_Store
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -375,6 +385,8 @@ __pycache__/
 >>>>>>> shoply/master
 =======
 >>>>>>> Springboard/master
+=======
+>>>>>>> microblog/master
 .env.local
 .env.development.local
 .env.test.local
@@ -383,6 +395,7 @@ __pycache__/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -595,3 +608,5 @@ __pycache__/
 venv/
 __pycache__/
 >>>>>>> Warbler/master
+=======
+>>>>>>> microblog/master

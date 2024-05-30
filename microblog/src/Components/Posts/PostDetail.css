@@ -1,0 +1,26 @@
+#post {
+    padding: 40px;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    position: relative;
+    align-items: center;
+}
+
+
+#icons {
+    margin: 0 20px;
+}
+
+#icons i {
+    margin: 0 10px;
+}
+
+#comments {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
