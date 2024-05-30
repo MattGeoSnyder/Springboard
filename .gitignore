@@ -70,6 +70,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Springboard/master
 =======
@@ -537,3 +538,6 @@ node_modules/
 venv/
 __pycache__/
 >>>>>>> Python/master
+=======
+node_modules/
+>>>>>>> React2/master
