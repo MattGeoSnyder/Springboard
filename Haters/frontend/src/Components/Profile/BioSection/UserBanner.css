@@ -1,0 +1,55 @@
+.user-banner {
+  height: 25%;
+
+  max-height: 150px;
+
+  display: flex;
+  gap: 25px;
+  flex-basis: fit-content;
+}
+
+.user-banner .user-icon {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 999%;
+  border: 1px solid grey;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: gray;
+  box-shadow: 3px 3px 6px black;
+}
+
+.user-icon.default h1 {
+  font-size: 48px;
+}
+
+.user-banner .user-name-age {
+  display: inline-block;
+  flex: 1;
+}
+
+.user-name-age #name {
+  font-size: 32px;
+  margin: 0;
+  margin-top: 1rem;
+  word-wrap: break-word;
+}
+
+.user-name-age #age {
+  margin: 0;
+  font-size: 24px;
+}
+
+@media (max-width: 1120px) {
+  #profile-page .user-banner {
+    background-color: white;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px gray;
+    top: 0px;
+  }
+}

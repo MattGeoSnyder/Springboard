@@ -1,0 +1,75 @@
+.bio-container {
+  width: 80%;
+
+  grid-row: 1 / -1;
+
+  padding: 25px;
+  margin: 50px;
+
+  box-sizing: border-box;
+
+  background-color: white;
+  box-shadow: 0px 0px 10px gray;
+
+  border-radius: 20px;
+
+  justify-self: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  position: relative;
+}
+
+.bio-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+ 
+  margin-bottom: 1em;
+}
+
+.content {
+  flex: 1;
+  border: none;
+  resize: none;
+  padding: 10px;
+}
+
+#bio {
+  font-family: 'Montserrat', 'sans-serif';
+  font-size: 16px;
+}
+
+#bio:focus {
+  border-radius: 10px;
+  outline: 1px solid var(--accent-one);
+}
+
+#update-profile-btn {
+  flex-basis: fit-content;
+  display: inline-block;
+  box-sizing: border-box;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 15px;
+
+  border-radius: 20px;
+  border: none;
+  background-color: var(--accent-two);
+  color: white;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+}
+
+.bio-content p {
+  font-size: 22px;
+}
+
+@media (max-width: 1120px) {
+  #update-profile-btn {
+    order: 10;
+  }
+}

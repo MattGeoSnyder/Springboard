@@ -1,0 +1,36 @@
+#signup-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 80%;
+    width: 100%;
+    position: relative;
+    transform-style: flat;
+}
+
+.carousel-item {
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+
+    height: 100%;
+    width: 100%;
+
+    transition: left ease 1s;
+}
+
+.carousel-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 15px;
+}
+
+@media (max-width: 750px) {
+    #signup-carousel {
+        display: none;
+    }
+}
+

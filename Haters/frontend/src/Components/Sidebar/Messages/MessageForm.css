@@ -1,0 +1,54 @@
+#message-form {
+    min-height: 100px;
+
+    flex-grow: .1;
+
+    background-color: var(--accent-one);
+    width: 100%;
+
+    border-radius: 10px;
+
+    box-shadow: 0px 0px 5px black;
+}
+
+#message-form form {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+
+    justify-content: space-between;
+}
+
+#message-form #content {
+    padding: 5px;
+    min-height: 50px;
+    overflow: auto;
+
+    margin: auto 0;
+
+    flex: 1;
+
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 2px gray;
+}
+
+#message-form #content:focus {
+    outline: none;
+    box-shadow: 0 0 5px inset black;
+}
+
+#message-form button {
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 10px;
+    margin: 0 20px;
+    font-size: 20px;
+    background-color: var(--main-bg-color-solid);
+    border: none;
+    border-radius: 5px;
+}
+

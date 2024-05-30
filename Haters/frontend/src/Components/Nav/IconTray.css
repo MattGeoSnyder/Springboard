@@ -1,0 +1,73 @@
+#icon-tray {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  padding: 0 50px;
+}
+
+#icon-tray .icon {
+  width: fit-content;
+  height: 100%;
+
+  padding: 0 10px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  pointer-events: fill;
+}
+
+#icon-tray p {
+  display: inline-block;
+  color: black;
+  font-size: 20px;
+}
+
+#icon-tray .message {
+  color: var(--accent-one);
+}
+
+#icon-tray .icon.profile {
+  gap: 10px;
+}
+
+
+.icon p {
+  display: inline-block;
+}
+
+.icon i {
+  display: inline-block;
+  font-size: 30px;
+}
+
+.logout.icon i {
+  margin-left: 10px;
+  position: relative;
+  top: 5px;
+}
+
+.icon.home {
+  color: var(--accent-two);
+}
+
+i.logout-icon::before {
+  content: 'Logout';
+}
+
+.icon.active {
+  box-shadow: 0 0 4px inset black;
+  border-radius: 10px;
+}
+
+@media (max-width: 700px) {
+  .logout.icon i {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+}
+

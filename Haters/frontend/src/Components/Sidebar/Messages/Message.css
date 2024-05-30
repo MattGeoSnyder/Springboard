@@ -1,0 +1,50 @@
+.message {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.message.sent {
+    flex-direction: row-reverse;
+}
+
+.message-content {
+    display: block;
+    border-radius: 10px;
+    word-wrap: break-word;
+    max-width: 50%;
+    padding: 10px;
+}
+
+.message-content.sent {
+    background-color: var(--main-bg-color-solid);
+    border: 1px solid gray;
+}
+
+.message-content.received {
+    background-color: var(--accent-two);
+    color: white;
+    border: 1px solid gray;
+}
+
+.time {
+    width: 100%;
+    color: gray;
+    font-size: 10px;
+}
+
+.time.sent {
+    text-align: end;
+}
+
+@keyframes send {
+    from {
+        top: 0%;
+        max-width: fit-content;
+    } 
+
+    to {
+        top: 100%;
+        max-width: 100%;
+    }
+}

@@ -67,6 +67,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Springboard/master
 =======
@@ -523,3 +524,7 @@ node_modules/
 /__pycache__
 /venv
 >>>>>>> ForexConverter/master
+=======
+node_modules/
+.env
+>>>>>>> Haters/master

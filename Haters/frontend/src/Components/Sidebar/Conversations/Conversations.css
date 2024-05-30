@@ -1,0 +1,40 @@
+#conversations {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    padding-bottom: 100px;
+}
+#conversations hr {
+    border: 0;
+    display: block;
+    width: 96%;
+    background-color: gray;
+    height: 1px;
+    margin-bottom: 1rem;
+}
+
+#conversations #header {
+    height: 10%;
+    align-self: flex-start;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+}
+
+#conversations #header p {
+    display: inline-block;
+    margin-bottom: 0;
+    font-size: 32px;
+    margin-left: 1rem;
+}
+
+#conversations #header i {
+    display: inline-block;
+    font-size: 30px;
+    margin-left: 1rem;
+    cursor: pointer;
+    pointer-events: fill;
+}

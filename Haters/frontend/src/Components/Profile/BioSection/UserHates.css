@@ -1,0 +1,26 @@
+.user-hates-container {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.user-hates-container > p {
+  font-size: 22px;
+}
+
+.user-hates {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.user-hates .hate {
+  pointer-events: none;
+}
+
+.user-hates .hate.active {
+  pointer-events: all;
+}
+

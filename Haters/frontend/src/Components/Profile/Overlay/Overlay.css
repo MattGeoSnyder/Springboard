@@ -1,0 +1,28 @@
+#overlay {
+  height: 100%;
+  width: 100%;
+
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#overlay #overlay-image {
+  --height-max: 90%;
+  --height-min: 400px;
+
+  max-height: var(--height-max);
+  max-width: calc(var(--height-max) * 0.8);
+
+  min-height: var(--height-min);
+  min-width:  calc(var(--height-min) * 0.8);
+}

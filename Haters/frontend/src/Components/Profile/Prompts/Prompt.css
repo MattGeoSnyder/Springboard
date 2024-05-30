@@ -1,0 +1,120 @@
+.prompt {
+  --prompt-width: 90%;
+  --prompt-height: fit-content;
+  border-radius: 20px;
+  background-color: var(--accent-two);
+  color: white;
+  box-sizing: border-box;
+  padding: 5px 40px 30px; 
+  width: var(--prompt-width);
+  height: var(--prompt-height);
+  position: relative;
+  justify-self: center;
+  margin-top: 2rem;
+
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+
+  box-shadow: 0 0 5px black;
+
+  transition: padding 0.5s ease, box-shadow 0.5s ease;
+}
+
+.prompt.active {
+  padding: 10px 45px 35px;
+  box-shadow: 0px 0px 20px black;
+}
+
+.prompt p {
+  font-size: 18px;
+  margin-right: auto;
+}
+
+.prompt div:not(div.options):not(div.option), p, i {
+  pointer-events: none;
+}
+
+.prompt i {
+  position: absolute;
+  right: 25px;
+  top: 15px;
+}
+
+.prompt .options {
+  position: absolute;
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  top: 50px;
+  left: 50px;
+
+  height: 150px;
+  width: 75%;
+
+  overflow: scroll;
+  scroll-margin: 5px;
+  scroll-behavior: contain;
+
+  box-shadow: 0 5px 10px black;
+
+  max-height: 0px;
+
+  box-sizing: border-box;
+
+  transition: max-height 0.25s ease, padding 0.25s ease;
+  margin-right: auto;
+  z-index: 10;
+}
+
+.prompt .options.active {
+  padding: 5px 10px;
+  max-height: 150px;
+}
+
+.prompt .options .option {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px;
+
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.prompt .options .option:hover {
+  background-color: var(--accent-two);
+  color: white;
+}
+
+.prompt .prompt-input {
+  width: 100%;
+  height: 75px;
+  padding: 0;
+  resize: none;
+  border: none;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-family: 'Montserrat', 'sans-serif';
+  max-height: 0;
+}
+
+.prompt .prompt-input.active {
+  display: block;
+  padding: 10px;
+  max-height: 75px;
+  transition: max-height 0.1s ease;
+}
+
+.prompt .prompt-input:focus {
+  outline: none;
+  box-shadow: inset 0 0 5px blueviolet;
+  border: 2px solid blueviolet;
+}
+
+@media (max-width: 1120px) {
+  .prompt {
+    --prompt-width: 95%;
+    align-self: center;
+    min-width: 0px;
+    margin: 0;
+  }
+}

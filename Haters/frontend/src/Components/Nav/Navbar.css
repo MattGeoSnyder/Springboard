@@ -1,0 +1,43 @@
+#navbar {
+  background-color: var(--main-bg-color-solid);
+  height: 60px;
+  width: 100%;
+  padding-top: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+#navbar #banner {
+  position: absolute;
+  left: 50px;
+
+  cursor: pointer;
+  pointer-events: fill;
+}
+
+#banner p {
+  display: inline-block;
+  font-size: 40px;
+  margin: 0;
+  color: black;
+  margin-right: 5px;
+}
+
+#banner i {
+  display: inline-block;
+  font-size: 30px;
+  color: var(--dark-red);
+  position: relative;
+}
+
+
+@media (max-width: 700px) {
+  #navbar {
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+  }
+}
+

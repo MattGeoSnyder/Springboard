@@ -1,0 +1,139 @@
+#login-page {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#login-page #welcome {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#welcome h1 {
+  text-align: center;
+  font-size: 48px;
+  background-clip: content-box;
+}
+
+#welcome img {
+  object-fit: contain;
+  height: 70%;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+#welcome div {
+  flex: 1;
+}
+
+#login {
+  margin-top: 2rem;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2rem 0;
+  grid-column: 2 / -1;
+  display: flex;
+  flex-direction: column;
+}
+
+#login h1 {
+  margin: 0;
+  font-size: 48px;
+  text-align: center;
+}
+
+#login a {
+  color: var(--accent-one);
+  cursor: pointer;
+  pointer-events: fill;
+}
+
+#login > p {
+  text-align: center;
+  margin: 0;
+  color: gray;
+  font-size: 16px;
+  margin-top: 0.5rem;
+}
+
+#login form {
+  flex: 1;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#login .input {
+  width: 60%;
+  flex: 1;
+}
+
+#login input {
+  font-family: 'Montserrat';
+  width: 100%;
+  padding-block: 5px;
+  padding-inline: 10px;
+  font-size: 14px;
+  border: 1px solid gray;
+  border-radius: 50px;
+}
+
+#login button {
+  font-size: 18px;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  border: none;
+  background-color: var(--accent-one);
+  border-radius: 50px;
+  width: 50%;
+  padding-block: 10px;
+}
+
+#login #err-msg {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+}
+
+#login #err-msg p {
+  text-align: center;
+  border: 1px solid var(--dark-red);
+  color: var(--dark-red);
+  border-radius: 10px;
+  width: 80%;
+  padding: 20px 0px;
+  margin: 2rem auto;
+}
+
+.left, .right {
+  height: 100%;
+  flex: 1;
+  background-color: blueviolet;
+}
+
+#login i.loader {
+  font-size: 22px;
+  animation: 2s linear infinite spin ;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 750px) {
+  #login-page #welcome {
+    display: none;
+  }
+  #login {
+    grid-column: 1 / -1;
+  }
+}
+

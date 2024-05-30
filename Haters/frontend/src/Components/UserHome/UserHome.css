@@ -1,0 +1,26 @@
+#home-container {
+    overflow-x: hidden;
+    position: relative;
+
+    grid-row: 2 / -1;
+}
+
+#message-sidebar {
+    width: 30%;
+    height: 100%;
+
+    max-width: 0%;
+
+    position: absolute;
+
+    right: 0;
+
+    background-color: var(--main-bg-color-solid);
+
+    border-left: 2px solid black;
+    display: flex;
+    flex-direction: column;
+
+    z-index: 10;
+}
+  
