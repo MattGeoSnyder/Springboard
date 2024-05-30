@@ -75,6 +75,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Springboard/master
 =======
@@ -590,3 +591,7 @@ __pycache__/
 >>>>>>> SQL/master
 =======
 >>>>>>> Springboard/master
+=======
+venv/
+__pycache__/
+>>>>>>> Warbler/master
