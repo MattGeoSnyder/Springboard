@@ -1,0 +1,6 @@
+.card {
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    position: absolute;
+}

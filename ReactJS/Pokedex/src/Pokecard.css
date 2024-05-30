@@ -1,0 +1,17 @@
+.card {
+    background-color: lightgray;
+    border-radius: 8px;
+    height: 250px;
+    width: 200px;
+    padding: 20px;
+}
+
+.img-container {
+    height: 125px;
+    width: 125px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0 auto;
+}
+
